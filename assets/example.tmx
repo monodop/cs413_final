@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="SnowPlatform" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="SnowPlatform.png" width="384" height="192"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="40" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztyScOQlEQAMAXOvmhI+gIOoLO/a/GHAKxYsWoqUopVUoppZRS+psadRo0adGmQzfA9+gzYMiIMROmAX7GnAVLVqzZsA3wO/YcOHLizIVrgL9x58GTF28+fAP8D6YAL0U=
+  </data>
+ </layer>
+</map>
