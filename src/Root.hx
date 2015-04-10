@@ -46,6 +46,9 @@ class Root extends Sprite {
         assets = new AssetManager();
 		assets.enqueue("assets/spritesheet.png");
 		assets.enqueue("assets/spritesheet.xml");
+        assets.enqueue("assets/font/font.png");
+        assets.enqueue("assets/font/font.fnt");
+        assets.enqueue("assets/sample.png");
 
         assets.loadQueue(function onProgress(ratio:Float) {
             haxe.Log.clear();

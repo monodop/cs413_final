@@ -20,7 +20,6 @@ import Std;
 class Main extends Sprite {
 	
 	public var rootSprite:Sprite;
-
 	private var selection:Int;
 	private var buttons:Array<TextField>;
 	private var title:Image;
@@ -45,20 +44,22 @@ class Main extends Sprite {
 		this.y = center.y;
 		this.scaleX = 8;
 		this.scaleY = 8;
-		//bg = new Image(Root.assets.getTexture("Intro"));
+		bg = new Image(Root.assets.getTexture("sample"));
 		//Root.assets.playSound("GrandpaTallTales", 0, 9999);
-		gametitle = new TextField(350, 50, "game", "5x7");
+		gametitle = new TextField(350, 50, "game", "font");
 		gametitle.text = "game";
 		gametitle.fontSize = 45;
 		gametitle.color = Color.WHITE;
 		gametitle.x = center.x - 125;
 		gametitle.y = 50;
-		TextField.getBitmapFont("5x7").smoothing = "none";
+		bg.x = center.x;
+		bg.y = center.y;
+		TextField.getBitmapFont("font").smoothing = "none";
 		this.addChild(bg);
 		this.addChild(gametitle);
 		rootSprite.addChild(this);
 
-		buttons = [new TextField(150, 50, "Begin Game", "5x7"), new TextField(150, 50, "Credits", "5x7")];
+		buttons = [new TextField(150, 50, "Start", "font"), new TextField(150, 50, "Credits", "font")];
 		for (i in 0...buttons.length) {
 			var button = buttons[i];
 			button.fontSize = 24;
