@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalong="no"?>
 <application xmlns="http://ns.adobe.com/air/application/3.8">
-  <id>com.cs413.gtt</id>
-  <name>GrandpaTallTales</name>
-  <filename>grandpatalltales</filename>
-  <versionNumber>15.01.14</versionNumber>
+  <id>com.cs413.twoworlds</id>
+  <name>Two Worlds</name>
+  <filename>twoworlds</filename>
+  <versionNumber>15.04.09</versionNumber>
   <initialWindow>
     <content>game.swf</content>
     <renderMode>direct</renderMode>

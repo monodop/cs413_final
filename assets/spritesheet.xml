@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:c7723115a56d8c3ba08448101c6ab60a:b747a8f2b6766fc8b87ebbf8146c596a:ef7663426bf705b25566a93aef3a1571$ -->
+<TextureAtlas imagePath="spritesheet.png">
+    <SubTexture name="greenpixel" x="3" y="199" width="1" height="1"/>
+    <SubTexture name="pixel" x="3" y="204" width="1" height="1"/>
+    <SubTexture name="redpixel" x="3" y="209" width="1" height="1"/>
+    <SubTexture name="world/SnowPlatform" x="3" y="3" width="384" height="192"/>
+    <SubTexture name="yellowpixel" x="3" y="214" width="1" height="1"/>
+</TextureAtlas>
