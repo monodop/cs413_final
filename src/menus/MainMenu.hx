@@ -7,8 +7,11 @@ import starling.text.BitmapFont;
 import starling.core.Starling;
 import starling.animation.Transitions;
 import starling.animation.Tween;
+import starling.events.KeyboardEvent;
+import flash.ui.Keyboard;
 import starling.utils.Color;
 import flash.geom.Vector3D;
+
 
 class MainMenu extends MenuState
 {
@@ -36,11 +39,9 @@ class MainMenu extends MenuState
 		this.pivotY = center.y;
 		this.x = center.x;
 		this.y = center.y;
-		this.scaleX = 8;
-		this.scaleY = 8;
-		bg = new Image(Root.assets.getTexture("world/SnowPlatform"));
-		gametitle = new TextField(350, 50, "game", "font");
-		gametitle.text = "game";
+		bg = new Image(Root.assets.getTexture("sample"));
+		gametitle = new TextField(350, 60, "TWO WOOOORLDS", "font");
+		//gametitle.text = "game";
 		gametitle.fontSize = 45;
 		gametitle.color = Color.WHITE;
 		gametitle.x = center.x - 125;
@@ -59,8 +60,13 @@ class MainMenu extends MenuState
 			button.x = center.x - 25;
 			button.y = 110 + (i * 50);
 			this.addChild(button);
-		rootSprite.addChild(this);
 		}
+		//Enlarge the first highlighted option by default
+		buttons[0].fontSize = 40;
+		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleInput);
+		selection = 0;
+		rootSprite.addChild(this);
+		transitionIn();
 		
 	}
 	
@@ -75,7 +81,7 @@ class MainMenu extends MenuState
 		
 	}
 	
-	private override function transitionIn(?callback:Void->Void) {
+	private override function transitionIn(?callBack:Void->Void) {
 		//this.scaleX = 0;
 		//this.scaleY = 0;
 		//this.x = 256;
@@ -90,9 +96,18 @@ class MainMenu extends MenuState
 			//callback();
 		//}
 		//Starling.juggler.add(tween);
-		callback();
+		var t = new Tween(this, transitionSpeed, Transitions.EASE_IN_OUT);
+		t.animate("scaleX", 1);
+		t.animate("scaleY", 1);
+		t.animate("bgcolor", 0);
+		t.onUpdate = function() {
+			Starling.current.stage.color = this.bgcolor | this.bgcolor << 8 | this.bgcolor << 16;
+		};
+		t.onComplete = callBack;
+		Starling.juggler.add(t);
+		//callback();
 	}
-	private override function transitionOut(?callback:Void->Void) {
+	private override function transitionOut(?callBack:Void->Void) {
 		//
 		//var tween = new Tween(ship, 2.0, "easeInOut");
 		//if(selection == 0) {
@@ -113,7 +128,70 @@ class MainMenu extends MenuState
 		//tween = new Tween(options, 1.5, "easeInOut");
 		//tween.animate("x", -options.width);
 		//Starling.juggler.add(tween);
-		callback();
+		var t = new Tween(this, transitionSpeed, Transitions.EASE_IN_OUT);
+		t.animate("x", 1000);
+		t.onComplete = callBack;
+		Starling.juggler.add(t);
+		//callback();
 	}
-	
+	private function handleInput(event:KeyboardEvent){
+
+		if (event.keyCode == Keyboard.SPACE) {
+
+			if (selection == 0) {
+			// NewGame
+				var game = new Game(rootSprite);
+				game.start();
+				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
+				transitionOut(function() {
+			//Root.assets.removeSound("GrandpaTallTales");
+					this.removeFromParent();
+					this.dispose();
+				});
+			}
+			else if (selection == 1) {
+			// Credits
+				var credits = new Credits(rootSprite);
+				credits.start();
+				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
+				transitionOut(function() {
+			//Root.assets.removeSound("GrandpaTallTales");
+					this.removeFromParent();
+					this.dispose();
+				});
+			}
+		}
+		else if (tween == null || tween.isComplete)
+		{
+			// Only allow moving if the current tween does not exist.
+			if (event.keyCode == Keyboard.UP) {
+
+				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
+				tween.animate("fontSize", 24);
+				Starling.juggler.add(tween);
+				selection = arithMod(--selection, buttons.length);
+				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
+				tween.animate("fontSize", 40);
+				Starling.juggler.add(tween);
+			}
+			else if (event.keyCode == Keyboard.DOWN) {
+
+				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
+				tween.animate("fontSize", 24);
+				Starling.juggler.add(tween);
+				selection = arithMod(++selection, buttons.length);
+				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
+				tween.animate("fontSize", 40);
+				Starling.juggler.add(tween);
+			}
+		}
+	}
+
+	public static function arithMod(n:Int, d:Int) : Int {
+
+		var r = n % d;
+		if (r < 0)
+			r += d;
+		return r;
+	}
 }
