@@ -2,7 +2,6 @@ package game;
 
 import colliders.*;
 import flash.geom.Rectangle;
-import game.tilemap.Tilemap;
 import menus.GameOverMenu;
 import menus.MenuState;
 import menus.QuadTreeVis;
@@ -28,6 +27,7 @@ class World extends Sprite {
 	
 	public var tileSize:Float = 32;
 	private var tilemap:Tilemap;
+	private var player:Image;
 	private var camera:Camera;
 	
 	private var quadvis:QuadTreeVis;
@@ -59,8 +59,16 @@ class World extends Sprite {
 		//collisionMatrix.enableCollisions("ship", ["projectile"]);
 		
 		// Prepare the tilemap
-		tilemap = new Tilemap(100, 100, tileSize);
+		tilemap = new Tilemap(Root.assets, "map");
+		tilemap.scaleX = .3;
+		tilemap.scaleY = .3;
 		addChild(tilemap);
+
+		player = new Image(Root.assets.getTexture("Player"));
+		player.smoothing = "none";
+		player.x = 40;
+		player.y = 70;
+		addChild(player);
 	}
 	
 	//public function addMovable(obj:SimpleMovable) {
