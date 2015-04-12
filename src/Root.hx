@@ -49,6 +49,11 @@ class Root extends Sprite {
         assets.enqueue("assets/font/font.png");
         assets.enqueue("assets/font/font.fnt");
         assets.enqueue("assets/sample.png");
+        assets.enqueue("assets/GameMap.tmx");
+        assets.enqueue("assets/Sky_01.png");
+        assets.enqueue("assets/SnowPlatform_01.png");
+        assets.enqueue("assets/SnowPlatform_02.png");
+        assets.enqueue("assets/SnowPlatform_03.png");
 
         assets.loadQueue(function onProgress(ratio:Float) {
             haxe.Log.clear();

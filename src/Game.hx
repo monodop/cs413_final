@@ -29,7 +29,8 @@ class Game extends Sprite
 	var rootSprite:Sprite;
 	var bg:Image;
 	var transitionSpeed = 0.5;
-	
+	var map:Tilemap;
+
 	public function new(root:Sprite) {
 		super();
 		this.rootSprite = root;
@@ -42,6 +43,11 @@ class Game extends Sprite
 		var stageHeight:Float = Starling.current.stage.stageHeight;
 
 		addEventListener(Event.ENTER_FRAME, onEnterFrame);
+
+		map = new Tilemap(Root.assets, "map");
+		map.scaleX = .3;
+		map.scaleY = .3;
+		stage.addChild(map);
 
 		//bg = new Image(Root.assets.getTexture("Background"));
 		//bg.smoothing = "none";

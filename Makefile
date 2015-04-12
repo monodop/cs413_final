@@ -18,11 +18,12 @@ game.swf: $(SOURCES)
 	-cp src \
 	-cp vendor \
 	-swf-version 11.8 \
-	-swf-header 512:386:60:000000 \
+	-swf-header 512:384:60:000000 \
 	-main Startup \
 	-swf game.swf \
 	-swf-lib vendor/starling_1_6.swc --macro "patchTypes('vendor/starling.patch')" \
 	-swf-lib vendor/pixelFilter.swc --macro "patchTypes('vendor/starling.patch')" \
+	-resource assets/GameMap.tmx@map \
 	-debug
 
 clean:
