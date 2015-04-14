@@ -1,29 +1,12 @@
-import menus.MenuState;
-import starling.display.Sprite;
-import starling.display.Image;
-import starling.core.Starling;
-import starling.text.TextField;
-import starling.events.KeyboardEvent;
-import starling.events.EnterFrameEvent;
-import starling.events.Event;
-import starling.filters.BlurFilter;
-import starling.filters.SelectorFilter;
+package menus;
+
+import game.World;
 import starling.animation.Transitions;
 import starling.animation.Tween;
-import starling.display.MovieClip;
-import starling.animation.Juggler;
-import starling.textures.Texture;
-import starling.textures.TextureAtlas;
-import flash.media.SoundTransform;
-import flash.media.SoundChannel;
-import flash.media.Sound;
-import flash.ui.Keyboard;
-
-import haxe.io.Bytes;
-import haxe.io.BytesInput;
-import haxe.io.Eof;
-import haxe.Timer;
-import game.World;
+import starling.core.Starling;
+import starling.display.Image;
+import starling.events.EnterFrameEvent;
+import starling.events.Event;
 
 class Game extends MenuState
 {

@@ -1,16 +1,12 @@
 package menus;
 
-import starling.display.Sprite;
-import starling.display.Image;
-import starling.text.TextField;
-import starling.text.BitmapFont;
-import starling.core.Starling;
+import flash.geom.Vector3D;
 import starling.animation.Transitions;
 import starling.animation.Tween;
-import starling.events.KeyboardEvent;
-import flash.ui.Keyboard;
+import starling.core.Starling;
+import starling.display.Image;
+import starling.text.TextField;
 import starling.utils.Color;
-import flash.geom.Vector3D;
 import utility.ControlManager.ControlAction;
 
 
@@ -129,8 +125,8 @@ class MainMenu extends MenuState
 		}
 		else if (selection == 1) {
 			// Credits
-			var credits = new Credits(rootSprite);
-			credits.start();
+			//var credits = new Credits(rootSprite);
+			//credits.start();
 			this.stop();
 		}
 	}

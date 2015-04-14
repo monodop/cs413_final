@@ -1,3 +1,5 @@
+package game;
+
 import haxe.xml.Fast;
 import flash.utils.ByteArray;
 import starling.display.Image;
