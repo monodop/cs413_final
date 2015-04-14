@@ -2,24 +2,14 @@ package game;
 
 import colliders.*;
 import flash.geom.Rectangle;
-import menus.GameOverMenu;
 import menus.MenuState;
 import menus.QuadTreeVis;
-import menus.UpgradeMenu;
 import movable.*;
-import starling.core.Starling;
 import starling.display.Image;
-import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.EnterFrameEvent;
-import starling.events.Touch;
-import starling.events.TouchEvent;
-import starling.text.BitmapFont;
 import utility.ControlManager.ControlAction;
 import utility.Point;
-import utility.HealthBar;
-import starling.events.Event;
-import starling.text.TextField;
 
 class World extends Sprite {
 	

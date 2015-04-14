@@ -11,6 +11,7 @@ import starling.events.KeyboardEvent;
 import flash.ui.Keyboard;
 import starling.utils.Color;
 import flash.geom.Vector3D;
+import utility.ControlManager.ControlAction;
 
 
 class MainMenu extends MenuState
@@ -26,12 +27,6 @@ class MainMenu extends MenuState
 	public var bg:Image;
 	public var gametitle:TextField;
 	public var center = new Vector3D(Starling.current.stage.stageWidth / 2.5, Starling.current.stage.stageHeight / 2.5);
-
-	public function new(rootSprite:Sprite) 
-	{
-		super(rootSprite);
-
-	}
 	
 	override function init() {
 
@@ -63,10 +58,8 @@ class MainMenu extends MenuState
 		}
 		//Enlarge the first highlighted option by default
 		buttons[0].fontSize = 40;
-		Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 		selection = 0;
 		rootSprite.addChild(this);
-		transitionIn();
 		
 	}
 	
@@ -75,27 +68,17 @@ class MainMenu extends MenuState
 	}
 	
 	override function awake() {
-		
+		Root.controls.hook("up", "MainMenuUp", up);
+		Root.controls.hook("down", "MainMenuDown", down);
+		Root.controls.hook("select", "MainMenuSpace", space);
 	}
 	override function sleep() {
-		
+		Root.controls.unhook("up", "MainMenuUp");
+		Root.controls.unhook("down", "MainMenuDown");
+		Root.controls.unhook("select", "MainMenuSpace");
 	}
 	
 	private override function transitionIn(?callBack:Void->Void) {
-		//this.scaleX = 0;
-		//this.scaleY = 0;
-		//this.x = 256;
-		//this.y = 256;
-		//
-		//var tween = new Tween(this, 1.5, "easeInOut");
-		//tween.animate("scaleX", 1);
-		//tween.animate("scaleY", 1);
-		//tween.animate("x", 0);
-		//tween.animate("y", 0);
-		//tween.onComplete = function() {
-			//callback();
-		//}
-		//Starling.juggler.add(tween);
 		var t = new Tween(this, transitionSpeed, Transitions.EASE_IN_OUT);
 		t.animate("scaleX", 1);
 		t.animate("scaleY", 1);
@@ -105,85 +88,50 @@ class MainMenu extends MenuState
 		};
 		t.onComplete = callBack;
 		Starling.juggler.add(t);
-		//callback();
 	}
 	private override function transitionOut(?callBack:Void->Void) {
-		//
-		//var tween = new Tween(ship, 2.0, "easeInOut");
-		//if(selection == 0) {
-			//tween.animate("x", 256);
-			//tween.animate("y", 192);
-		//} else {
-			//tween.animate("x", 512 + ship.width);
-		//}
-		//tween.onComplete = function() {
-			//callback();
-		//}
-		//Starling.juggler.add(tween);
-		//
-		//tween = new Tween(title, 1.5, "easeInOut");
-		//tween.animate("y", -100);
-		//Starling.juggler.add(tween);
-		//
-		//tween = new Tween(options, 1.5, "easeInOut");
-		//tween.animate("x", -options.width);
-		//Starling.juggler.add(tween);
 		var t = new Tween(this, transitionSpeed, Transitions.EASE_IN_OUT);
 		t.animate("x", 1000);
 		t.onComplete = callBack;
 		Starling.juggler.add(t);
-		//callback();
 	}
-	private function handleInput(event:KeyboardEvent){
-
-		if (event.keyCode == Keyboard.SPACE) {
-
-			if (selection == 0) {
-			// NewGame
-				var game = new Game(rootSprite);
-				game.start();
-				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
-				transitionOut(function() {
-			//Root.assets.removeSound("GrandpaTallTales");
-					this.removeFromParent();
-					this.dispose();
-				});
-			}
-			else if (selection == 1) {
-			// Credits
-				var credits = new Credits(rootSprite);
-				credits.start();
-				Starling.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
-				transitionOut(function() {
-			//Root.assets.removeSound("GrandpaTallTales");
-					this.removeFromParent();
-					this.dispose();
-				});
-			}
+	
+	private function up(action:ControlAction) {
+		
+		if (tween == null || tween.isComplete) {
+			tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
+			tween.animate("fontSize", 24);
+			Starling.juggler.add(tween);
+			selection = arithMod(--selection, buttons.length);
+			tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
+			tween.animate("fontSize", 40);
+			Starling.juggler.add(tween);
 		}
-		else if (tween == null || tween.isComplete)
-		{
-			// Only allow moving if the current tween does not exist.
-			if (event.keyCode == Keyboard.UP) {
-
-				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
-				tween.animate("fontSize", 24);
-				Starling.juggler.add(tween);
-				selection = arithMod(--selection, buttons.length);
-				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
-				tween.animate("fontSize", 40);
-				Starling.juggler.add(tween);
-			}
-			else if (event.keyCode == Keyboard.DOWN) {
-
-				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
-				tween.animate("fontSize", 24);
-				Starling.juggler.add(tween);
-				selection = arithMod(++selection, buttons.length);
-				tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
-				tween.animate("fontSize", 40);
-				Starling.juggler.add(tween);
-			}
+	}
+	private function down(action:ControlAction) {
+		
+		if (tween == null || tween.isComplete) {
+			tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
+			tween.animate("fontSize", 24);
+			Starling.juggler.add(tween);
+			selection = arithMod(++selection, buttons.length);
+			tween = new Tween(this.buttons[selection], rotateSpeed, Transitions.EASE_IN_OUT);
+			tween.animate("fontSize", 40);
+			Starling.juggler.add(tween);
+		}
+	}
+	private function space(action:ControlAction) {
+		if (selection == 0) {
+			// NewGame
+			var game = new Game(rootSprite);
+			game.start();
+			this.stop();
+		}
+		else if (selection == 1) {
+			// Credits
+			var credits = new Credits(rootSprite);
+			credits.start();
+			this.stop();
 		}
 	}
 

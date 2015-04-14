@@ -1,3 +1,4 @@
+import menus.MenuState;
 import starling.display.Sprite;
 import starling.display.Image;
 import starling.core.Starling;
@@ -24,26 +25,18 @@ import haxe.io.Eof;
 import haxe.Timer;
 import game.World;
 
-class Game extends Sprite
+class Game extends MenuState
 {
 	
-	var rootSprite:Sprite;
 	var bg:Image;
 	var transitionSpeed = 0.5;
 	var world:World;
-
-	public function new(root:Sprite) {
-		super();
-		this.rootSprite = root;
-	}
 	
-	public function start() {
+	public override function init() {
 		
 		var stage = Starling.current.stage;
 		var stageWidth:Float = Starling.current.stage.stageWidth;
 		var stageHeight:Float = Starling.current.stage.stageHeight;
-
-		addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
 		//map = new Tilemap(Root.assets, "map");
 		//map.scaleX = .3;
@@ -60,7 +53,18 @@ class Game extends Sprite
 		//bg.smoothing = "none";
 
 		//this.addChild(bg);
+		
+		this.world = new World(this);
 		stage.addChild(world);
+	}
+	
+	public override function deinit() { }
+	
+	public override function awake() {
+		addEventListener(Event.ENTER_FRAME, onEnterFrame);
+	}
+	public override function sleep() {
+		removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
 	
 	public function cleanup() {
@@ -73,7 +77,7 @@ class Game extends Sprite
 
 
 
-	private function transitionOut(?callBack:Void->Void) {
+	private override function transitionOut(?callBack:Void->Void) {
 
 		var t = new Tween(this, transitionSpeed, Transitions.EASE_IN_OUT);
 		t.animate("alpha", 0);
