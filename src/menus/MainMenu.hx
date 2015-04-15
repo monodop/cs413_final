@@ -80,7 +80,7 @@ class MainMenu extends MenuState
 		t.animate("scaleY", 1);
 		t.animate("bgcolor", 0);
 		t.onUpdate = function() {
-			Starling.current.stage.color = this.bgcolor | this.bgcolor << 8 | this.bgcolor << 16;
+			//Starling.current.stage.color = this.bgcolor | this.bgcolor << 8 | this.bgcolor << 16;
 		};
 		t.onComplete = callBack;
 		Starling.juggler.add(t);

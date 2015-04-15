@@ -2,6 +2,8 @@ package game;
 
 import colliders.*;
 import flash.geom.Rectangle;
+import game.objects.BaseObject;
+import game.objects.Player;
 import menus.MenuState;
 import menus.QuadTreeVis;
 import movable.*;
@@ -17,7 +19,7 @@ class World extends Sprite {
 	
 	public var tileSize:Float = 32;
 	private var tilemap:Tilemap;
-	private var player:Image;
+	private var player:Player;
 	private var camera:Camera;
 	
 	private var quadvis:QuadTreeVis;
@@ -30,8 +32,8 @@ class World extends Sprite {
 		
 		// Rescale the world and initiate the menu state
 		this.menustate = menustate;
-		this.scaleX = tileSize;
-		this.scaleY = tileSize;
+		this.scaleX = tileSize * 0.5;
+		this.scaleY = tileSize * 0.5;
 		
 		// Setup the camera tracking class
 		camera = new Camera(new Rectangle( -0.5, -0.5, 100, 100));
@@ -42,37 +44,36 @@ class World extends Sprite {
 		
 		// Prepare the collision matrix
 		collisionMatrix = new CollisionMatrix();
-		//collisionMatrix.registerLayer("map");
-		//collisionMatrix.registerLayer("ship");
-		//collisionMatrix.registerLayer("projectile");
-		//collisionMatrix.enableCollisions("map", ["ship", "projectile"]);
-		//collisionMatrix.enableCollisions("ship", ["projectile"]);
+		collisionMatrix.registerLayer("map");
+		collisionMatrix.registerLayer("player");
+		collisionMatrix.enableCollisions("map", ["player"]);
 		
 		// Prepare the tilemap
 		tilemap = new Tilemap(Root.assets, "map");
-		tilemap.scaleX = .3;
-		tilemap.scaleY = .3;
+		tilemap.scaleX = 1.0 / tileSize;
+		tilemap.scaleY = 1.0 / tileSize;
 		addChild(tilemap);
 
-		player = new Image(Root.assets.getTexture("Player"));
-		player.smoothing = "none";
-		player.x = 40;
-		player.y = 70;
-		addChild(player);
+		player = new Player();
+		player.x = 7;
+		player.y = 12;
+		player.scaleX = 1 / tileSize;
+		player.scaleY = 1 / tileSize;
+		addObject(player);
 	}
 	
-	//public function addMovable(obj:SimpleMovable) {
-		//addChild(obj);
-		//for (collider in obj.getColliders()) {
-			//this.quadTree.insert(collider);
-		//}
-	//}
-	//public function removeMovable(obj:SimpleMovable) {
-		//for (collider in obj.getColliders()) {
-			//collider.quadTree.remove(collider, true);
-		//}
-		//removeChild(obj);
-	//}
+	public function addObject(obj:BaseObject) {
+		addChild(obj);
+		for (collider in obj.getColliders()) {
+			this.quadTree.insert(collider);
+		}
+	}
+	public function removeObject(obj:BaseObject) {
+		for (collider in obj.getColliders()) {
+			collider.quadTree.remove(collider, true);
+		}
+		removeChild(obj);
+	}
 	
 	public function update(event:EnterFrameEvent) {
 		//var mouse = Root.controls.getMousePos();
