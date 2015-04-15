@@ -76,6 +76,7 @@ class World extends Sprite {
 	}
 	
 	public function update(event:EnterFrameEvent) {
+		player.update(event);
 		//var mouse = Root.controls.getMousePos();
 
 		// Control the ship's break

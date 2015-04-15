@@ -15,9 +15,9 @@ class Game extends MenuState
 	var transitionSpeed = 0.5;
 	var world:World;
 	
-	public override function init() {
+	override function init() {
+		rootSprite.addChild(this);
 		
-		var stage = Starling.current.stage;
 		var stageWidth:Float = Starling.current.stage.stageWidth;
 		var stageHeight:Float = Starling.current.stage.stageHeight;
 
@@ -38,24 +38,22 @@ class Game extends MenuState
 		//this.addChild(bg);
 		
 		this.world = new World(this);
-		stage.addChild(world);
+		this.addChild(world);
 	}
 	
-	public override function deinit() { }
+	override function deinit() { }
 	
-	public override function awake() {
-		addEventListener(Event.ENTER_FRAME, onEnterFrame);
+	override function awake() {
+		this.addEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
+		world.awake();
 	}
-	public override function sleep() {
-		removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-	}
-	
-	public function cleanup() {
-
+	override function sleep() {
+		removeEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
+		world.sleep();
 	}
 	
-	function onEnterFrame(event:EnterFrameEvent) {
-
+	function enterFrame(event:EnterFrameEvent) {
+		world.update(event);
 	}
 
 
@@ -68,15 +66,4 @@ class Game extends MenuState
 		Starling.juggler.add(t);
 
 	}
-}
-
-enum FieldState {
-	TEXT;
-	CORRECTION_TRANSITION;
-	CORRECTIONS;
-	NO_ERROR_RESPONSE;
-	ERROR_CORRECT_RESPONSE;
-	ERROR_INCORRECT_RESPONSE;
-	INTRO;
-	OUTRO;
 }

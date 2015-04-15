@@ -4,15 +4,33 @@ import colliders.CollisionInformation;
 import colliders.HasCollider;
 import colliders.Quadtree;
 import starling.display.Sprite;
+import starling.events.EnterFrameEvent;
 
 class BaseObject extends Sprite implements HasCollider
 {
+	
+	public var velX:Float = 0.0;
+	public var velY:Float = 0.0;
 
 	public function new() 
 	{
 		super();
 	}
 	
+	public function awake() {
+		
+	}
+	
+	public function sleep() {
+		
+	}
+	
+	public function update(event:EnterFrameEvent) {
+		
+	}
+	
+	
+	// HasCollider required methods
 	public function getColliders():Array<Collider> {
 		return [];
 	}
