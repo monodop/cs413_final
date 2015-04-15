@@ -1,10 +1,18 @@
 package game;
 
+import colliders.BoxCollider;
+import colliders.Collider;
+import colliders.CollisionInformation;
+import colliders.HasCollider;
+import colliders.PolygonCollider;
+import game.objects.BaseObject;
+import game.Tilemap.ObjectLayer;
 import haxe.xml.Fast;
 import flash.utils.ByteArray;
 import starling.display.Image;
 import starling.display.Sprite;
 import starling.utils.AssetManager;
+import utility.Point;
 
 enum Orientation {
   Orthogonal;
@@ -31,6 +39,19 @@ class Tile {
   }
 }
 
+class Object {
+  public var id:Int;
+  public var width:Int;
+  public var height:Int;
+  public var x:Int;
+  public var y:Int;
+  public var points:Array<Point>;
+  // properties
+
+  public function new() {
+  }
+}
+
 class Layer {
   public var name:String;
   public var data:Array<Array<Tile>>;
@@ -42,7 +63,17 @@ class Layer {
   }
 }
 
-class Tilemap extends Sprite {
+class ObjectLayer {
+  public var name:String;
+  public var data:Array<Object>;
+  // properties
+
+  public function new() {
+    data = new Array<Object>();
+  }
+}
+
+class Tilemap extends BaseObject implements HasCollider {
 
   public var mapWidth(default, null):Int;
   public var mapHeight(default, null):Int;
@@ -52,10 +83,13 @@ class Tilemap extends Sprite {
   public var renderOrder(default, null):RenderOrder;
   public var tiles:Array<Tile>;
   public var layers:Array<Layer>;
+  public var objectLayers:Array<ObjectLayer>;
   public var _assets:AssetManager;
+  
+  private var colliders:Array<Collider>;
 
-  public function new(assets:AssetManager, xml:String) {
-    super();
+  public function new(world:World, assets:AssetManager, xml:String) {
+    super(world);
     _assets = assets;
 
     var xml = Xml.parse(haxe.Resource.getString(xml));
@@ -138,6 +172,33 @@ class Tilemap extends Sprite {
       }
       layers.push(t);
     }
+	
+	objectLayers = new Array<ObjectLayer>();
+	for (layer in source.nodes.objectgroup) {
+		var ol = new ObjectLayer();
+		ol.name = layer.att.name;
+		for ( object in layer.nodes.object ) {
+			var o = new Object();
+			o.id = Std.parseInt(object.att.id);
+			o.x = Std.parseInt(object.att.x);
+			o.y = Std.parseInt(object.att.y);
+			if (object.hasNode.polygon) {
+				o.points = new Array<Point>();
+				var pointsStr:String = object.nodes.polygon.first().att.points;
+				var pointsArr = pointsStr.split(" ");
+				var i:Int;
+				for (pt in pointsArr) {
+					i = pt.indexOf(",");
+					o.points.push(new Point(Std.parseInt(pt.substr(0, i)), Std.parseInt(pt.substr(i))));
+				}
+			} else {
+				o.width = Std.parseInt(object.att.width);
+				o.height = Std.parseInt(object.att.height);
+			}
+			ol.data.push(o);
+		}
+		objectLayers.push(ol);
+	}
 
 	//var i:Int = 0;
     for (layer in layers) {
@@ -199,7 +260,30 @@ class Tilemap extends Sprite {
 	//}
 	//i += 1;
     }
+	
+	this.colliders = new Array<Collider>();
+	for (layer in objectLayers) {
+		if (layer.name.indexOf("_Collisions") >= 0) {
+			for ( object in layer.data) {
+				if (object.points != null) {
+					var collider = new PolygonCollider(this, ["map"], object.points);
+					collider.x = object.x;
+					collider.y = object.y;
+					this.addChild(collider);
+					this.colliders.push(collider);
+				} else {
+					var collider = new BoxCollider(this, ["map"], object.width, object.height, new Point(object.width / 2.0, object.height / 2.0));
+					collider.x = object.x;
+					collider.y = object.y;
+					this.addChild(collider);
+					this.colliders.push(collider);
+				}
+			}
+		}
+	}
 
   }
+  
+  public override function getColliders():Array<Collider> { return this.colliders; }
 
 }

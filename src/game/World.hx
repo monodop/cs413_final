@@ -7,9 +7,12 @@ import game.objects.Player;
 import menus.MenuState;
 import menus.QuadTreeVis;
 import movable.*;
+import starling.core.Starling;
 import starling.display.Image;
 import starling.display.Sprite;
 import starling.events.EnterFrameEvent;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
 import utility.ControlManager.ControlAction;
 import utility.Point;
 
@@ -20,7 +23,7 @@ class World extends Sprite {
 	public var tileSize:Float = 32;
 	private var tilemap:Tilemap;
 	private var player:Player;
-	private var camera:Camera;
+	public var camera:Camera;
 	
 	private var quadvis:QuadTreeVis;
 	
@@ -32,6 +35,8 @@ class World extends Sprite {
 		
 		// Rescale the world and initiate the menu state
 		this.menustate = menustate;
+		this.x = Starling.current.stage.stageWidth / 2.0;
+		this.y = Starling.current.stage.stageHeight / 2.0;
 		this.scaleX = tileSize * 0.5;
 		this.scaleY = tileSize * 0.5;
 		
@@ -49,17 +54,22 @@ class World extends Sprite {
 		collisionMatrix.enableCollisions("map", ["player"]);
 		
 		// Prepare the tilemap
-		tilemap = new Tilemap(Root.assets, "map");
+		tilemap = new Tilemap(this, Root.assets, "map");
 		tilemap.scaleX = 1.0 / tileSize;
 		tilemap.scaleY = 1.0 / tileSize;
-		addChild(tilemap);
+		addObject(tilemap);
 
-		player = new Player();
+		player = new Player(this);
 		player.x = 7;
-		player.y = 12;
+		player.y = 10;
 		player.scaleX = 1 / tileSize;
 		player.scaleY = 1 / tileSize;
 		addObject(player);
+		
+		this.pivotX = player.x;
+		this.pivotY = player.y;
+		this.camera.x = player.x;
+		this.camera.y = player.y;
 	}
 	
 	public function addObject(obj:BaseObject) {
@@ -91,8 +101,8 @@ class World extends Sprite {
 		
 		
 		// Update the camera object
-		//camera.moveTowards(playerShip.x, playerShip.y);
-		//camera.applyCamera(this);
+		camera.moveTowards(player.x, player.y);
+		camera.applyCamera(this);
 		
 		// Update the tilemap
 		//tilemap.update(event, camera);
@@ -100,10 +110,13 @@ class World extends Sprite {
 	
 	public function awake() {
 		Root.controls.hook("quadtreevis", "quadTreeVis", quadTreeVis);
+		Starling.current.stage.addEventListener(TouchEvent.TOUCH, touch);
+		player.awake();
 	}
 	
 	public function sleep() {
 		Root.controls.unhook("quadtreevis", "quadTreeVis");
+		player.sleep();
 	}
 	
 	public function gameOver() {
@@ -113,6 +126,15 @@ class World extends Sprite {
 		//
 		//menustate.pause();
 		
+	}
+	
+	function touch(event:TouchEvent) {
+		var p = event.getTouch(Starling.current.stage, TouchPhase.BEGAN, -1);
+		if (p != null) {
+			player.setPos(p.getLocation(this).x, p.getLocation(this).y);
+			player.velX = 0;
+			player.velY = 0;
+		}
 	}
 	
 	// Pass a collider of something you want to test the collision of (the player's ship for example).

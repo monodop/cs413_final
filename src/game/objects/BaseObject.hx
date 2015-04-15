@@ -3,6 +3,7 @@ import colliders.Collider;
 import colliders.CollisionInformation;
 import colliders.HasCollider;
 import colliders.Quadtree;
+import game.World;
 import starling.display.Sprite;
 import starling.events.EnterFrameEvent;
 
@@ -11,9 +12,11 @@ class BaseObject extends Sprite implements HasCollider
 	
 	public var velX:Float = 0.0;
 	public var velY:Float = 0.0;
+	private var world:World;
 
-	public function new() 
+	public function new(world:World) 
 	{
+		this.world = world;
 		super();
 	}
 	
