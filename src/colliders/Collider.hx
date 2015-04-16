@@ -135,6 +135,10 @@ class Collider extends Sprite
 		}
 	}
 	
+	public function containsPoint(pt:Point, ?space:DisplayObject) {
+		return false;
+	}
+	
 	// Gets the rectangular bounds around this collider in the target space.
 	public override function getBounds(targetSpace:DisplayObject, ?resultRect:Rectangle):Rectangle {
 		

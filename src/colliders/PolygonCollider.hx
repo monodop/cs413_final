@@ -425,6 +425,14 @@ class PolygonCollider extends Collider
 		return this.points.length;
 	}
 	
+	public override function containsPoint(pt:Point, ?space:DisplayObject = null) {
+		
+		var src = Point.fromPoint(getTransformationMatrix(space).transformPoint(this.getCenter().toGeom()));
+		
+		return rayCast(src, pt.sub(src), space) == null;
+		
+	}
+	
 	public override function updateQuadtree() {
 		if (this.quadTree != null) {
 			boundsCache = null;

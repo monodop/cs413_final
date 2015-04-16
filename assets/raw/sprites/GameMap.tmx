@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="20" tilewidth="16" tileheight="16" nextobjectid="25">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="20" tilewidth="16" tileheight="16" nextobjectid="38">
  <tileset firstgid="1" name="Snow" tilewidth="192" tileheight="240">
   <tile id="0">
    <image width="16" height="16" source="world/IcyPlatform_01.png"/>
@@ -18,6 +18,7 @@
   </tile>
   <tile id="5">
    <image width="192" height="240" source="world/SnowTree_01.png"/>
+   <objectgroup draworder="index"/>
   </tile>
  </tileset>
  <layer name="Background" width="60" height="20">
@@ -2433,23 +2434,32 @@
   <object id="2" x="576" y="144" width="144" height="16"/>
   <object id="3" x="96" y="256" width="128" height="16"/>
   <object id="4" x="0" y="304" width="960" height="16"/>
-  <object id="19" x="776.125" y="174">
-   <polygon points="0,0 31.75,0 34.625,2.875 42.125,13.375 -4.125,4.375"/>
+  <object id="28" x="772.091" y="178.182">
+   <polygon points="0,0 4.09091,-4.18182 35.6364,-4.09091 38,-1.18182 37.8182,7.72727 4.09091,4.63636"/>
   </object>
-  <object id="20" x="810.957" y="177">
-   <polygon points="0,0 15,0.0434783 20.0435,3.04348 20.0435,4.91304 14,10.9565 10.0435,10.9565"/>
+  <object id="29" x="809.822" y="177.022">
+   <polygon points="0,0 18.9903,-0.0222222 11.9903,16.1028 0.115278,8.91528"/>
   </object>
-  <object id="21" x="827.739" y="177.913">
-   <polygon points="0,0 8.21739,-8.82609 19.2174,-8.82609 25.3913,-2.95652 32.3478,1.04348"/>
+  <object id="30" x="828.594" y="177.031">
+   <polygon points="0,0 7.44973,-7.94429 18.3193,-7.98777 24.6236,-1.98777 24.7106,6.53397 -3.11549,6.96875"/>
   </object>
-  <object id="22" x="853.609" y="175.043">
-   <polygon points="0,0 9.47826,-0.130435 11.4348,6.69565"/>
+  <object id="31" x="852.812" y="175.031">
+   <polygon points="0,0 10.3125,-0.0625 11.125,7.875 2.3125,13.875 0.03125,8.34375"/>
   </object>
-  <object id="23" x="863.13" y="174.739">
-   <polygon points="0,0 13.9565,-10.8696 17.8696,-10.7391 18.087,-4.86957 2,6.95652"/>
+  <object id="32" x="862.826" y="175">
+   <polygon points="0,0 6.17391,-5.86957 14.2609,-11 18.1739,-11 18.087,-6.26087 13.0435,-1 0.826087,8.08696"/>
   </object>
-  <object id="24" x="880.875" y="161">
-   <polygon points="0,0 48.1875,1.0625 50.125,6.875 0.375,8.875"/>
+  <object id="33" x="880.957" y="161.043">
+   <polygon points="0,0 16,-1 32,-0.956522 31.9565,6.91304 0.0434783,8.91304"/>
+  </object>
+  <object id="34" x="912.739" y="161.957">
+   <polygon points="0,0 16.3478,0.0869565 18.2174,6 16.087,8.08696 0.0869565,9"/>
+  </object>
+  <object id="36" x="224" y="208">
+   <polygon points="0,0 0,-16 -16,-32 -96,-32 -112,-16 -112,0"/>
+  </object>
+  <object id="37" x="112" y="192">
+   <polygon points="0,0 -48,0 -48,16 0,16"/>
   </object>
  </objectgroup>
 </map>

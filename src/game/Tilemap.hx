@@ -189,7 +189,7 @@ class Tilemap extends BaseObject implements HasCollider {
 				var i:Int;
 				for (pt in pointsArr) {
 					i = pt.indexOf(",");
-					o.points.push(new Point(Std.parseFloat(pt.substr(0, i)), Std.parseFloat(pt.substr(i))));
+					o.points.push(new Point(Std.parseFloat(pt.substr(0, i)), Std.parseFloat(pt.substr(i+1))));
 				}
 			} else {
 				o.width = Std.parseFloat(object.att.width);

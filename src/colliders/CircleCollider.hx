@@ -1,4 +1,5 @@
 package colliders;
+import starling.display.DisplayObject;
 import starling.display.Image;
 import utility.Point;
 
@@ -17,6 +18,10 @@ class CircleCollider extends Collider
 	
 	public override function getInnerRadius():Float {
 		return this.inner_radius;
+	}
+	
+	public override function containsPoint(pt:Point, ?space:DisplayObject) {
+		return pt.distanceSqr(this.center) <= this.radius * this.radius;
 	}
 	
 }
