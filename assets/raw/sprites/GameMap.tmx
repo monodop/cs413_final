@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="20" tilewidth="16" tileheight="16" nextobjectid="5">
- <tileset firstgid="1" name="Snow" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="20" tilewidth="16" tileheight="16" nextobjectid="25">
+ <tileset firstgid="1" name="Snow" tilewidth="192" tileheight="240">
   <tile id="0">
    <image width="16" height="16" source="world/IcyPlatform_01.png"/>
   </tile>
@@ -15,6 +15,9 @@
   </tile>
   <tile id="4">
    <image width="16" height="16" source="world/IcyPlatformEdge_right.png"/>
+  </tile>
+  <tile id="5">
+   <image width="192" height="240" source="world/SnowTree_01.png"/>
   </tile>
  </tileset>
  <layer name="Background" width="60" height="20">
@@ -2350,7 +2353,7 @@
    <tile gid="2"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="6"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -2430,5 +2433,24 @@
   <object id="2" x="576" y="144" width="144" height="16"/>
   <object id="3" x="96" y="256" width="128" height="16"/>
   <object id="4" x="0" y="304" width="960" height="16"/>
+  <object id="14" x="792.375" y="185.625" height="0.125"/>
+  <object id="19" x="776.125" y="174">
+   <polygon points="0,0 31.75,0 34.625,2.875 42.125,13.375 -4.125,4.375"/>
+  </object>
+  <object id="20" x="810.957" y="177">
+   <polygon points="0,0 15,0.0434783 20.0435,3.04348 20.0435,4.91304 14,10.9565 10.0435,10.9565"/>
+  </object>
+  <object id="21" x="827.739" y="177.913">
+   <polygon points="0,0 8.21739,-8.82609 19.2174,-8.82609 25.3913,-2.95652 32.3478,1.04348"/>
+  </object>
+  <object id="22" x="853.609" y="175.043">
+   <polygon points="0,0 9.47826,-0.130435 11.4348,6.69565"/>
+  </object>
+  <object id="23" x="863.13" y="174.739">
+   <polygon points="0,0 13.9565,-10.8696 17.8696,-10.7391 18.087,-4.86957 2,6.95652"/>
+  </object>
+  <object id="24" x="880.875" y="161">
+   <polygon points="0,0 48.1875,1.0625 50.125,6.875 0.375,8.875"/>
+  </object>
  </objectgroup>
 </map>
