@@ -24,7 +24,7 @@ class Player extends BaseObject
 		this.pivotX = 0;
 		this.pivotY = -4;
 		
-		this.sprite = new MovieClip(Root.assets.getTextures("player/Player_Run"), 10);
+		this.sprite = new MovieClip(Root.assets.getTextures("player/Player_Walk"), 10);
 		this.sprite.pivotX = 32;
 		this.sprite.pivotY = 64;
 		this.sprite.smoothing = 'none';

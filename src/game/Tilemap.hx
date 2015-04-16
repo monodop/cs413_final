@@ -40,11 +40,11 @@ class Tile {
 }
 
 class Object {
-  public var id:Int;
-  public var width:Int;
-  public var height:Int;
-  public var x:Int;
-  public var y:Int;
+  public var id:Float;
+  public var width:Float;
+  public var height:Float;
+  public var x:Float;
+  public var y:Float;
   public var points:Array<Point>;
   // properties
 
@@ -180,8 +180,8 @@ class Tilemap extends BaseObject implements HasCollider {
 		for ( object in layer.nodes.object ) {
 			var o = new Object();
 			o.id = Std.parseInt(object.att.id);
-			o.x = Std.parseInt(object.att.x);
-			o.y = Std.parseInt(object.att.y);
+			o.x = Std.parseFloat(object.att.x);
+			o.y = Std.parseFloat(object.att.y);
 			if (object.hasNode.polygon) {
 				o.points = new Array<Point>();
 				var pointsStr:String = object.nodes.polygon.first().att.points;
@@ -189,11 +189,11 @@ class Tilemap extends BaseObject implements HasCollider {
 				var i:Int;
 				for (pt in pointsArr) {
 					i = pt.indexOf(",");
-					o.points.push(new Point(Std.parseInt(pt.substr(0, i)), Std.parseInt(pt.substr(i))));
+					o.points.push(new Point(Std.parseFloat(pt.substr(0, i)), Std.parseFloat(pt.substr(i))));
 				}
 			} else {
-				o.width = Std.parseInt(object.att.width);
-				o.height = Std.parseInt(object.att.height);
+				o.width = Std.parseFloat(object.att.width);
+				o.height = Std.parseFloat(object.att.height);
 			}
 			ol.data.push(o);
 		}
@@ -249,7 +249,7 @@ class Tilemap extends BaseObject implements HasCollider {
 			img.smoothing = "none";
             img.pivotY = img.height;
             img.x = _x*tileWidth;
-            img.y = _y*tileHeight + 32;
+            img.y = _y*tileHeight + 16;
             addChild(img);
           }
           _x += dy;

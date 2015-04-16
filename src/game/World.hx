@@ -20,7 +20,7 @@ class World extends Sprite {
 	
 	private var menustate:MenuState;
 	
-	public var tileSize:Float = 32;
+	public var tileSize:Float = 16;
 	private var tilemap:Tilemap;
 	private var player:Player;
 	public var camera:Camera;
@@ -37,15 +37,15 @@ class World extends Sprite {
 		this.menustate = menustate;
 		this.x = Starling.current.stage.stageWidth / 2.0;
 		this.y = Starling.current.stage.stageHeight / 2.0;
-		this.scaleX = tileSize * 0.5;
-		this.scaleY = tileSize * 0.5;
+		this.scaleX = tileSize;
+		this.scaleY = tileSize;
 		
 		// Setup the camera tracking class
 		camera = new Camera(new Rectangle( -0.5, -0.5, 100, 100));
 		this.addChild(camera);
 		
 		// Prepare the quadtree
-		quadTree = new Quadtree(this, new Rectangle( -0.5, -0.5, 100, 100));
+		quadTree = new Quadtree(this, new Rectangle( 0.0, 0.0, 100, 100));
 		
 		// Prepare the collision matrix
 		collisionMatrix = new CollisionMatrix();
@@ -62,8 +62,8 @@ class World extends Sprite {
 		player = new Player(this);
 		player.x = 7;
 		player.y = 10;
-		player.scaleX = 2 / tileSize;
-		player.scaleY = 2 / tileSize;
+		player.scaleX = 1 / tileSize;
+		player.scaleY = 1 / tileSize;
 		addObject(player);
 		
 		this.pivotX = player.x;
