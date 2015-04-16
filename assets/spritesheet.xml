@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:6d92f9c18141b80f0a70f60b77375dc7:b33fc873db5059b65df6fb7e090228be:ef7663426bf705b25566a93aef3a1571$ -->
+<!-- $TexturePacker:SmartUpdate:707f5cba4ee6d4e38a164436143bb8ec:b4a3c52c7535f105153ce33380807cf0:ef7663426bf705b25566a93aef3a1571$ -->
 <TextureAtlas imagePath="spritesheet.png">
-    <SubTexture name="greenpixel" x="3" y="235" width="1" height="1"/>
-    <SubTexture name="pixel" x="3" y="240" width="1" height="1"/>
-    <SubTexture name="player/Player" x="391" y="3" width="27" height="57" frameX="0" frameY="-7" frameWidth="32" frameHeight="64"/>
-    <SubTexture name="redpixel" x="3" y="245" width="1" height="1"/>
-    <SubTexture name="world/Sky_01" x="3" y="199" width="32" height="32"/>
-    <SubTexture name="world/SnowPlatform" x="3" y="3" width="384" height="192"/>
-    <SubTexture name="world/SnowPlatform_01" x="39" y="199" width="32" height="32"/>
-    <SubTexture name="world/SnowPlatform_02" x="75" y="199" width="32" height="32"/>
-    <SubTexture name="world/SnowPlatform_03" x="111" y="199" width="32" height="32"/>
-    <SubTexture name="yellowpixel" x="3" y="250" width="1" height="1"/>
+    <SubTexture name="greenpixel" x="391" y="1471" width="1" height="1"/>
+    <SubTexture name="pixel" x="391" y="1476" width="1" height="1"/>
+    <SubTexture name="player/Player" x="391" y="1353" width="27" height="57" frameX="0" frameY="-7" frameWidth="32" frameHeight="64"/>
+    <SubTexture name="player/Player_Run1" x="421" y="1414" width="41" height="52" frameX="-20" frameY="-11" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Run2" x="391" y="1414" width="26" height="53" frameX="-24" frameY="-9" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Run3" x="473" y="1291" width="18" height="48" frameX="-27" frameY="-12" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Run4" x="424" y="1291" width="23" height="51" frameX="-22" frameY="-9" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Run5" x="422" y="1353" width="39" height="52" frameX="-9" frameY="-11" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Run6" x="465" y="1346" width="25" height="50" frameX="-22" frameY="-13" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Run7" x="451" y="1291" width="18" height="51" frameX="-27" frameY="-12" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Run8" x="391" y="1291" width="29" height="58" frameX="-21" frameY="-5" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="redpixel" x="391" y="1481" width="1" height="1"/>
+    <SubTexture name="world/GrassBG_01" x="3" y="3" width="1920" height="640"/>
+    <SubTexture name="world/GrassPlatform_01" x="466" y="1400" width="32" height="32"/>
+    <SubTexture name="world/GrassPlatform_02" x="466" y="1436" width="32" height="32"/>
+    <SubTexture name="world/GrassPlatform_03" x="494" y="1343" width="32" height="32"/>
+    <SubTexture name="world/Sky_01" x="495" y="1291" width="32" height="32"/>
+    <SubTexture name="world/SnowBG_01" x="3" y="647" width="1920" height="640"/>
+    <SubTexture name="world/SnowPlatform" x="3" y="1291" width="384" height="192"/>
+    <SubTexture name="world/SnowPlatform_01" x="502" y="1379" width="32" height="32"/>
+    <SubTexture name="world/SnowPlatform_02" x="530" y="1327" width="32" height="32"/>
+    <SubTexture name="world/SnowPlatform_03" x="531" y="1291" width="32" height="32"/>
+    <SubTexture name="yellowpixel" x="396" y="1471" width="1" height="1"/>
 </TextureAtlas>

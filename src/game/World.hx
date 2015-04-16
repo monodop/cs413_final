@@ -62,8 +62,8 @@ class World extends Sprite {
 		player = new Player(this);
 		player.x = 7;
 		player.y = 10;
-		player.scaleX = 1 / tileSize;
-		player.scaleY = 1 / tileSize;
+		player.scaleX = 2 / tileSize;
+		player.scaleY = 2 / tileSize;
 		addObject(player);
 		
 		this.pivotX = player.x;

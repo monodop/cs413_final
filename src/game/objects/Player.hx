@@ -2,7 +2,9 @@ package game.objects;
 import colliders.BoxCollider;
 import colliders.Collider;
 import colliders.CollisionInformation;
+import starling.core.Starling;
 import starling.display.Image;
+import starling.display.MovieClip;
 import starling.events.EnterFrameEvent;
 import utility.ControlManager.ControlAction;
 import utility.Point;
@@ -10,7 +12,7 @@ import utility.Point;
 class Player extends BaseObject
 {
 
-	private var sprite:Image;
+	private var sprite:MovieClip;
 	private var collider:BoxCollider;
 	
 	
@@ -19,14 +21,16 @@ class Player extends BaseObject
 		
 		super(world);
 		
-		this.pivotX = 16;
-		this.pivotY = 64;
+		this.pivotX = 0;
+		this.pivotY = -4;
 		
-		this.sprite = new Image(Root.assets.getTexture("player/Player"));
+		this.sprite = new MovieClip(Root.assets.getTextures("player/Player_Run"), 10);
+		this.sprite.pivotX = 32;
+		this.sprite.pivotY = 64;
 		this.sprite.smoothing = 'none';
 		addChild(this.sprite);
 		
-		this.collider = new BoxCollider(this, ["player"], 32, 64, new Point(16, 32));
+		this.collider = new BoxCollider(this, ["player"], 32, 64, new Point(0, -32));
 		addChild(this.collider);
 		
 	}
@@ -45,12 +49,19 @@ class Player extends BaseObject
 	
 	public override function update(event:EnterFrameEvent) {
 		
+		this.sprite.advanceTime(event.passedTime);
+		
 		var left = Root.controls.isDown("left") ? -1 : 0;
 		var right = Root.controls.isDown("right") ? 1 : 0;
 		var up = Root.controls.isDown("up") ? -1 : 0;
 		var down = Root.controls.isDown("down");
 		
 		var hor = left + right;
+		
+		if (hor < 0)
+			this.scaleX = -(Math.abs(this.scaleX));
+		else if (hor > 0)
+			this.scaleX = Math.abs(this.scaleX);
 		
 		var newPosX = this.x + hor * event.passedTime * 7.5;
 		
