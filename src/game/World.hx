@@ -15,6 +15,7 @@ import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 import utility.ControlManager.ControlAction;
 import utility.Point;
+import starling.extensions.*;
 
 class World extends Sprite {
 	
@@ -29,6 +30,8 @@ class World extends Sprite {
 	
 	public var quadTree:Quadtree;
 	private var collisionMatrix:CollisionMatrix;
+    
+    public var ps:PDParticleSystem;
 	
 	public function new (menustate:MenuState) {
 		super();
@@ -70,6 +73,13 @@ class World extends Sprite {
 		this.pivotY = player.y;
 		this.camera.x = player.x;
 		this.camera.y = player.y;
+        
+        ps = new PDParticleSystem(Root.assets.getXml("snow_particle_config"), Root.assets.getTexture("snow_particle"));
+        ps.scaleX = 1/tileSize/2;
+        ps.scaleY = 1/tileSize/2;
+        this.addChild(ps);
+        Starling.juggler.add(ps);
+        ps.start();
 	}
 	
 	public function addObject(obj:BaseObject) {
@@ -106,6 +116,10 @@ class World extends Sprite {
 		
 		// Update the tilemap
 		//tilemap.update(event, camera);
+        
+        var camBounds = camera.getCameraBounds(this);
+        ps.emitterX = camera.x * tileSize;
+        ps.emitterY = camBounds.top * tileSize;
 	}
 	
 	public function awake() {
