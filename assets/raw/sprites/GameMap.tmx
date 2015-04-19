@@ -1251,11 +1251,5 @@
   <object id="34" x="912.739" y="161.957">
    <polygon points="0,0 16.3478,0.0869565 18.2174,6 16.087,8.08696 0.0869565,9"/>
   </object>
-  <object id="36" x="224" y="208">
-   <polygon points="0,0 0,-16 -16,-32 -96,-32 -112,-16 -112,0"/>
-  </object>
-  <object id="37" x="112" y="192">
-   <polygon points="0,0 -48,0 -48,16 0,16"/>
-  </object>
  </objectgroup>
 </map>
