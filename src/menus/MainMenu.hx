@@ -125,8 +125,8 @@ class MainMenu extends MenuState
 		}
 		else if (selection == 1) {
 			// Credits
-			//var credits = new Credits(rootSprite);
-			//credits.start();
+			var credits = new Credits(rootSprite);
+			credits.start();
 			this.stop();
 		}
 	}
