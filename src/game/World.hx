@@ -75,8 +75,8 @@ class World extends Sprite {
 		this.camera.y = player.y;
         
         ps = new PDParticleSystem(Root.assets.getXml("snow_particle_config"), Root.assets.getTexture("snow_particle"));
-        ps.scaleX = 1/tileSize/2;
-        ps.scaleY = 1/tileSize/2;
+        ps.scaleX = 1 / tileSize / 2;
+        ps.scaleY = 1 / tileSize / 2;
         this.addChild(ps);
         Starling.juggler.add(ps);
         ps.start();
@@ -118,7 +118,7 @@ class World extends Sprite {
 		//tilemap.update(event, camera);
         
         var camBounds = camera.getCameraBounds(this);
-        ps.emitterX = camera.x * tileSize;
+        ps.emitterX = camera.x * tileSize * 2;
         ps.emitterY = camBounds.top * tileSize;
 	}
 	
