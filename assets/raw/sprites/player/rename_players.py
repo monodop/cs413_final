@@ -12,10 +12,10 @@ replacements = {
 	3: "Player_Idle_",
 	11: "Player_Walk_",
 	13: "Player_Jump_",
-	14: "Player_Jump_Fast_",
-	15: "Player_Jump_Med_",
-	16: "Player_Jump_Slow_",
-	17: "Player_Jump_Peak_",
+	14: "Player_Air_Fast_",
+	15: "Player_Air_Med_",
+	16: "Player_Air_Slow_",
+	17: "Player_Air_Peak_",
 }
 
 i = 1

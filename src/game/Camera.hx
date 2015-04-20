@@ -54,9 +54,6 @@ class Camera extends Sprite
 		
 		object.pivotX = this.x;
 		object.pivotY = this.y;
-
-		object.pivotX += shakeX;
-		object.pivotY += shakeY;
 		
 		var b = getCameraBounds(object, 0);
 		var x = b.left + b.width / 2;
@@ -64,6 +61,9 @@ class Camera extends Sprite
 		
 		object.pivotX = x;
 		object.pivotY = y;
+
+		object.pivotX += shakeX;
+		object.pivotY += shakeY;
 		
 	}
 	

@@ -2,11 +2,14 @@ package game.objects;
 import colliders.BoxCollider;
 import colliders.Collider;
 import colliders.CollisionInformation;
+import flash.Vector;
+import haxe.ds.StringMap;
 import haxe.macro.Expr.Position;
 import starling.core.Starling;
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.events.EnterFrameEvent;
+import starling.textures.Texture;
 import utility.ControlManager.ControlAction;
 import utility.Point;
 import starling.extensions.*;
@@ -14,11 +17,16 @@ import starling.extensions.*;
 class Player extends BaseObject
 {
 
-	private var sprite:MovieClip;
+	private var sprite:MovieClipPlusPlus;
 	private var collider:BoxCollider;
 	private var grounded:Bool;
 	public var snowWalkPS:PDParticleSystem;
 	public var tileSize:Float = 16;
+	
+	private var jumpStart:Bool = false;
+	private var jumpEnd:Bool = false;
+	
+	private var doubleJumped:Bool = false;
 	
 	public function new(world:World) 
 	{
@@ -28,10 +36,25 @@ class Player extends BaseObject
 		this.pivotX = 0;
 		this.pivotY = -4;
 		
-		this.sprite = new MovieClip(Root.assets.getTextures("player/Player_Walk"), 10);
+		var animations = new StringMap<Vector<Texture>>();
+		animations.set("Walk", Root.assets.getTextures("player/Player_Walk_"));
+		animations.set("Idle", Root.assets.getTextures("player/Player_Idle_"));
+		animations.set("Jump", Root.assets.getTextures("player/Player_Jump_"));
+		animations.set("AirFast", Root.assets.getTextures("player/Player_Air_Fast_"));
+		animations.set("AirMed", Root.assets.getTextures("player/Player_Air_Med_"));
+		animations.set("AirSlow", Root.assets.getTextures("player/Player_Air_Slow_"));
+		animations.set("AirPeak", Root.assets.getTextures("player/Player_Air_Peak_"));
+		
+		this.sprite = new MovieClipPlusPlus(animations, 10);
 		this.sprite.pivotX = 32;
 		this.sprite.pivotY = 64;
 		this.sprite.smoothing = 'none';
+		
+		this.sprite.setAnimationDuration("Jump", 0.05);
+		this.sprite.setLoop("Walk");
+		this.sprite.setLoop("Idle");
+		this.sprite.changeAnimation("Walk");
+		
 		addChild(this.sprite);
 		
 		this.collider = new BoxCollider(this, ["player"], 32, 64, new Point(0, -32));
@@ -55,8 +78,15 @@ class Player extends BaseObject
 	}
 	
 	public function jump(action:ControlAction) {
-		if(action.isActive())
-			velY = -20;
+		if (action.isActive() && !jumpStart && (grounded || !doubleJumped) ) {
+			//velY = -20;
+			jumpStart = true;
+			sprite.changeAnimation("Jump");
+			
+			if (!grounded) {
+				doubleJumped = true;
+			}
+		}
 	}
 	
 	public override function update(event:EnterFrameEvent) {
@@ -84,6 +114,46 @@ class Player extends BaseObject
 			snowWalkPS.stop();
 		}
 		
+		if (grounded && !jumpStart && !jumpEnd) {
+			
+			if (hor == 0) {
+				if (sprite.getLastAnimation() != "Idle")
+					sprite.changeAnimation("Idle");
+			} else {
+				if (sprite.getLastAnimation() != "Walk")
+					sprite.changeAnimation("Walk");
+			}
+		
+		} else if (jumpStart) {
+			
+			if (!sprite.isPlaying) {
+				velY = -20;
+				jumpStart = false;
+				grounded = false;
+			}
+			
+		} else if (jumpEnd) {
+			
+			if (!sprite.isPlaying) {
+				jumpEnd = false;
+			}
+			
+		} else {
+			
+			var absVel = (this.velY);
+			
+			if (absVel < 5) {
+				sprite.changeAnimation("AirPeak");
+			} else if (absVel < 10) {
+				sprite.changeAnimation("AirSlow");
+			} else if (absVel < 14) {
+				sprite.changeAnimation("AirMed");
+			} else {
+				sprite.changeAnimation("AirFast");
+			}
+			
+		}
+		
 		var oldX = this.x;
 		var oldY = this.y;
 		
@@ -94,7 +164,14 @@ class Player extends BaseObject
 		if (velY >= 0 && dest != null && !ci[0].collider_src.containsPoint(new Point(dest.x, dest.y - 0.0001), world)) {
 			this.setPos(this.x, dest.y);
 			this.velY = 0;
+			if (!grounded) {
+				jumpEnd = true;
+				sprite.changeAnimation("Jump");
+				sprite.nextFrame();
+				sprite.play();
+			}
 			grounded = true;
+			doubleJumped = false;
 		}
 		else {
 			this.setPos(this.x, newPosY);
