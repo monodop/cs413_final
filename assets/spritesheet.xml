@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:2f5c7164ec98c078860830be1ddb2df3:ff82d7f222c25c179f19c3809edf0b2a:ef7663426bf705b25566a93aef3a1571$ -->
+<!-- $TexturePacker:SmartUpdate:83fd647de27093dfc7519529135e1860:25c724559d1ec085dff2bfc77014c288:ef7663426bf705b25566a93aef3a1571$ -->
 <TextureAtlas imagePath="spritesheet.png">
-    <SubTexture name="enemies/SnowMon_01" x="637" y="1291" width="30" height="39" frameX="-9" frameY="-24" frameWidth="48" frameHeight="64"/>
-    <SubTexture name="enemies/SnowMon_02" x="632" y="1399" width="29" height="36" frameX="-10" frameY="-27" frameWidth="48" frameHeight="64"/>
-    <SubTexture name="enemies/SnowMon_03" x="637" y="1291" width="30" height="39" frameX="-9" frameY="-21" frameWidth="48" frameHeight="64"/>
+    <SubTexture name="enemies/Golem_01" x="541" y="1389" width="77" height="93" frameX="-1" frameY="-2" frameWidth="80" frameHeight="96"/>
+    <SubTexture name="enemies/Golem_02" x="591" y="1291" width="77" height="94" frameX="-1" frameY="-1" frameWidth="80" frameHeight="96"/>
+    <SubTexture name="enemies/Golem_03" x="541" y="1389" width="77" height="93" frameX="-1" frameY="-2" frameWidth="80" frameHeight="96"/>
+    <SubTexture name="enemies/Golem_04" x="509" y="1291" width="78" height="94" frameX="0" frameY="-1" frameWidth="80" frameHeight="96"/>
+    <SubTexture name="enemies/SnowMon_01" x="731" y="1445" rotated="true" width="39" height="30" frameX="-9" frameY="-24" frameWidth="48" frameHeight="64"/>
+    <SubTexture name="enemies/SnowMon_02" x="672" y="1348" width="29" height="36" frameX="-10" frameY="-27" frameWidth="48" frameHeight="64"/>
+    <SubTexture name="enemies/SnowMon_03" x="731" y="1445" rotated="true" width="39" height="30" frameX="-9" frameY="-21" frameWidth="48" frameHeight="64"/>
     <SubTexture name="greenpixel" x="507" y="1481" width="1" height="1"/>
     <SubTexture name="icon" x="377" y="1291" width="128" height="128"/>
-    <SubTexture name="particles/snow_particle" x="651" y="1439" width="29" height="29" frameX="-1" frameY="-1" frameWidth="32" frameHeight="32"/>
-    <SubTexture name="particles/snow_walk_particle" x="651" y="1439" width="29" height="29" frameX="-1" frameY="-1" frameWidth="32" frameHeight="32"/>
+    <SubTexture name="particles/snow_particle" x="757" y="1399" width="29" height="29" frameX="-1" frameY="-1" frameWidth="32" frameHeight="32"/>
+    <SubTexture name="particles/snow_walk_particle" x="757" y="1399" width="29" height="29" frameX="-1" frameY="-1" frameWidth="32" frameHeight="32"/>
     <SubTexture name="pixel" x="512" y="1481" width="1" height="1"/>
     <SubTexture name="player/Player" x="229" y="1454" rotated="true" width="57" height="27" frameX="0" frameY="-7" frameWidth="32" frameHeight="64"/>
-    <SubTexture name="player/Player_Idle_001" x="507" y="1423" width="30" height="54" frameX="-23" frameY="-9" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Idle_002" x="541" y="1422" width="31" height="53" frameX="-23" frameY="-10" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Idle_003" x="537" y="1291" width="31" height="53" frameX="-23" frameY="-10" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Jump_001" x="604" y="1347" width="30" height="48" frameX="-23" frameY="-15" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Jump_002" x="347" y="1454" rotated="true" width="57" height="25" frameX="-24" frameY="-6" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Air_Fast_001" x="509" y="1357" width="46" height="61" frameX="-14" frameY="0" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Air_Fast_001" x="650" y="1389" width="46" height="61" frameX="-14" frameY="0" frameWidth="64" frameHeight="64"/>
     <SubTexture name="player/Player_Air_Med_001" x="408" y="1423" width="38" height="58" frameX="-21" frameY="-4" frameWidth="64" frameHeight="64"/>
     <SubTexture name="player/Player_Air_Peak_001" x="483" y="1423" width="20" height="55" frameX="-27" frameY="-7" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Air_Slow_001" x="509" y="1291" width="24" height="62" frameX="-27" frameY="0" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Walk_001" x="559" y="1348" width="41" height="52" frameX="-20" frameY="-11" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Air_Slow_001" x="622" y="1389" width="24" height="62" frameX="-27" frameY="0" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Idle_001" x="507" y="1423" width="30" height="54" frameX="-23" frameY="-9" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Idle_002" x="672" y="1291" width="31" height="53" frameX="-23" frameY="-10" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Idle_003" x="700" y="1388" width="31" height="53" frameX="-23" frameY="-10" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Jump_001" x="705" y="1348" rotated="true" width="48" height="30" frameX="-23" frameY="-15" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Jump_002" x="347" y="1454" rotated="true" width="57" height="25" frameX="-24" frameY="-6" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Walk_001" x="707" y="1291" width="41" height="52" frameX="-20" frameY="-11" frameWidth="64" frameHeight="64"/>
     <SubTexture name="player/Player_Walk_002" x="290" y="1454" rotated="true" width="53" height="26" frameX="-24" frameY="-9" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Walk_003" x="615" y="1291" width="18" height="48" frameX="-27" frameY="-12" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Walk_004" x="576" y="1404" width="23" height="51" frameX="-22" frameY="-9" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Walk_005" x="572" y="1291" width="39" height="52" frameX="-9" frameY="-11" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Walk_006" x="603" y="1404" width="25" height="50" frameX="-22" frameY="-13" frameWidth="64" frameHeight="64"/>
-    <SubTexture name="player/Player_Walk_007" x="576" y="1459" rotated="true" width="51" height="18" frameX="-27" frameY="-12" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Walk_003" x="757" y="1347" width="18" height="48" frameX="-27" frameY="-12" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Walk_004" x="676" y="1454" rotated="true" width="51" height="23" frameX="-22" frameY="-9" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Walk_005" x="752" y="1291" width="39" height="52" frameX="-9" frameY="-11" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Walk_006" x="622" y="1455" rotated="true" width="50" height="25" frameX="-22" frameY="-13" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="player/Player_Walk_007" x="735" y="1382" width="18" height="51" frameX="-27" frameY="-12" frameWidth="64" frameHeight="64"/>
     <SubTexture name="player/Player_Walk_008" x="450" y="1423" width="29" height="58" frameX="-21" frameY="-5" frameWidth="64" frameHeight="64"/>
     <SubTexture name="redpixel" x="517" y="1481" width="1" height="1"/>
     <SubTexture name="world/DirtBlock_01" x="377" y="1423" width="16" height="16"/>
-    <SubTexture name="world/FlowerBlock_01" x="631" y="1458" width="16" height="16"/>
-    <SubTexture name="world/FlowerBlock_02" x="638" y="1334" width="16" height="16"/>
+    <SubTexture name="world/FlowerBlock_01" x="509" y="1389" width="16" height="16"/>
+    <SubTexture name="world/FlowerBlock_02" x="779" y="1347" width="16" height="16"/>
     <SubTexture name="world/GrassBG_01" x="3" y="3" width="1920" height="640"/>
     <SubTexture name="world/GrassPlatformEdge_left" x="395" y="1443" rotated="true" width="9" height="6" frameX="-10" frameY="0" frameWidth="16" frameHeight="16"/>
     <SubTexture name="world/GrassPlatformEdge_right" x="397" y="1423" width="6" height="9" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
-    <SubTexture name="world/GrassPlatform_01" x="638" y="1354" width="16" height="16"/>
-    <SubTexture name="world/GrassPlatform_02" x="638" y="1374" width="16" height="16"/>
-    <SubTexture name="world/IcyBlock_01" x="658" y="1334" width="16" height="16"/>
+    <SubTexture name="world/GrassPlatform_01" x="779" y="1367" width="16" height="16"/>
+    <SubTexture name="world/GrassPlatform_02" x="774" y="1432" width="16" height="16"/>
+    <SubTexture name="world/IcyBlock_01" x="774" y="1452" width="16" height="16"/>
     <SubTexture name="world/IcyPlatformEdge_left" x="377" y="1443" rotated="true" width="5" height="7" frameX="-9" frameY="0" frameWidth="16" frameHeight="16"/>
     <SubTexture name="world/IcyPlatformEdge_right" x="386" y="1443" rotated="true" width="5" height="7" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
-    <SubTexture name="world/IcyPlatform_01" x="671" y="1291" width="16" height="16"/>
-    <SubTexture name="world/IcyPlatform_02" x="671" y="1311" width="16" height="16"/>
+    <SubTexture name="world/IcyPlatform_01" x="790" y="1387" width="16" height="16"/>
+    <SubTexture name="world/IcyPlatform_02" x="790" y="1407" width="16" height="16"/>
     <SubTexture name="world/SnowBG_01" x="3" y="647" width="1920" height="640"/>
     <SubTexture name="world/SnowTree_01" x="229" y="1291" rotated="true" width="144" height="159" frameX="-20" frameY="-96" frameWidth="192" frameHeight="240"/>
     <SubTexture name="world/Tree_01" x="3" y="1291" rotated="true" width="222" height="191" frameX="-1" frameY="-18" frameWidth="192" frameHeight="240"/>
-    <SubTexture name="world/chestBlock_1" x="658" y="1354" width="16" height="16"/>
-    <SubTexture name="world/chestBlock_2" x="658" y="1374" width="16" height="16"/>
-    <SubTexture name="world/chestBlock_3" x="665" y="1394" width="16" height="16"/>
-    <SubTexture name="world/chestBlock_4" x="665" y="1414" width="16" height="16"/>
+    <SubTexture name="world/chestBlock_1" x="795" y="1291" width="16" height="16"/>
+    <SubTexture name="world/chestBlock_2" x="795" y="1311" width="16" height="16"/>
+    <SubTexture name="world/chestBlock_3" x="799" y="1331" width="16" height="16"/>
+    <SubTexture name="world/chestBlock_4" x="799" y="1351" width="16" height="16"/>
     <SubTexture name="yellowpixel" x="522" y="1481" width="1" height="1"/>
 </TextureAtlas>
