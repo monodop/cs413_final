@@ -85,6 +85,7 @@ class World extends Sprite {
         Starling.juggler.add(snowPS);
         snowPS.start();
 	}
+
 	
 	public function addObject(obj:BaseObject) {
 		addChild(obj);
@@ -128,7 +129,8 @@ class World extends Sprite {
 	
 	public function awake() {
 		Root.controls.hook("quadtreevis", "quadTreeVis", quadTreeVis);
-		Starling.current.stage.addEventListener(TouchEvent.TOUCH, touch);
+		//Starling.current.stage.addEventListener(TouchEvent.TOUCH, touch);
+		Starling.current.stage.addEventListener(TouchEvent.TOUCH, screenShake);
 		player.awake();
 	}
 	
@@ -136,7 +138,15 @@ class World extends Sprite {
 		Root.controls.unhook("quadtreevis", "quadTreeVis");
 		player.sleep();
 	}
-	
+
+	public function screenShake(event:TouchEvent) {
+		var p = event.getTouch(Starling.current.stage, TouchPhase.BEGAN, -1);
+
+		if (p != null && p.isTouching != null) {
+			camera.shake(0, 0, 0.0);
+		}
+	}
+
 	public function gameOver() {
 		
 		//var menu = new GameOverMenu(menustate.rootSprite, this, menustate);
