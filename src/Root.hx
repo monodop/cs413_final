@@ -9,20 +9,20 @@ import utility.ControlManager;
 
 class Root extends Sprite {
 
-    public static var assets:AssetManager;
-    public var rootSprite:Sprite;
+	public static var assets:AssetManager;
+	public var rootSprite:Sprite;
 	public static var controls:ControlManager;
 
 	public static function init() {
 		
 	}
 	
-    public function new() {
-        rootSprite = this;
-        super();
-    }
+	public function new() {
+		rootSprite = this;
+		super();
+	}
 
-    public function start(startup:Startup) {
+	public function start(startup:Startup) {
 
 		controls = new ControlManager();
 		controls.registerAction("left", Keyboard.A);
@@ -45,23 +45,27 @@ class Root extends Sprite {
 		Starling.current.stage.addEventListener(KeyboardEvent.KEY_UP, controls.keyUp);
 		Starling.current.stage.addEventListener(TouchEvent.TOUCH, controls.touch);
 		
-        assets = new AssetManager();
+		Starling.current.showStats = true;
+		
+		assets = new AssetManager();
 		assets.enqueue("assets/spritesheet.png");
 		assets.enqueue("assets/spritesheet.xml");
-        assets.enqueue("assets/font/font.png");
-        assets.enqueue("assets/font/font.fnt");
-        assets.enqueue("assets/sample.png");
-        assets.enqueue("assets/particles/snow_particle.png");
-        assets.enqueue("assets/particles/snow_particle_config.pex");
+		assets.enqueue("assets/font/font.png");
+		assets.enqueue("assets/font/font.fnt");
+		assets.enqueue("assets/sample.png");
+		assets.enqueue("assets/particles/snow_particle.png");
+		assets.enqueue("assets/particles/snow_particle_config.pex");
+		assets.enqueue("assets/particles/snow_walk_particle.png");
+		assets.enqueue("assets/particles/snow_walk_particle_config.pex");
 
-        assets.loadQueue(function onProgress(ratio:Float) {
-            haxe.Log.clear();
-            if (ratio == 1) {
-                haxe.Log.clear();
-                startup.removeChild(startup.loadingBitmap);
-                var menu = new MainMenu(rootSprite);
-                menu.start();
-            }
-        });
-    }
+		assets.loadQueue(function onProgress(ratio:Float) {
+			haxe.Log.clear();
+			if (ratio == 1) {
+				haxe.Log.clear();
+				startup.removeChild(startup.loadingBitmap);
+				var menu = new MainMenu(rootSprite);
+				menu.start();
+			}
+		});
+	}
 }
