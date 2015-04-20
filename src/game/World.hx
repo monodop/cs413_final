@@ -75,7 +75,7 @@ class World extends Sprite {
 		this.camera.x = player.x;
 		this.camera.y = player.y;
 		
-		snowPS = new PDParticleSystem(Root.assets.getXml("snow_particle_config"), Root.assets.getTexture("snow_particle"));
+		snowPS = new PDParticleSystem(Root.assets.getXml("snow_particle_config"), Root.assets.getTexture("particles/snow_particle"));
 		snowPS.scaleX = 1 / tileSize / 2;
 		snowPS.scaleY = 1 / tileSize / 2;
 		//snowPS.startColor = ColorArgb.fromArgbToArgb(0xffff0000);

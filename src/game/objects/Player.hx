@@ -37,7 +37,7 @@ class Player extends BaseObject
 		this.collider = new BoxCollider(this, ["player"], 32, 64, new Point(0, -32));
 		addChild(this.collider);
 		
-		snowWalkPS = new PDParticleSystem(Root.assets.getXml("snow_walk_particle_config"), Root.assets.getTexture("snow_walk_particle"));
+		snowWalkPS = new PDParticleSystem(Root.assets.getXml("snow_walk_particle_config"), Root.assets.getTexture("particles/snow_walk_particle"));
 		snowWalkPS.emitterX = this.x * tileSize * 2;
 		snowWalkPS.emitterY = this.y * tileSize * 2;
 		snowWalkPS.scaleX = 1 / tileSize / 2;
