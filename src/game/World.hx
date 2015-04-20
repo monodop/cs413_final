@@ -31,8 +31,8 @@ class World extends Sprite {
 	
 	public var quadTree:Quadtree;
 	private var collisionMatrix:CollisionMatrix;
-    
-    public var snowPS:PDParticleSystem;
+	
+	public var snowPS:PDParticleSystem;
 	
 	public function new (menustate:MenuState) {
 		super();
@@ -74,16 +74,16 @@ class World extends Sprite {
 		this.pivotY = player.y;
 		this.camera.x = player.x;
 		this.camera.y = player.y;
-        
-        snowPS = new PDParticleSystem(Root.assets.getXml("snow_particle_config"), Root.assets.getTexture("snow_particle"));
-        snowPS.scaleX = 1 / tileSize / 2;
-        snowPS.scaleY = 1 / tileSize / 2;
-        //snowPS.startColor = ColorArgb.fromArgbToArgb(0xffff0000);
-        //snowPS.endColor = ColorArgb.fromArgbToArgb(0xff0000ff);
-        snowPS.lifespan = 32;
-        this.addChild(snowPS);
-        Starling.juggler.add(snowPS);
-        snowPS.start();
+		
+		snowPS = new PDParticleSystem(Root.assets.getXml("snow_particle_config"), Root.assets.getTexture("snow_particle"));
+		snowPS.scaleX = 1 / tileSize / 2;
+		snowPS.scaleY = 1 / tileSize / 2;
+		//snowPS.startColor = ColorArgb.fromArgbToArgb(0xffff0000);
+		//snowPS.endColor = ColorArgb.fromArgbToArgb(0xff0000ff);
+		snowPS.lifespan = 32;
+		this.addChild(snowPS);
+		Starling.juggler.add(snowPS);
+		snowPS.start();
 	}
 
 	
@@ -121,10 +121,10 @@ class World extends Sprite {
 		
 		// Update the tilemap
 		//tilemap.update(event, camera);
-        
-        var camBounds = camera.getCameraBounds(this);
-        snowPS.emitterX = camera.x * tileSize * 2;
-        snowPS.emitterY = camBounds.top * tileSize;
+		
+		var camBounds = camera.getCameraBounds(this);
+		snowPS.emitterX = camera.x * tileSize * 2;
+		snowPS.emitterY = camBounds.top * tileSize;
 	}
 	
 	public function awake() {
