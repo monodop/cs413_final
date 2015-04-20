@@ -22,8 +22,8 @@ game.swf: $(SOURCES)
 	-main Startup \
 	-swf game.swf \
 	-swf-lib vendor/starling_1_6.swc --macro "patchTypes('vendor/starling.patch')" \
-	-swf-lib vendor/pixelFilter.swc --macro "patchTypes('vendor/starling.patch')" \
-	-resource assets/GameMap.tmx@map \
+	-swf-lib vendor/particleSystem.swc --macro "patchTypes('vendor/starling.patch')" \
+	-resource assets/raw/sprites/GameMap.tmx@map \
 	-debug
 
 clean:
