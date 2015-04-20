@@ -1,8 +1,11 @@
 package game;
+
 import flash.geom.Rectangle;
 import starling.core.Starling;
 import starling.display.DisplayObject;
 import starling.display.Sprite;
+import starling.animation.Tween;
+import starling.animation.Transitions;
 import utility.Point;
 
 class Camera extends Sprite
@@ -10,14 +13,29 @@ class Camera extends Sprite
 
 	private var velocity:Point;
 	private var boundaries:Rectangle;
-	
+	private var shakeX:Float = 0.0;
+	private var shakeY:Float = 0.0;
+
+
 	public function new(boundaries:Rectangle) 
 	{
 		velocity = new Point();
 		this.boundaries = boundaries;
 		super();
 	}
-	
+
+	public function shake(dirX:Float, dirY:Float, magnitude:Float) {
+		shakeX = dirX * magnitude;
+		shakeY = dirY * magnitude;
+		var t = new Tween(this, 0.1, Transitions.LINEAR);
+
+		t.animate("shakeY", 0.3);
+		t.onComplete = function() { shakeY = 0.0; }
+		t.repeatCount = 4;
+
+		Starling.juggler.add(t);
+	}
+
 	public function moveTowards(x:Float, y:Float) {
 		
 		var pos = new Point(this.x, this.y);
@@ -31,11 +49,14 @@ class Camera extends Sprite
 		this.y += vector.y;
 		
 	}
-	
+
 	public function applyCamera(object:DisplayObject) {
 		
 		object.pivotX = this.x;
 		object.pivotY = this.y;
+
+		object.pivotX += shakeX;
+		object.pivotY += shakeY;
 		
 		var b = getCameraBounds(object, 0);
 		var x = b.left + b.width / 2;
