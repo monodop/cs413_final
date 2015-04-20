@@ -24,7 +24,7 @@ class World extends Sprite {
 	
 	public var tileSize:Float = 16;
 	private var tilemap:Tilemap;
-	private var player:Player;
+	public var player:Player;
 	public var camera:Camera;
 	
 	private var quadvis:QuadTreeVis;
@@ -32,9 +32,7 @@ class World extends Sprite {
 	public var quadTree:Quadtree;
 	private var collisionMatrix:CollisionMatrix;
 	
-	public var snowPS:PDParticleSystem;
-	
-	public function new (menustate:MenuState) {
+	public function new (menustate:MenuState, mapName:String) {
 		super();
 		
 		// Rescale the world and initiate the menu state
@@ -58,7 +56,7 @@ class World extends Sprite {
 		collisionMatrix.enableCollisions("map", ["player"]);
 		
 		// Prepare the tilemap
-		tilemap = new Tilemap(this, Root.assets, "map");
+		tilemap = new Tilemap(this, Root.assets, mapName);
 		tilemap.scaleX = 1.0 / tileSize;
 		tilemap.scaleY = 1.0 / tileSize;
 		addObject(tilemap);
@@ -74,16 +72,6 @@ class World extends Sprite {
 		this.pivotY = player.y;
 		this.camera.x = player.x;
 		this.camera.y = player.y;
-		
-		snowPS = new PDParticleSystem(Root.assets.getXml("snow_particle_config"), Root.assets.getTexture("particles/snow_particle"));
-		snowPS.scaleX = 1 / tileSize / 2;
-		snowPS.scaleY = 1 / tileSize / 2;
-		//snowPS.startColor = ColorArgb.fromArgbToArgb(0xffff0000);
-		//snowPS.endColor = ColorArgb.fromArgbToArgb(0xff0000ff);
-		snowPS.lifespan = 32;
-		this.addChild(snowPS);
-		Starling.juggler.add(snowPS);
-		snowPS.start();
 	}
 
 	
@@ -102,18 +90,6 @@ class World extends Sprite {
 	
 	public function update(event:EnterFrameEvent) {
 		player.update(event);
-		//var mouse = Root.controls.getMousePos();
-
-		// Control the ship's break
-		//if(Root.controls.isDown("break")){
-			//playerShip.stopMovement();
-		//}
-		
-		// Hold the ship's current speed
-		//if(Root.controls.isDown("hold")){
-			//playerShip.holdSpeed();
-		//}
-		
 		
 		// Update the camera object
 		camera.moveTowards(player.x, player.y);
@@ -121,21 +97,17 @@ class World extends Sprite {
 		
 		// Update the tilemap
 		//tilemap.update(event, camera);
-		
-		var camBounds = camera.getCameraBounds(this);
-		snowPS.emitterX = camera.x * tileSize * 2;
-		snowPS.emitterY = camBounds.top * tileSize;
 	}
 	
 	public function awake() {
 		Root.controls.hook("quadtreevis", "quadTreeVis", quadTreeVis);
-		//Starling.current.stage.addEventListener(TouchEvent.TOUCH, touch);
 		Starling.current.stage.addEventListener(TouchEvent.TOUCH, screenShake);
 		player.awake();
 	}
 	
 	public function sleep() {
 		Root.controls.unhook("quadtreevis", "quadTreeVis");
+		Starling.current.stage.removeEventListener(TouchEvent.TOUCH, screenShake);
 		player.sleep();
 	}
 

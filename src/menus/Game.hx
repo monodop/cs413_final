@@ -1,5 +1,8 @@
 package menus;
 
+import flash.display.SimpleButton;
+import game.SummerWorld;
+import game.WinterWorld;
 import game.World;
 import starling.animation.Transitions;
 import starling.animation.Tween;
@@ -7,13 +10,16 @@ import starling.core.Starling;
 import starling.display.Image;
 import starling.events.EnterFrameEvent;
 import starling.events.Event;
+import utility.ControlManager.ControlAction;
 
 class Game extends MenuState
 {
 	
 	var bg:Image;
 	var transitionSpeed = 0.5;
-	var world:World;
+	var winterWorld:WinterWorld;
+	var summerWorld:SummerWorld;
+	var activeWorld:World;
 	
 	override function init() {
 		rootSprite.addChild(this);
@@ -37,23 +43,55 @@ class Game extends MenuState
 
 		//this.addChild(bg);
 		
-		this.world = new World(this);
-		this.addChild(world);
+		this.winterWorld = new WinterWorld(this, "map");
+		this.addChild(winterWorld);
+		
+		this.summerWorld = new SummerWorld(this, "map2");
+		
+		this.activeWorld = this.winterWorld;
 	}
 	
 	override function deinit() { }
 	
 	override function awake() {
 		this.addEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
-		world.awake();
+		Root.controls.hook("debugWorldSwitch", "gameSwitchWorldDebug", switchWorld);
+		activeWorld.awake();
 	}
 	override function sleep() {
 		removeEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
-		world.sleep();
+		Root.controls.unhook("debugWorldSwitch", "gameSwitchWorldDebug");
+		activeWorld.sleep();
+	}
+	
+	function switchWorld(action:ControlAction) {
+		
+		if (action.isActive()) {
+			
+			var playerX = activeWorld.player.x;
+			var playerY = activeWorld.player.y;
+			
+			this.activeWorld.sleep();
+			this.removeChild(activeWorld);
+			if (this.activeWorld == summerWorld) {
+				this.activeWorld = winterWorld;
+			} else {
+				this.activeWorld = summerWorld;
+			}
+			this.addChild(activeWorld);
+			activeWorld.player.x = playerX;
+			activeWorld.player.y = playerY;
+			activeWorld.camera.x = playerX;
+			activeWorld.camera.y = playerY;
+			
+			this.activeWorld.awake();
+			
+		}
+		
 	}
 	
 	function enterFrame(event:EnterFrameEvent) {
-		world.update(event);
+		activeWorld.update(event);
 	}
 
 
