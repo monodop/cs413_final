@@ -1,4 +1,4 @@
-FLEX_SDK = /c/flexsdk
+FLEX_SDK = C:\Program Files (x86)\Apache Flex\flexsdk
 ADL = $(FLEX_SDK)/bin/adl
 AMXMLC = $(FLEX_SDK)/bin/amxmlc
 SOURCES = src/*.hx assets/loadingimage.png
@@ -30,7 +30,7 @@ game.swf: $(SOURCES)
 	
 
 clean:
-	rm -rf game.swf *~ src/*~
+	del game.swf 
 
 
 test: game.swf
