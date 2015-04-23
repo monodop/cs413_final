@@ -54,9 +54,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/font/font.png");
 		assets.enqueue("assets/font/font.fnt");
 		assets.enqueue("assets/sample.png");
-		assets.enqueue("assets/particles/snow_particle.png");
 		assets.enqueue("assets/particles/snow_particle_config.pex");
-		assets.enqueue("assets/particles/snow_walk_particle.png");
 		assets.enqueue("assets/particles/snow_walk_particle_config.pex");
 
 		assets.loadQueue(function onProgress(ratio:Float) {
