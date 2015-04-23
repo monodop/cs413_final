@@ -2,6 +2,7 @@ package game;
 
 import menus.MenuState;
 import starling.core.Starling;
+import starling.display.Image;
 import starling.events.EnterFrameEvent;
 import starling.extensions.PDParticleSystem;
 
@@ -12,6 +13,8 @@ class WinterWorld extends World
 
 	public function new(menustate:MenuState, mapName:String) 
 	{
+		this.bg = new Image(Root.assets.getTexture("world/SnowBG_01"));
+		
 		super(menustate, mapName);
 		
 		snowPS = new PDParticleSystem(Root.assets.getXml("snow_particle_config"), Root.assets.getTexture("particles/snow_particle"));

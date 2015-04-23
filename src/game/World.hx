@@ -22,6 +22,8 @@ class World extends Sprite {
 	
 	private var menustate:MenuState;
 	
+	private var bg:Image;
+	
 	public var tileSize:Float = 16;
 	private var tilemap:Tilemap;
 	public var player:Player;
@@ -34,6 +36,12 @@ class World extends Sprite {
 	
 	public function new (menustate:MenuState, mapName:String) {
 		super();
+		
+		if (this.bg != null) {
+			this.bg.scaleX = 0.66 / tileSize;
+			this.bg.scaleY = 0.66 / tileSize;
+			this.addChild(bg);
+		}
 		
 		// Rescale the world and initiate the menu state
 		this.menustate = menustate;
@@ -94,6 +102,12 @@ class World extends Sprite {
 		// Update the camera object
 		camera.moveTowards(player.x, player.y);
 		camera.applyCamera(this);
+		
+		var camBounds = camera.getCameraBounds(this);
+		this.bg.x = camBounds.left;
+		this.bg.y = camBounds.top;
+		this.bg.pivotX = camBounds.left * 5;
+		this.bg.pivotY = camBounds.top * 5;
 		
 		// Update the tilemap
 		//tilemap.update(event, camera);
