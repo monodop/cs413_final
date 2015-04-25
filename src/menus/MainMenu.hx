@@ -30,9 +30,9 @@ class MainMenu extends MenuState
 		this.pivotY = center.y;
 		this.x = center.x;
 		this.y = center.y;
-		bg = new Image(Root.assets.getTexture("sample"));
+		bg = new Image(Root.assets.getTexture("intro"));
 		gametitle = new TextField(350, 60, "TWO WOOOORLDS", "font");
-		//gametitle.text = "game";
+		bg.smoothing = "none";
 		gametitle.fontSize = 45;
 		gametitle.color = Color.WHITE;
 		gametitle.x = center.x - 125;
