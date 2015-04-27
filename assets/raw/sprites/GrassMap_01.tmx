@@ -40,6 +40,12 @@
   <tile id="12">
    <image width="192" height="240" source="world/Tree_03.png"/>
   </tile>
+  <tile id="13">
+   <image width="16" height="16" source="world/GrassBot_02.png"/>
+  </tile>
+  <tile id="14">
+   <image width="16" height="16" source="world/GrassSlope_02.png"/>
+  </tile>
  </tileset>
  <layer name="Grass" width="100" height="20">
   <data>
@@ -615,7 +621,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="2684354570"/>
+   <tile gid="14"/>
    <tile gid="11"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -716,7 +722,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="2684354570"/>
+   <tile gid="14"/>
    <tile gid="4"/>
    <tile gid="7"/>
    <tile gid="0"/>
@@ -918,7 +924,7 @@
    <tile gid="12"/>
    <tile gid="0"/>
    <tile gid="6"/>
-   <tile gid="4"/>
+   <tile gid="5"/>
    <tile gid="7"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -930,7 +936,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="6"/>
-   <tile gid="4"/>
+   <tile gid="5"/>
    <tile gid="7"/>
    <tile gid="0"/>
    <tile gid="6"/>
@@ -1120,7 +1126,7 @@
    <tile gid="0"/>
    <tile gid="2"/>
    <tile gid="6"/>
-   <tile gid="4"/>
+   <tile gid="5"/>
    <tile gid="7"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1128,7 +1134,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="6"/>
-   <tile gid="4"/>
+   <tile gid="5"/>
    <tile gid="7"/>
    <tile gid="2"/>
    <tile gid="0"/>
@@ -1322,11 +1328,11 @@
    <tile gid="0"/>
    <tile gid="3"/>
    <tile gid="6"/>
-   <tile gid="4"/>
+   <tile gid="5"/>
    <tile gid="7"/>
    <tile gid="0"/>
    <tile gid="6"/>
-   <tile gid="4"/>
+   <tile gid="5"/>
    <tile gid="7"/>
    <tile gid="3"/>
    <tile gid="0"/>
@@ -1524,7 +1530,7 @@
    <tile gid="0"/>
    <tile gid="3"/>
    <tile gid="6"/>
-   <tile gid="4"/>
+   <tile gid="5"/>
    <tile gid="7"/>
    <tile gid="3"/>
    <tile gid="0"/>
@@ -1547,7 +1553,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1610612747"/>
+   <tile gid="15"/>
    <tile gid="5"/>
    <tile gid="5"/>
    <tile gid="5"/>
@@ -1646,7 +1652,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1610612747"/>
+   <tile gid="15"/>
    <tile gid="10"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -1745,7 +1751,7 @@
    <tile gid="1"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1610612747"/>
+   <tile gid="15"/>
    <tile gid="10"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -1844,7 +1850,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="0"/>
-   <tile gid="1610612747"/>
+   <tile gid="15"/>
    <tile gid="10"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -2045,7 +2051,7 @@
    <tile gid="1"/>
   </data>
  </layer>
- <objectgroup name="Map_Collisions">
+ <objectgroup name="Map_Collisions" visible="0">
   <object id="3" x="80" y="240" width="80" height="16"/>
   <object id="4" x="0" y="304" width="624" height="16"/>
   <object id="6" x="224" y="144" width="48" height="16"/>
