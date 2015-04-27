@@ -2051,7 +2051,7 @@
    <tile gid="1"/>
   </data>
  </layer>
- <objectgroup name="Map_Collisions" visible="0">
+ <objectgroup name="Map_Collisions">
   <object id="3" x="80" y="240" width="80" height="16"/>
   <object id="4" x="0" y="304" width="624" height="16"/>
   <object id="6" x="224" y="144" width="48" height="16"/>
