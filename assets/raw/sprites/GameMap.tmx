@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="16" tileheight="16" nextobjectid="46">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="20" tilewidth="16" tileheight="16" nextobjectid="49">
  <tileset firstgid="1" name="Snow" tilewidth="192" tileheight="240">
   <tile id="0">
    <image width="16" height="16" source="world/IcyBlock_01.png"/>
@@ -2054,7 +2054,7 @@
    <tile gid="1"/>
   </data>
  </layer>
- <objectgroup name="Map_Collisions" visible="0">
+ <objectgroup name="Map_Collisions">
   <object id="1" x="1392" y="64" width="16" height="16"/>
   <object id="2" x="1264" y="16" width="16" height="16"/>
   <object id="3" x="1328" y="96" width="16" height="16"/>
@@ -2071,23 +2071,22 @@
   <object id="17" x="80" y="240" width="80" height="16"/>
   <object id="18" x="176" y="208" width="16" height="16"/>
   <object id="19" x="176" y="176" width="96" height="16"/>
-  <object id="26" x="1536" y="240" width="16" height="48"/>
   <object id="27" x="1440" y="96" width="16" height="16"/>
   <object id="28" x="1488" y="144" width="16" height="16"/>
   <object id="30" x="1536" y="176" width="64" height="16"/>
   <object id="31" x="1536" y="288" width="64" height="16"/>
   <object id="37" x="0" y="304" width="624" height="16"/>
-  <object id="38" x="464" y="128">
-   <polygon points="0,0 64,-64 64,-48 0,16"/>
-  </object>
-  <object id="42" x="272" y="176">
-   <polygon points="0,0 16,-16 16,0 0,16"/>
-  </object>
   <object id="43" x="288" y="160">
    <polygon points="0,0 48,0 48,16 0,16"/>
   </object>
   <object id="45" x="80" y="240">
    <polygon points="0,0 -80,80 -64,80 0,16"/>
+  </object>
+  <object id="46" x="528" y="64">
+   <polygon points="0,0 -80,80 -64,80 0,16"/>
+  </object>
+  <object id="47" x="288" y="160">
+   <polygon points="0,0 -32,32 -16,32 0,16"/>
   </object>
  </objectgroup>
 </map>
