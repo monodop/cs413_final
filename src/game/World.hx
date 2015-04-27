@@ -4,6 +4,7 @@ import colliders.*;
 import flash.geom.Rectangle;
 import game.objects.BaseObject;
 import game.objects.Player;
+import haxe.Log;
 import menus.MenuState;
 import menus.QuadTreeVis;
 import movable.*;
@@ -50,12 +51,13 @@ class World extends Sprite {
 		this.scaleX = tileSize;
 		this.scaleY = tileSize;
 		
-		// Setup the camera tracking class
-		camera = new Camera(new Rectangle( -0.5, -0.5, 100, 100));
-		this.addChild(camera);
+		// Prepare the tilemap
+		tilemap = new Tilemap(this, Root.assets, mapName);
+		tilemap.scaleX = 1.0 / tileSize;
+		tilemap.scaleY = 1.0 / tileSize;
 		
 		// Prepare the quadtree
-		quadTree = new Quadtree(this, new Rectangle( 0.0, 0.0, 100, 100));
+		quadTree = new Quadtree(this, new Rectangle( 0.0, 0.0, tilemap.mapWidth, tilemap.mapHeight));
 		
 		// Prepare the collision matrix
 		collisionMatrix = new CollisionMatrix();
@@ -63,11 +65,11 @@ class World extends Sprite {
 		collisionMatrix.registerLayer("player");
 		collisionMatrix.enableCollisions("map", ["player"]);
 		
-		// Prepare the tilemap
-		tilemap = new Tilemap(this, Root.assets, mapName);
-		tilemap.scaleX = 1.0 / tileSize;
-		tilemap.scaleY = 1.0 / tileSize;
 		addObject(tilemap);
+		
+		// Setup the camera tracking class
+		camera = new Camera(new Rectangle( 0, 0, tilemap.mapWidth, tilemap.mapHeight));
+		this.addChild(camera);
 
 		player = new Player(this);
 		player.x = 7;
@@ -109,6 +111,12 @@ class World extends Sprite {
 		this.bg.pivotX = camBounds.left * 5;
 		this.bg.pivotY = camBounds.top * 5;
 		
+		if (player.y > tilemap.mapHeight + 10) {
+			player.x = 7;
+			player.y = 10;
+			player.velX = 0;
+			player.velY = 0;
+		}
 		// Update the tilemap
 		//tilemap.update(event, camera);
 	}

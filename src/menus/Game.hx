@@ -26,22 +26,6 @@ class Game extends MenuState
 		
 		var stageWidth:Float = Starling.current.stage.stageWidth;
 		var stageHeight:Float = Starling.current.stage.stageHeight;
-
-		//map = new Tilemap(Root.assets, "map");
-		//map.scaleX = .3;
-		//map.scaleY = .3;
-		//stage.addChild(map);
-
-		//player = new Image(Root.assets.getTexture("Player"));
-		//player.smoothing = "none";
-		//player.x = 40;
-		//player.y = 70;
-		//stage.addChild(player);
-
-		//bg = new Image(Root.assets.getTexture("Background"));
-		//bg.smoothing = "none";
-
-		//this.addChild(bg);
 		
 		this.winterWorld = new WinterWorld(this, "map");
 		this.addChild(winterWorld);
