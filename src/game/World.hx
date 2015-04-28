@@ -5,6 +5,7 @@ import flash.geom.Rectangle;
 import game.objects.BaseObject;
 import game.objects.Player;
 import haxe.Log;
+import menus.Game;
 import menus.MenuState;
 import menus.QuadTreeVis;
 import movable.*;
@@ -116,11 +117,18 @@ class World extends Sprite {
 		this.bg.pivotY = camBounds.top * 5;
 		
 		if (player.y > tilemap.mapHeight + 10) {
-			player.x = 7;
-			player.y = 10;
-			player.velX = 0;
-			player.velY = 0;
+			gameOver();
 		}
+		
+		//code for a quick reset, used for testing
+		
+		//if (player.y > tilemap.mapHeight + 10) {
+			//player.x = 7;
+			//player.y = 10;
+			//player.velX = 0;
+			//player.velY = 0;
+		//}
+		
 		// Update the tilemap
 		//tilemap.update(event, camera);
 	}
@@ -147,10 +155,9 @@ class World extends Sprite {
 
 	public function gameOver() {
 		
-		//var menu = new GameOverMenu(menustate.rootSprite, this, menustate);
-		//menu.start();
-		//
-		//menustate.pause();
+		var game = new Game(menustate.rootSprite);
+		menustate.stop();
+		game.start();
 		
 	}
 	
