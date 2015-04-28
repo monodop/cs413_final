@@ -6,7 +6,9 @@ import colliders.CollisionInformation;
 import colliders.HasCollider;
 import colliders.PolygonCollider;
 import game.objects.BaseObject;
+import game.objects.Chest;
 import game.Tilemap.ObjectLayer;
+import haxe.ds.StringMap;
 import haxe.xml.Fast;
 import flash.utils.ByteArray;
 import starling.display.Image;
@@ -46,7 +48,8 @@ class Object {
   public var x:Float;
   public var y:Float;
   public var points:Array<Point>;
-  // properties
+  public var type:String;
+  public var properties:StringMap<String>;
 
   public function new() {
   }
@@ -87,6 +90,8 @@ class Tilemap extends BaseObject implements HasCollider {
   public var _assets:AssetManager;
   
   private var colliders:Array<Collider>;
+  
+  public var entities:Array<BaseObject>;
 
   public function new(world:World, assets:AssetManager, xml:String) {
     super(world);
@@ -191,10 +196,19 @@ class Tilemap extends BaseObject implements HasCollider {
 					i = pt.indexOf(",");
 					o.points.push(new Point(Std.parseFloat(pt.substr(0, i)), Std.parseFloat(pt.substr(i+1))));
 				}
-			} else {
-				o.width = Std.parseFloat(object.att.width);
-				o.height = Std.parseFloat(object.att.height);
 			}
+			if (object.hasNode.properties) {
+				o.properties = new StringMap<String>();
+				for (prop in object.node.properties.nodes.property) {
+					o.properties.set(prop.att.name, prop.att.value);
+				}
+			}
+			if(object.has.width)
+				o.width = Std.parseFloat(object.att.width);
+			if(object.has.height)
+				o.height = Std.parseFloat(object.att.height);
+			if(object.has.type)
+				o.type = object.att.type;
 			ol.data.push(o);
 		}
 		objectLayers.push(ol);
@@ -262,8 +276,9 @@ class Tilemap extends BaseObject implements HasCollider {
     }
 	
 	this.colliders = new Array<Collider>();
+	this.entities = new Array<BaseObject>();
 	for (layer in objectLayers) {
-		if (layer.name.indexOf("_Collisions") >= 0) {
+		if (layer.name.indexOf("Collisions") >= 0) {
 			for ( object in layer.data) {
 				if (object.points != null) {
 					var collider = new PolygonCollider(this, ["map"], object.points);
@@ -277,6 +292,25 @@ class Tilemap extends BaseObject implements HasCollider {
 					collider.y = object.y;
 					this.addChild(collider);
 					this.colliders.push(collider);
+				}
+			}
+		}
+		else if ( layer.name.indexOf("Objects") >= 0) {
+			for (object in layer.data) {
+				switch(object.type) {
+					case "Chest":
+						var chest = new Chest(this.world);
+						chest.x = object.x / world.tileSize;
+						chest.y = object.y / world.tileSize;
+						for (key in object.properties.keys()) {
+							var val = object.properties.get(key);
+							switch(key) {
+								case "Loot":
+									chest.Loot = val;
+							}
+						}
+						entities.push(chest);
+						break;
 				}
 			}
 		}

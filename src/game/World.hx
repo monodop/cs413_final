@@ -70,6 +70,10 @@ class World extends Sprite {
 		// Setup the camera tracking class
 		camera = new Camera(new Rectangle( 0, 0, tilemap.mapWidth, tilemap.mapHeight));
 		this.addChild(camera);
+		
+		for (ent in tilemap.entities) {
+			addObject(ent);
+		}
 
 		player = new Player(this);
 		player.x = 7;
