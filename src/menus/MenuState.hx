@@ -18,7 +18,10 @@ class MenuState extends Sprite {
 	function init() { }
 	
 	// Called when the menu is stopped after sleep
-	function deinit() { }
+	function deinit() {
+		this.removeChildren(0, -1, true);
+		this.removeFromParent(true);
+	}
 	
 	// Called after the menu is started, or when the menu is unpaused
 	function awake() { }

@@ -43,7 +43,11 @@ class Game extends MenuState
 		this.activeWorld.attachPlayer();
 	}
 	
-	override function deinit() { }
+	override function deinit() {
+		summerWorld.dispose();
+		winterWorld.dispose();
+		super.deinit();
+	}
 	
 	override function awake() {
 		this.addEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);

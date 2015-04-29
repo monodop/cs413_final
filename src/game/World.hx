@@ -165,6 +165,12 @@ class World extends Sprite {
 		for (ent in tilemap.entities)
 			ent.sleep();
 	}
+	
+	override public function dispose():Void 
+	{
+		super.dispose();
+		this.removeChildren(0, -1, true);
+	}
 
 	public function screenShake(event:TouchEvent) {
 		var p = event.getTouch(Starling.current.stage, TouchPhase.BEGAN, -1);

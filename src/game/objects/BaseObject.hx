@@ -32,6 +32,12 @@ class BaseObject extends Sprite implements HasCollider
 		
 	}
 	
+	override public function dispose():Void 
+	{
+		this.removeChildren(0, -1, true);
+		super.dispose();
+	}
+	
 	
 	// HasCollider required methods
 	public function getColliders():Array<Collider> {

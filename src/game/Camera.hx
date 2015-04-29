@@ -114,4 +114,10 @@ class Camera extends Sprite
 		
 	}
 	
+	override public function dispose():Void 
+	{
+		this.removeChildren(0, -1, true);
+		super.dispose();
+	}
+	
 }
