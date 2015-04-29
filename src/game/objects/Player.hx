@@ -3,6 +3,7 @@ import colliders.BoxCollider;
 import colliders.Collider;
 import colliders.CollisionInformation;
 import flash.Vector;
+import game.World;
 import haxe.ds.StringMap;
 import haxe.macro.Expr.Position;
 import starling.core.Starling;
@@ -33,6 +34,9 @@ class Player extends BaseObject
 		
 		super(world);
 		
+		this.scaleX = 1 / world.tileSize;
+		this.scaleY = 1 / world.tileSize;
+		
 		this.pivotX = 0;
 		this.pivotY = -4;
 		
@@ -44,6 +48,9 @@ class Player extends BaseObject
 		animations.set("AirMed", Root.assets.getTextures("player/Player_Air_Med_"));
 		animations.set("AirSlow", Root.assets.getTextures("player/Player_Air_Slow_"));
 		animations.set("AirPeak", Root.assets.getTextures("player/Player_Air_Peak_"));
+		animations.set("Attack1", Root.assets.getTextures("player/Player_Attack_"));
+		animations.set("TeleportIn", Root.assets.getTextures("player/Player_Teleport_In_"));
+		animations.set("TeleportOut", Root.assets.getTextures("player/Player_Teleport_Out_"));
 		
 		this.sprite = new MovieClipPlusPlus(animations, 10);
 		this.sprite.pivotX = 32;
@@ -60,14 +67,20 @@ class Player extends BaseObject
 		this.collider = new BoxCollider(this, ["player"], 32, 64, new Point(0, -32));
 		addChild(this.collider);
 		
-		snowWalkPS = new PDParticleSystem(Root.assets.getXml("snow_walk_particle_config"), Root.assets.getTexture("particles/snow_walk_particle"));
-		snowWalkPS.emitterX = this.x * tileSize * 2;
-		snowWalkPS.emitterY = this.y * tileSize * 2;
-		snowWalkPS.scaleX = 1 / tileSize / 2;
-		snowWalkPS.scaleY = 1 / tileSize / 2;
-		world.addChild(snowWalkPS);
-		Starling.juggler.add(snowWalkPS);
+		//snowWalkPS = new PDParticleSystem(Root.assets.getXml("snow_walk_particle_config"), Root.assets.getTexture("particles/snow_walk_particle"));
+		//snowWalkPS.emitterX = this.x * tileSize * 2;
+		//snowWalkPS.emitterY = this.y * tileSize * 2;
+		//snowWalkPS.scaleX = 1 / tileSize / 2;
+		//snowWalkPS.scaleY = 1 / tileSize / 2;
+		//world.addChild(snowWalkPS);
+		//Starling.juggler.add(snowWalkPS);
 		
+	}
+	
+	public function setWorld(world:World) {
+		this.world.detachPlayer();
+		this.world = world;
+		this.world.attachPlayer();
 	}
 	
 	public override function awake() {
@@ -100,18 +113,18 @@ class Player extends BaseObject
 		
 		var hor = left + right;
 		
-		snowWalkPS.start();
+		//snowWalkPS.start();
 		
 		if (hor < 0) {
 			this.scaleX = -(Math.abs(this.scaleX));
-			snowWalkPS.emitAngle = utility.Utils.deg2rad(221.64 + 90);
+			//snowWalkPS.emitAngle = utility.Utils.deg2rad(221.64 + 90);
 		}
 		else if (hor > 0) {
 			this.scaleX = Math.abs(this.scaleX);
-			snowWalkPS.emitAngle = utility.Utils.deg2rad(221.64);
+			//snowWalkPS.emitAngle = utility.Utils.deg2rad(221.64);
 		}
 		else {
-			snowWalkPS.stop();
+			//snowWalkPS.stop();
 		}
 		
 		if (grounded && !jumpStart && !jumpEnd) {
@@ -197,13 +210,13 @@ class Player extends BaseObject
 			
 		}
 		else {
-			snowWalkPS.stop();
+			//snowWalkPS.stop();
 		}
 		
 		velY += event.passedTime * 80.0;
 		
-		snowWalkPS.emitterX = this.x * tileSize * 2;
-		snowWalkPS.emitterY = this.y * tileSize * 2;
+		//snowWalkPS.emitterX = this.x * tileSize * 2;
+		//snowWalkPS.emitterY = this.y * tileSize * 2;
 	}
 	
 	
