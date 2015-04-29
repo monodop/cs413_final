@@ -40,8 +40,8 @@ class World extends Sprite {
 		super();
 		
 		if (this.bg != null) {
-			this.bg.scaleX = 0.66 / tileSize;
-			this.bg.scaleY = 0.66 / tileSize;
+			this.bg.scaleX = 1.09 / tileSize;
+			this.bg.scaleY = 1.09/ tileSize;
 			this.addChild(bg);
 		}
 		
