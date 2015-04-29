@@ -79,19 +79,30 @@ class World extends Sprite {
 			addObject(ent);
 		}
 
-		player = new Player(this);
-		player.x = 7;
-		player.y = 10;
-		player.scaleX = 1 / tileSize;
-		player.scaleY = 1 / tileSize;
-		addObject(player);
+		//player = new Player(this);
+		//player.x = 7;
+		//player.y = 10;
+		//player.scaleX = 1 / tileSize;
+		//player.scaleY = 1 / tileSize;
+		//addObject(player);
 		
+		//this.pivotX = player.x;
+		//this.pivotY = player.y;
+		//this.camera.x = player.x;
+		//this.camera.y = player.y;
+	}
+
+	public function attachPlayer() {
+		addObject(player);
 		this.pivotX = player.x;
 		this.pivotY = player.y;
 		this.camera.x = player.x;
 		this.camera.y = player.y;
 	}
-
+	
+	public function detachPlayer() {
+		removeObject(player);
+	}
 	
 	public function addObject(obj:BaseObject) {
 		addChild(obj);
@@ -123,6 +134,9 @@ class World extends Sprite {
 			gameOver();
 		}
 		
+		for (ent in tilemap.entities)
+			ent.update(event);
+		
 		//code for a quick reset, used for testing
 		
 		//if (player.y > tilemap.mapHeight + 10) {
@@ -140,12 +154,16 @@ class World extends Sprite {
 		Root.controls.hook("quadtreevis", "quadTreeVis", quadTreeVis);
 		Starling.current.stage.addEventListener(TouchEvent.TOUCH, screenShake);
 		player.awake();
+		for (ent in tilemap.entities)
+			ent.awake();
 	}
 	
 	public function sleep() {
 		Root.controls.unhook("quadtreevis", "quadTreeVis");
 		Starling.current.stage.removeEventListener(TouchEvent.TOUCH, screenShake);
 		player.sleep();
+		for (ent in tilemap.entities)
+			ent.sleep();
 	}
 
 	public function screenShake(event:TouchEvent) {

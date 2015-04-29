@@ -1,6 +1,7 @@
 package menus;
 
 import flash.display.SimpleButton;
+import game.objects.Player;
 import game.SummerWorld;
 import game.WinterWorld;
 import game.World;
@@ -20,6 +21,7 @@ class Game extends MenuState
 	var winterWorld:WinterWorld;
 	var summerWorld:SummerWorld;
 	var activeWorld:World;
+	var player:Player;
 	
 	override function init() {
 		rootSprite.addChild(this);
@@ -31,8 +33,14 @@ class Game extends MenuState
 		this.addChild(winterWorld);
 		
 		this.summerWorld = new SummerWorld(this, "map2");
-		
 		this.activeWorld = this.winterWorld;
+		
+		this.player = new Player(this.activeWorld);
+		this.player.x = 7;
+		this.player.y = 14;
+		this.summerWorld.player = this.player;
+		this.winterWorld.player = this.player;
+		this.activeWorld.attachPlayer();
 	}
 	
 	override function deinit() { }
@@ -52,8 +60,8 @@ class Game extends MenuState
 		
 		if (action.isActive()) {
 			
-			var playerX = activeWorld.player.x;
-			var playerY = activeWorld.player.y;
+			//var playerX = activeWorld.player.x;
+			//var playerY = activeWorld.player.y;
 			
 			this.activeWorld.sleep();
 			this.removeChild(activeWorld);
@@ -62,11 +70,12 @@ class Game extends MenuState
 			} else {
 				this.activeWorld = summerWorld;
 			}
+			player.setWorld(this.activeWorld);
 			this.addChild(activeWorld);
-			activeWorld.player.x = playerX;
-			activeWorld.player.y = playerY;
-			activeWorld.camera.x = playerX;
-			activeWorld.camera.y = playerY;
+			//activeWorld.player.x = playerX;
+			//activeWorld.player.y = playerY;
+			//activeWorld.camera.x = playerX;
+			//activeWorld.camera.y = playerY;
 			
 			this.activeWorld.awake();
 			
