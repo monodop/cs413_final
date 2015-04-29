@@ -17,7 +17,8 @@ replacements = {
 	16: "Player_Air_Slow_",
 	17: "Player_Air_Peak_",
 	21: "Player_Attack_",
-	23: "Player_Teleport_Out_",
+	25: "Player_Teleport_Out_",
+	26: "Player_Teleport_In_",
 }
 keys = replacements.keys()
 keys.sort()
