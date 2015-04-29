@@ -311,7 +311,7 @@ class Tilemap extends BaseObject implements HasCollider {
                             }
                         }
 						entities.push(chest);
-						break;
+
 
                     case "Snowmon":
                     var snowmon = new Snowmon(this.world);

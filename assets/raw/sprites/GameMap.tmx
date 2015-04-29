@@ -3102,6 +3102,6 @@
     <property name="Loot" value="{ 'Coin': 10 }"/>
    </properties>
   </object>
-  <object id="65" gid="18" x="560" y="224"/>
+  <object id="65" type="Snowmon" gid="18" x="560" y="224"/>
  </objectgroup>
 </map>

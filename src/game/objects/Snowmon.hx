@@ -27,14 +27,14 @@ class Snowmon extends BaseObject
 
         this.sprite = new MovieClipPlusPlus(animations, 10);
         this.sprite.pivotX = 0;
-        this.sprite.pivotY = 32;
+        this.sprite.pivotY = 64;
         this.sprite.smoothing = 'none';
 
-        this.sprite.changeAnimation("Move");
+        //this.sprite.changeAnimation("Move");
 
         addChild(this.sprite);
 
-        this.collider = new BoxCollider(this, ["map"], 32, 32, new Point(16, -16));
+        this.collider = new BoxCollider(this, ["map"], 48, 64, new Point(16, -16));
         addChild(this.collider);
     }
 
