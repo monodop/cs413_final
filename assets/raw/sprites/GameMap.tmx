@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="16" tileheight="16" nextobjectid="57">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="16" tileheight="16" nextobjectid="66">
  <tileset firstgid="1" name="Snow" tilewidth="192" tileheight="240">
   <tile id="0">
    <image width="16" height="16" source="world/IcyBlock_01.png"/>
@@ -51,6 +51,9 @@
   </tile>
   <tile id="16">
    <image width="32" height="32" source="world/Chest_Closed.png"/>
+  </tile>
+  <tile id="17">
+   <image width="48" height="64" source="enemies/SnowMon_01.png"/>
   </tile>
  </tileset>
  <layer name="Snow" width="100" height="30">
@@ -3099,5 +3102,6 @@
     <property name="Loot" value="{ 'Coin': 10 }"/>
    </properties>
   </object>
+  <object id="65" gid="18" x="560" y="224"/>
  </objectgroup>
 </map>

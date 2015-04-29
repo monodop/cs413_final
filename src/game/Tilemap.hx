@@ -7,6 +7,7 @@ import colliders.HasCollider;
 import colliders.PolygonCollider;
 import game.objects.BaseObject;
 import game.objects.Chest;
+import game.objects.Snowmon;
 import game.Tilemap.ObjectLayer;
 import haxe.ds.StringMap;
 import haxe.xml.Fast;
@@ -307,11 +308,18 @@ class Tilemap extends BaseObject implements HasCollider {
 							switch(key) {
 								case "Loot":
 									chest.Loot = val;
-							}
-						}
+                            }
+                        }
 						entities.push(chest);
 						break;
-				}
+
+                    case "Snowmon":
+                    var snowmon = new Snowmon(this.world);
+                    snowmon.x = object.x / world.tileSize;
+                    snowmon.y = object.y / world.tileSize;
+
+                    entities.push(snowmon);
+                }
 			}
 		}
 	}
