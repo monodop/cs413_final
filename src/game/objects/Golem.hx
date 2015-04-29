@@ -7,7 +7,7 @@ import starling.textures.Texture;
 import utility.Point;
 
 
-class Snowmon extends BaseObject
+class Golem extends BaseObject
 {
 
     private var sprite:MovieClipPlusPlus;
@@ -23,18 +23,18 @@ class Snowmon extends BaseObject
         this.scaleY = 1 / world.tileSize;
 
         var animations = new StringMap<Vector<Texture>>();
-        animations.set("Move", Root.assets.getTextures("enemies/SnowMon_"));
+        animations.set("Move", Root.assets.getTextures("enemies/Golem_"));
 
         this.sprite = new MovieClipPlusPlus(animations, 10);
         this.sprite.pivotX = 0;
-        this.sprite.pivotY = 64;
+        this.sprite.pivotY = 96;
         this.sprite.smoothing = 'none';
 
         this.sprite.changeAnimation("Move");
 
         addChild(this.sprite);
 
-        this.collider = new BoxCollider(this, ["map"], 48, 64, new Point(16, -16));
+        this.collider = new BoxCollider(this, ["map"], 80, 96, new Point(16, -16));
         addChild(this.collider);
     }
 

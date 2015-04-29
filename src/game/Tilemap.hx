@@ -8,6 +8,7 @@ import colliders.PolygonCollider;
 import game.objects.BaseObject;
 import game.objects.Chest;
 import game.objects.Snowmon;
+import game.objects.Golem;
 import game.Tilemap.ObjectLayer;
 import haxe.ds.StringMap;
 import haxe.xml.Fast;
@@ -312,6 +313,12 @@ class Tilemap extends BaseObject implements HasCollider {
                         }
 						entities.push(chest);
 
+                    case "Golem":
+                    var golem = new Golem(this.world);
+                    golem.x = object.x / world.tileSize;
+                    golem.y = object.y / world.tileSize;
+
+                    entities.push(golem);
 
                     case "Snowmon":
                     var snowmon = new Snowmon(this.world);
@@ -319,6 +326,8 @@ class Tilemap extends BaseObject implements HasCollider {
                     snowmon.y = object.y / world.tileSize;
 
                     entities.push(snowmon);
+
+
                 }
 			}
 		}
