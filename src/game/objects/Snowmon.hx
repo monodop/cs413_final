@@ -34,7 +34,7 @@ class Snowmon extends BaseObject
 
         addChild(this.sprite);
 
-        this.collider = new BoxCollider(this, ["map"], 48, 64, new Point(16, -16));
+        this.collider = new BoxCollider(this, ["enemies"], 48, 64, new Point(16, -16));
         addChild(this.collider);
     }
 

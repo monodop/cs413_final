@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:a0cf48438768959e2874378ecf95b6be:921af07fe8c8a6473bc569676fe36797:ef7663426bf705b25566a93aef3a1571$ -->
+<!-- $TexturePacker:SmartUpdate:e2c099a6afbe81300fc5baf8a1d7eab0:8910d83106adb42e91f304dbc6ea3bec:ef7663426bf705b25566a93aef3a1571$ -->
 <TextureAtlas imagePath="spritesheet.png">
     <SubTexture name="enemies/Golem_01" x="1489" y="873" width="77" height="93" frameX="-1" frameY="-2" frameWidth="80" frameHeight="96"/>
     <SubTexture name="enemies/Golem_02" x="1408" y="873" width="77" height="94" frameX="-1" frameY="-1" frameWidth="80" frameHeight="96"/>
@@ -45,8 +45,8 @@
     <SubTexture name="world/Chest_Closed" x="1417" y="1005" width="32" height="25" frameX="0" frameY="-7" frameWidth="32" frameHeight="32"/>
     <SubTexture name="world/Chest_Open" x="1707" y="647" rotated="true" width="30" height="32" frameX="0" frameY="-2" frameWidth="32" frameHeight="32"/>
     <SubTexture name="world/DirtBlock_01" x="1707" y="683" width="16" height="16"/>
-    <SubTexture name="world/DirtBot_01" x="1694" y="865" width="15" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
-    <SubTexture name="world/DirtBot_02" x="1694" y="885" rotated="true" width="15" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
+    <SubTexture name="world/DirtBot_01" x="1694" y="885" width="15" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
+    <SubTexture name="world/DirtBot_02" x="1694" y="905" rotated="true" width="15" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
     <SubTexture name="world/FlowerBlock_01" x="1727" y="683" width="16" height="16"/>
     <SubTexture name="world/FlowerBlock_02" x="1723" y="736" width="16" height="16"/>
     <SubTexture name="world/GrassBG_01" x="3" y="647" width="1024" height="384"/>
@@ -60,7 +60,7 @@
     <SubTexture name="world/GrassSlope_02" x="1635" y="1009" width="16" height="16"/>
     <SubTexture name="world/ICySlope_01" x="1655" y="969" width="16" height="16"/>
     <SubTexture name="world/IcyBlock_01" x="1665" y="926" width="16" height="16"/>
-    <SubTexture name="world/IcyBot_01" x="1694" y="905" rotated="true" width="15" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
+    <SubTexture name="world/IcyBot_01" x="1705" y="816" rotated="true" width="15" height="16" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
     <SubTexture name="world/IcyPlatformEdge_left" x="1051" y="1021" width="5" height="9" frameX="-11" frameY="0" frameWidth="16" frameHeight="16"/>
     <SubTexture name="world/IcyPlatformEdge_right" x="1060" y="1021" width="5" height="9" frameX="0" frameY="0" frameWidth="16" frameHeight="16"/>
     <SubTexture name="world/IcyPlatform_01" x="1665" y="946" width="16" height="16"/>
@@ -70,14 +70,15 @@
     <SubTexture name="world/IcySide_02" x="1674" y="885" width="16" height="16"/>
     <SubTexture name="world/IcySlopeBot_01" x="1674" y="905" width="16" height="16"/>
     <SubTexture name="world/IcySlopeBot_02" x="1675" y="966" width="16" height="16"/>
+    <SubTexture name="world/Ladder_01" x="1685" y="925" width="16" height="16"/>
     <SubTexture name="world/SnowBG_01" x="3" y="3" width="1920" height="640"/>
     <SubTexture name="world/SnowTree_01" x="1031" y="873" width="159" height="144" frameX="-20" frameY="-96" frameWidth="192" frameHeight="240"/>
     <SubTexture name="world/Tree_01" x="1031" y="647" width="191" height="222" frameX="-1" frameY="-18" frameWidth="192" frameHeight="240"/>
     <SubTexture name="world/Tree_02" x="1226" y="647" width="191" height="222" frameX="-1" frameY="-18" frameWidth="192" frameHeight="240"/>
     <SubTexture name="world/Tree_03" x="1421" y="647" width="191" height="222" frameX="0" frameY="0" frameWidth="192" frameHeight="240"/>
-    <SubTexture name="world/chestBlock_1" x="1685" y="925" width="16" height="16"/>
-    <SubTexture name="world/chestBlock_2" x="1685" y="945" width="16" height="16"/>
-    <SubTexture name="world/chestBlock_3" x="1675" y="986" width="16" height="16"/>
-    <SubTexture name="world/chestBlock_4" x="1675" y="1006" width="16" height="16"/>
+    <SubTexture name="world/chestBlock_1" x="1685" y="945" width="16" height="16"/>
+    <SubTexture name="world/chestBlock_2" x="1675" y="986" width="16" height="16"/>
+    <SubTexture name="world/chestBlock_3" x="1675" y="1006" width="16" height="16"/>
+    <SubTexture name="world/chestBlock_4" x="1694" y="865" width="16" height="16"/>
     <SubTexture name="yellowpixel" x="1074" y="1026" width="1" height="1"/>
 </TextureAtlas>

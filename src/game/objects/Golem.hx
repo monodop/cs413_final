@@ -34,7 +34,7 @@ class Golem extends BaseObject
 
         addChild(this.sprite);
 
-        this.collider = new BoxCollider(this, ["map"], 80, 96, new Point(16, -16));
+        this.collider = new BoxCollider(this, ["enemies"], 80, 96, new Point(16, -16));
         addChild(this.collider);
     }
 
