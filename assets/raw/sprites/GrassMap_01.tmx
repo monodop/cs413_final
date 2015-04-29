@@ -3091,6 +3091,6 @@
   </object>
  </objectgroup>
  <objectgroup name="Map_Objects">
-  <object id="49" type="Golem " gid="17" x="80" y="400"/>
+  <object id="49" type="Golem" gid="17" x="80" y="400"/>
  </objectgroup>
 </map>
