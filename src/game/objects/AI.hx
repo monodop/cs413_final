@@ -30,7 +30,7 @@ class AI extends BaseObject
 	}
 
 	public override function update(event:EnterFrameEvent) {
-		var dir = new Point(this.x - world.player.x, this.y - world.player.y);
+		var dir = new Point(world.player.x - this.x, world.player.y - this.y);
 		dir = dir.normalize(5);
 		var ci = new Array<CollisionInformation>();
 		var hitpoint:Point;
