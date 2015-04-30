@@ -34,6 +34,7 @@ class BaseObject extends Sprite implements HasCollider
 	
 	override public function dispose():Void 
 	{
+		this.sleep();
 		this.removeChildren(0, -1, true);
 		super.dispose();
 	}

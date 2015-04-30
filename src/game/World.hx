@@ -164,10 +164,13 @@ class World extends Sprite {
 		player.sleep();
 		for (ent in tilemap.entities)
 			ent.sleep();
+		if(quadvis != null)
+			quadvis.pause();
 	}
 	
 	override public function dispose():Void 
 	{
+		this.sleep();
 		super.dispose();
 		this.removeChildren(0, -1, true);
 	}

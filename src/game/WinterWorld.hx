@@ -24,8 +24,6 @@ class WinterWorld extends World
 		//snowPS.endColor = ColorArgb.fromArgbToArgb(0xff0000ff);
 		snowPS.lifespan = 32;
 		this.addChild(snowPS);
-		Starling.juggler.add(snowPS);
-		snowPS.start();
 		
 	}
 	
@@ -35,5 +33,17 @@ class WinterWorld extends World
 		var camBounds = camera.getCameraBounds(this);
 		snowPS.emitterX = camera.x * tileSize * 2;
 		snowPS.emitterY = camBounds.top * tileSize;
+	}
+	
+	public override function awake() {
+		super.awake();
+		Starling.juggler.add(snowPS);
+		snowPS.start();
+	}
+	
+	public override function sleep() {
+		super.sleep();
+		snowPS.stop();
+		Starling.juggler.remove(snowPS);
 	}
 }
