@@ -7,7 +7,7 @@ import starling.textures.Texture;
 import utility.Point;
 
 
-class Snowmon extends BaseObject
+class Snowmon extends AI
 {
 
     private var sprite:MovieClipPlusPlus;
