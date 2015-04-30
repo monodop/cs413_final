@@ -31,7 +31,8 @@ class MainMenu extends MenuState
 		this.x = center.x;
 		this.y = center.y;
 		bg = new Image(Root.assets.getTexture("intro"));
-		gametitle = new TextField(350, 60, "TWO WOOOORLDS", "font");
+		Root.assets.playSound("Grandpa's Clock", 0, 9999);
+		gametitle = new TextField(350, 100, "Grandpa's Tall Tales: \nTwo Worlds", "font");
 		bg.smoothing = "none";
 		gametitle.fontSize = 45;
 		gametitle.color = Color.WHITE;
@@ -49,7 +50,7 @@ class MainMenu extends MenuState
 			button.fontSize = 24;
 			button.color = Color.WHITE;
 			button.x = center.x - 25;
-			button.y = 110 + (i * 50);
+			button.y = 150 + (i * 50);
 			this.addChild(button);
 		}
 		//Enlarge the first highlighted option by default
@@ -119,12 +120,14 @@ class MainMenu extends MenuState
 	private function space(action:ControlAction) {
 		if (selection == 0) {
 			// NewGame
+			Root.assets.removeSound("Grandpa's Clock");
 			var game = new Game(rootSprite);
 			game.start();
 			this.stop();
 		}
 		else if (selection == 1) {
 			// Credits
+			Root.assets.removeSound("Grandpa's Clock");
 			var credits = new Credits(rootSprite);
 			credits.start();
 			this.stop();
