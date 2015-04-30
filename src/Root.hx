@@ -56,6 +56,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/intro.png");
 		assets.enqueue("assets/particles/snow_particle_config.pex");
 		assets.enqueue("assets/particles/snow_walk_particle_config.pex");
+		assets.enqueue("assets/particles/fireflies_config.pex");
 
 		assets.loadQueue(function onProgress(ratio:Float) {
 			haxe.Log.clear();
