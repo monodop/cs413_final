@@ -26,6 +26,10 @@ class AI extends BaseObject
 			setPos(this.x+1*event.passedTime, this.y);
 		else if(this.x>world.player.x)
 			setPos(this.x-1*event.passedTime, this.y);
+		if(world.rayCast(new Point(this.x, this.y), new Point(1, 1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
+			setPos(this.x, this.y+1*event.passedTime);
+		if(world.rayCast(new Point(this.x, this.y), new Point(-1, -1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
+			setPos(this.x, this.y+1*event.passedTime);
 	
 	}
 
