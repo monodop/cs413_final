@@ -7,7 +7,7 @@ import starling.textures.Texture;
 import utility.Point;
 
 
-class Golem extends BaseObject
+class Golem extends AI
 {
 
     private var sprite:MovieClipPlusPlus;
