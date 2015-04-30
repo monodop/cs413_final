@@ -28,8 +28,15 @@ class MovieClipPlus extends MovieClip {
                 currentFrame = target;
                 play();
             }
-        }
+			frameChange();
+        } else if (lf != currentFrame) {
+			frameChange();
+		}
     }
+	
+	private function frameChange() {
+		
+	}
 
 // Starts playing at the specified frame.
     public function gotoAndPlay(frame:Int) {

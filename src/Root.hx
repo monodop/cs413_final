@@ -38,6 +38,10 @@ class Root extends Sprite {
 		controls.bindKey("down", Keyboard.DOWN);
 		
 		controls.registerAction("select", Keyboard.SPACE);
+		controls.bindKey("select", Keyboard.ENTER);
+		
+		controls.registerAction("attack", Keyboard.Z);
+		controls.registerAction("teleport", Keyboard.X);
 		
 		controls.registerAction("debugWorldSwitch", Keyboard.F2);
 		controls.registerAction("quadtreevis", Keyboard.F1);

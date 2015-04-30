@@ -22,6 +22,10 @@ class Chest extends BaseObject
 		this.scaleX = 1 / world.tileSize;
 		this.scaleY = 1 / world.tileSize;
 		
+		this.health = 1.0;
+		this.maxHealth = 1.0;
+		this.strikable = true;
+		
 		var animations = new StringMap<Vector<Texture>>();
 		animations.set("Closed", Root.assets.getTextures("world/Chest_Closed"));
 		animations.set("Open", Root.assets.getTextures("world/Chest_Open"));
@@ -41,5 +45,9 @@ class Chest extends BaseObject
 	
 	public override function getColliders():Array<Collider> {
 		return [this.collider];
+	}
+	
+	private override function killed(overflow:Float) {
+		this.sprite.changeAnimation("Open");
 	}
 }

@@ -3,6 +3,7 @@ import colliders.BoxCollider;
 import colliders.Collider;
 import colliders.CollisionInformation;
 import flash.Vector;
+import game.MovieClipPlusPlus;
 import game.World;
 import haxe.ds.StringMap;
 import haxe.macro.Expr.Position;
@@ -26,6 +27,8 @@ class Player extends BaseObject
 	
 	private var jumpStart:Bool = false;
 	private var jumpEnd:Bool = false;
+	private var attacking:Bool = false;
+	private var attackPerformed:Bool = false;
 	
 	private var doubleJumped:Bool = false;
 	
@@ -58,6 +61,10 @@ class Player extends BaseObject
 		this.sprite.smoothing = 'none';
 		
 		this.sprite.setAnimationDuration("Jump", 0.05);
+		this.sprite.setAnimationDuration("Attack1", 0.15);
+		this.sprite.setAnimationFrameDuration("Attack1", 0, 0.05);
+		this.sprite.setAnimationFrameDuration("Attack1", 3, 0.05);
+		this.sprite.setAnimationDuration("Idle", 0.20);
 		this.sprite.setLoop("Walk");
 		this.sprite.setLoop("Idle");
 		this.sprite.changeAnimation("Walk");
@@ -85,19 +92,47 @@ class Player extends BaseObject
 	
 	public override function awake() {
 		Root.controls.hook("up", "playerJump", jump);
+		Root.controls.hook("attack", "playerAttack", attack);
+		sprite.addChangeFrameHook(frameAdvance);
 	}
 	public override function sleep() {
 		Root.controls.unhook("up", "playerJump");
+		Root.controls.unhook("attack", "playerAttack");
+		sprite.removeChangeFrameHook(frameAdvance);
 	}
 	
 	public function jump(action:ControlAction) {
-		if (action.isActive() && !jumpStart && (grounded || !doubleJumped) ) {
+		if (action.isActive() && !jumpStart && !attacking && (grounded || !doubleJumped) ) {
 			//velY = -20;
 			jumpStart = true;
 			sprite.changeAnimation("Jump");
 			
 			if (!grounded) {
 				doubleJumped = true;
+			}
+		}
+	}
+	
+	public function attack(action:ControlAction) {
+		if (action.isActive() && !attacking && !jumpStart) {
+			attacking = true;
+			jumpEnd = false;
+			sprite.changeAnimation("Attack1");
+		}
+	}
+	
+	public function frameAdvance(clip:MovieClipPlusPlus) {
+		//trace(clip.getLastAnimation() + "\t\t" + clip.getAnimationFrame());
+		if (clip.getLastAnimation() == "Attack1" && clip.getAnimationFrame() == 2) {
+			// Strike
+			var ci = new Array<CollisionInformation>();
+			var hit = world.rayCast(new Point(x, y - 1.0), new Point((this.scaleX < 0 ? -1 : 1) * 3.0, 0.0), world.camera.getCameraBounds(world), ["map", "enemies"], 0.0, ci);
+			if(hit != null) {
+				var hitCollider = ci[0].collider_src.parent;
+				if (Std.is(hitCollider, BaseObject)) {
+					var target:BaseObject = cast hitCollider;
+					target.damage(10);
+				}
 			}
 		}
 	}
@@ -127,7 +162,7 @@ class Player extends BaseObject
 			//snowWalkPS.stop();
 		}
 		
-		if (grounded && !jumpStart && !jumpEnd) {
+		if (grounded && !jumpStart && !jumpEnd && !attacking) {
 			
 			if (hor == 0) {
 				if (sprite.getLastAnimation() != "Idle")
@@ -149,6 +184,12 @@ class Player extends BaseObject
 			
 			if (!sprite.isPlaying) {
 				jumpEnd = false;
+			}
+		
+		} else if (attacking) {
+			
+			if (!sprite.isPlaying) {
+				attacking = false;
 			}
 			
 		} else {
@@ -177,7 +218,7 @@ class Player extends BaseObject
 		if (velY >= 0 && dest != null && !ci[0].collider_src.containsPoint(new Point(dest.x, dest.y - 0.0001), world)) {
 			this.setPos(this.x, dest.y);
 			this.velY = 0;
-			if (!grounded) {
+			if (!grounded && !attacking) {
 				jumpEnd = true;
 				sprite.changeAnimation("Jump");
 				sprite.nextFrame();

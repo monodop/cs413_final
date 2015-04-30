@@ -170,7 +170,7 @@ class World extends Sprite {
 	
 	override public function dispose():Void 
 	{
-		this.sleep();
+		//this.sleep();
 		super.dispose();
 		this.removeChildren(0, -1, true);
 	}

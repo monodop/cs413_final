@@ -10,6 +10,8 @@ class MovieClipPlusPlus extends MovieClipPlus
 	private var mappings:StringMap<Int>;
 	private var lastAnimation:String;
 	
+	private var changeFrameHooks:Array<MovieClipPlusPlus->Void>;
+	
 	public function new(textures:StringMap<flash.Vector<Texture>>, fps:Int=12) 
 	{
 		var texVector = new Vector<Texture>();
@@ -27,13 +29,20 @@ class MovieClipPlusPlus extends MovieClipPlus
 			
 		}
 		
-		
 		super(texVector, fps);
 		
 		for (key in mappings.keys()) {
 			setNext(getAnimationEndFrame(key), -1);
 		}
 		
+		changeFrameHooks = new Array<MovieClipPlusPlus->Void>();
+		
+	}
+	
+	private override function frameChange() {
+		for (hook in changeFrameHooks) {
+			hook(this);
+		}
 	}
 	
 	public function getAnimationEndFrame(key:String):Int {
@@ -73,6 +82,10 @@ class MovieClipPlusPlus extends MovieClipPlus
 		}
 		
 	}
+	public function setAnimationFrameDuration(key:String, offset:Int, duration:Float):Void {
+		var start = mappings.get(key);
+		setFrameDuration(start + offset, duration);
+	}
 	
 	public function changeAnimation(key:String):Void {
 		gotoAndPlay(mappings.get(key));
@@ -81,6 +94,19 @@ class MovieClipPlusPlus extends MovieClipPlus
 	
 	public function getLastAnimation():String {
 		return this.lastAnimation;
+	}
+	public function getAnimationFrame():Int {
+		var f = mappings.get(this.lastAnimation);
+		return this.currentFrame - f;
+	}
+	
+	
+	public function addChangeFrameHook(callback:MovieClipPlusPlus->Void) {
+		this.changeFrameHooks.push(callback);
+	}
+	
+	public function removeChangeFrameHook(callback:MovieClipPlusPlus->Void) {
+		this.changeFrameHooks.remove(callback);
 	}
 	
 }
