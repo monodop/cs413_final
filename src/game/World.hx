@@ -221,8 +221,12 @@ class World extends Sprite {
 		var Loot = Json.parse(loot);
 		while (ctr < Loot.Coin) {
 			ctr++;
-			var coin:Coin = new Coin(this, xlocation, ylocation);
-			addChild(coin);
+			var sign = Std.random(2);
+			var offsetX = Math.random();
+			if (sign == 1) { offsetX *= -1; }
+			var coin:Coin = new Coin(this, xlocation, ylocation, offsetX, -19);
+			addObject(coin);
+			tilemap.entities.push(coin);
 		}
 	}
 	
