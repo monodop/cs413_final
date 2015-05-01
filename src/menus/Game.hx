@@ -31,7 +31,7 @@ class Game extends MenuState
     var healthBarFG:Quad;
     var healthBarWidth:Int = 100;
     var healthBarHeight:Int = 6;
-    var scoreText:TextField;
+    //var scoreText:TextField;
     var coinText:TextField;
 	
 	override function init() {
@@ -66,13 +66,13 @@ class Game extends MenuState
         this.healthBarFG.y = 20 + 2;
         this.addChild(this.healthBarFG);
         
-        this.scoreText = new TextField(75, 12, "Score: 0", BitmapFont.MINI, 12, 0x000000);
-        this.scoreText.x = stageWidth - 90;
-        this.scoreText.y = 18;
-        this.addChild(scoreText);
+        //this.scoreText = new TextField(75, 12, "Score: 0", BitmapFont.MINI, 12, 0x000000);
+        //this.scoreText.x = stageWidth - 90;
+        //this.scoreText.y = 18;
+        //this.addChild(scoreText);
         this.coinText = new TextField(75, 12, "Coins: 0", BitmapFont.MINI, 12, 0x000000);
         this.coinText.x = stageWidth - 90;
-        this.coinText.y = 38;
+        this.coinText.y = 18;
         this.addChild(coinText);
 	}
 	
@@ -112,7 +112,7 @@ class Game extends MenuState
 				this.activeWorld = winterWorld;
                 this.healthText.color = 0x000000;
                 this.healthBarBG.color = 0x000000;
-                this.scoreText.color = 0x000000;
+                //this.scoreText.color = 0x000000;
                 this.coinText.color = 0x000000;
                 this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xffffffff);
                 this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xffffffff);
@@ -120,7 +120,7 @@ class Game extends MenuState
 				this.activeWorld = summerWorld;
                 this.healthText.color = 0xffffff;
                 this.healthBarBG.color = 0xffffff;
-                this.scoreText.color = 0xffffff;
+                //this.scoreText.color = 0xffffff;
                 this.coinText.color = 0xffffff;
                 this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xff8b7355);
                 this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xff8b7355);
@@ -137,7 +137,7 @@ class Game extends MenuState
             this.setChildIndex(healthText, this.numChildren - 1);
             this.setChildIndex(healthBarBG, this.numChildren - 1);
             this.setChildIndex(healthBarFG, this.numChildren - 1);
-            this.setChildIndex(scoreText, this.numChildren - 1);
+            //this.setChildIndex(scoreText, this.numChildren - 1);
             this.setChildIndex(coinText, this.numChildren - 1);
 			
 		}
