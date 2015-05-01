@@ -16,6 +16,8 @@ class Golem extends AI
 
     private var sprite:MovieClipPlusPlus;
     private var collider:BoxCollider;
+	
+	private var attacking:Bool;
 
     public var Loot:String;
 
@@ -26,9 +28,9 @@ class Golem extends AI
         this.scaleY = 1 / world.tileSize;
 		this.attackRange = 3.5;
 		this.attackDamage = 15;
-		this.attackSpeed = 7000.0;
+		this.attackSpeed = 5000.0;
 		
-		this.health = 50.0;
+		this.health = 80.0;
 		this.maxHealth = 50.0;
 		this.strikable = true;
 		
@@ -50,7 +52,7 @@ class Golem extends AI
         this.sprite.pivotY = 96;
         this.sprite.smoothing = 'none';
 
-        this.sprite.setLoop("Walk");
+        this.sprite.setLoop("Move");
         this.sprite.changeAnimation("Move");
         this.sprite.setAnimationDuration("Move", 0.4);
         this.sprite.setAnimationDuration("Attack", 0.3);
@@ -61,11 +63,21 @@ class Golem extends AI
         addChild(this.collider);
 
     }
+	
+	public override function awake() {
+		super.awake();
+		sprite.addChangeFrameHook(frameAdvance);
+	}
+	public override function sleep() {
+		super.sleep();
+		sprite.removeChangeFrameHook(frameAdvance);
+	}
 
 
     public override function update(event:EnterFrameEvent) {
 
         this.sprite.advanceTime(event.passedTime);
+		this.sprite.scaleX = direction ? -1 : 1;
 
         var left = Root.controls.isDown("left") ? -1 : 0;
         var right = Root.controls.isDown("right") ? 1 : 0;
@@ -88,8 +100,6 @@ class Golem extends AI
             this.Advance(event);
         else{
             if(!canAttack){
-                if(!sprite.isPlaying)
-                    sprite.changeAnimation("Walk");
 
                 attackTimer -= event.passedTime*1000;
                 if(attackTimer<=0){
@@ -99,13 +109,29 @@ class Golem extends AI
             }
             if(canAttack){
 
-                canAttack=false;
-                this.Attack(event);
+                canAttack = false;
+				attacking = true;
+				canMove = false;
                 attackTimer = attackSpeed;
                 sprite.changeAnimation("Attack");
+				sprite.play();
             }
         }
+		
+		if(!sprite.isPlaying) {
+			sprite.changeAnimation("Move");
+			sprite.play();
+			attacking = false;
+			canMove = true;
+		}
     }
+	
+	public function frameAdvance(clip:MovieClipPlusPlus) {
+		//trace(clip.getLastAnimation() + "\t\t" + clip.getAnimationFrame());
+		if (clip.getLastAnimation() == "Attack" && clip.getAnimationFrame() == 3) {
+			this.Attack();
+		}
+	}
 
     public override function getColliders():Array<Collider> {
         return [this.collider];

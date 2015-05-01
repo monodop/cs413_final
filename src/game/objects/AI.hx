@@ -20,6 +20,8 @@ class AI extends BaseObject
     var advanceMoveSpeed:Float = 5.0;
 	var patrolMoveSpeed:Float = 2.5;
 	
+	var canMove:Bool = true;
+	
 	
 	public function new(world:World, ?x:Float = 0.0, ?y:Float = 0.0, ?offsetX = 0.0, ?offsetY = 0.0) {
 		
@@ -64,7 +66,13 @@ class AI extends BaseObject
 		}
 			
         this.fall(event, ["map"]);
-		this.walk(event, patrolMoveSpeed, direction ? 1 : -1, ["map"]);
+		
+		var hor = 0;
+		if (canMove) {
+			hor = direction ? 1 : -1;
+		}
+		
+		this.walk(event, patrolMoveSpeed, hor, ["map"]);
         
 			
 	}
@@ -78,10 +86,15 @@ class AI extends BaseObject
 		}  
         this.fall(event, ["map"]);
 			
-		this.walk(event, advanceMoveSpeed, direction ? 1 : -1, ["map"]);
+		var hor = 0;
+		if (canMove) {
+			hor = direction ? 1 : -1;
+		}
+		
+		this.walk(event, advanceMoveSpeed, hor, ["map"]);
 	}
 	
-	public function Attack(event:EnterFrameEvent) {
+	public function Attack() {
 		// attack
 		var ci = new Array<CollisionInformation>();
 		var hit = world.rayCast(new Point(x, y - 1.0), new Point((direction ? 1 : -1)* attackRange, 0.0), world.camera.getCameraBounds(world), ["player", "map"], 0.0, ci);
@@ -120,7 +133,7 @@ class AI extends BaseObject
 			}
 			if(canAttack){
 				canAttack=false;
-				this.Attack(event);
+				this.Attack();
 				attackTimer = attackSpeed;
 			}
 		}

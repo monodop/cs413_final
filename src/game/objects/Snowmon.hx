@@ -17,6 +17,8 @@ class Snowmon extends AI
     private var sprite:MovieClipPlusPlus;
     private var collider:BoxCollider;
 
+	private var attacking:Bool;
+	
     public var Loot:String;
 
     public function new(world:World, ?x:Float=0.0, ?y:Float=0.0)
@@ -47,6 +49,7 @@ class Snowmon extends AI
 		this.patrolMoveSpeed = 3;
 		this.advanceMoveSpeed = 4.5;
 
+		this.sprite.setLoop("Move");
         this.sprite.changeAnimation("Move");
 
         addChild(this.sprite);
@@ -54,6 +57,15 @@ class Snowmon extends AI
         this.collider = new BoxCollider(this, ["enemies"], 48, 64, new Point(0, -32));
         addChild(this.collider);
     }
+	
+	public override function awake() {
+		super.awake();
+		sprite.addChangeFrameHook(frameAdvance);
+	}
+	public override function sleep() {
+		super.sleep();
+		sprite.removeChangeFrameHook(frameAdvance);
+	}
 
     public override function getColliders():Array<Collider> {
         return [this.collider];
@@ -69,6 +81,7 @@ class Snowmon extends AI
     public override function update(event:EnterFrameEvent) {
 
         this.sprite.advanceTime(event.passedTime);
+		this.sprite.scaleX = direction ? -1 : 1;
 
         var left = Root.controls.isDown("left") ? -1 : 0;
         var right = Root.controls.isDown("right") ? 1 : 0;
@@ -91,8 +104,6 @@ class Snowmon extends AI
             this.Advance(event);
         else{
             if(!canAttack){
-                if(!sprite.isPlaying)
-                    sprite.changeAnimation("Walk");
 
                 attackTimer -= event.passedTime*1000;
                 if(attackTimer<=0){
@@ -102,17 +113,31 @@ class Snowmon extends AI
             }
             if(canAttack){
 
-                canAttack=false;
-                this.Attack(event);
+                canAttack = false;
+				attacking = true;
+				canMove = false;
                 attackTimer = attackSpeed;
                 sprite.changeAnimation("Attack");
+				sprite.play();
             }
         }
+		if (!sprite.isPlaying) {
+			sprite.changeAnimation("Move");
+			sprite.play();
+			attacking = false;
+			canMove = true;
+		}
     }
 
 	private override function killed(overflow:Float) {
 		world.spawnItem("{ \"Coin\" : \"1\" }", this.x, this.y);
 		world.removeObject(this);
         this.dispose();
+	}
+	
+	public function frameAdvance(clip:MovieClipPlusPlus) {
+		if (clip.getLastAnimation() == "Attack" && clip.getAnimationFrame() == 4) {
+			this.Attack();
+		}
 	}
 }
