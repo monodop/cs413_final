@@ -13,16 +13,10 @@ import utility.Point;
 
 class Golem extends AI
 {
-
-<<<<<<< HEAD
     private var sprite:MovieClipPlusPlus;
     private var collider:BoxCollider;
 	
 	private var attacking:Bool;
-=======
-	private var sprite:MovieClipPlusPlus;
-	private var collider:BoxCollider;
->>>>>>> 9c3c505fc8d3e36e3efeaf112289b8573abd398a
 
 	public var Loot:String;
 

@@ -17,13 +17,9 @@ class Snowmon extends AI
 	private var sprite:MovieClipPlusPlus;
 	private var collider:BoxCollider;
 
-<<<<<<< HEAD
 	private var attacking:Bool;
 	
     public var Loot:String;
-=======
-	public var Loot:String;
->>>>>>> 9c3c505fc8d3e36e3efeaf112289b8573abd398a
 
 	public function new(world:World, ?x:Float=0.0, ?y:Float=0.0)
 	{
