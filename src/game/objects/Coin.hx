@@ -22,6 +22,11 @@ class Coin extends BaseObject
 	private var sprite:MovieClipPlusPlus;
 	private var collider:BoxCollider;
 	
+	private var collectable:Bool = false;
+	private var timeToCollectable:Float = 550;
+	private var timeToFlash:Float = 7000;
+	private var timeToDespawn:Float = 10000;
+	
 	public function new(world:World, xloc:Float, yloc:Float, velX, velY) {
 		super(world, xloc, yloc, 0, 0);
 		this.velX = velX;
@@ -98,9 +103,28 @@ class Coin extends BaseObject
 		}
 	
 		velY += event.passedTime * 80.0;
+		
+		timeToCollectable -= event.passedTime * 1000;
+		timeToFlash -= event.passedTime * 1000;
+		timeToDespawn -= event.passedTime * 1000;
+		
+		if (timeToCollectable < 0) {
+			collectable = true;
+		}
+		
+		if (timeToFlash < 0) {
+			timeToFlash = 90 + Std.random(20);
+			this.sprite.visible = !this.sprite.visible;
+		}
+		
+		if (timeToDespawn < 0) {
+			this.damage(1.0);
+		}
 	}
 	
 	public override function collision(self:Collider, object:Collider, collisionInfo:CollisionInformation):Bool {
+		if (!collectable)
+			return false;
 		var player:Player;
 		if (Std.is(object.parent, Player)) {
 			player = cast object.parent;
