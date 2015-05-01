@@ -13,7 +13,6 @@ import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.display.Image;
 import starling.text.TextField;
-import starling.text.BitmapFont;
 import starling.utils.Color;
 import starling.events.KeyboardEvent;
 import Std;
@@ -37,36 +36,39 @@ class Credits extends Sprite {
 
 	public function start() {
 
-			var center = new Vector3D(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
-			this.pivotX = center.x;
-			this.pivotY = center.y;
-			this.x = center.x;
-			this.y = center.y;
-			this.scaleX = 1;
-			this.scaleY = 1;
+        bg = new Image(Root.assets.getTexture("intro"));
+        bg.smoothing = "none";
+        this.addChild(bg);
+        var center = new Vector3D(Starling.current.stage.stageWidth / 2, Starling.current.stage.stageHeight / 2);
+        this.pivotX = center.x;
+        this.pivotY = center.y;
+        this.x = center.x;
+        this.y = center.y;
+        this.scaleX = 1;
+        this.scaleY = 1;
 
-			Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleInput);
-			credits.x = center.x - 175;
-			credits.y = center.y + 180;
-			this.addChild(credits);
-			name1.x = center.x - 75;
-			name1.y = center.y + 230;
-			this.addChild(name1);
-			name2.x = center.x - 75;
-			name2.y = center.y + 260;
-			this.addChild(name2);
-			name3.x = center.x - 75;
-			name3.y = center.y + 290;
-			this.addChild(name3);
-			name4.x = center.x - 75;
-			name4.y = center.y + 320;
-			this.addChild(name4);
-            name5.x = center.x - 75;
-			name5.y = center.y + 350;
-			this.addChild(name5);
-			rootSprite.addChild(this);
-			scrollUp();
-		}
+        Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleInput);
+        credits.x = center.x - 175;
+        credits.y = center.y + 180;
+        this.addChild(credits);
+        name1.x = center.x - 75;
+        name1.y = center.y + 230;
+        this.addChild(name1);
+        name2.x = center.x - 75;
+        name2.y = center.y + 260;
+        this.addChild(name2);
+        name3.x = center.x - 75;
+        name3.y = center.y + 290;
+        this.addChild(name3);
+        name4.x = center.x - 75;
+        name4.y = center.y + 320;
+        this.addChild(name4);
+        name5.x = center.x - 75;
+        name5.y = center.y + 350;
+        this.addChild(name5);
+        rootSprite.addChild(this);
+        scrollUp();
+    }
 		
 	private function scrollUp(){
 		var creditsTween = new Tween(credits, 10, Transitions.LINEAR);
