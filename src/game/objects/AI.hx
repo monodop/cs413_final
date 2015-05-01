@@ -90,6 +90,8 @@ class AI extends BaseObject
 			if (Std.is(hitCollider, BaseObject)) {
 				var target:BaseObject = cast hitCollider;
 				target.damage(attackDamage);
+				if(attackDamage>10)
+					world.camera.shake(0, 0, 0.0);
 			}
 		}
 	
