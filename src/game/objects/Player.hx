@@ -24,11 +24,11 @@ class Player extends BaseObject
 	private var grounded:Bool;
 	public var snowWalkPS:PDParticleSystem;
 	public var tileSize:Float = 16;
+	private var ladders:Ladder;
 	
 	private var jumpStart:Bool = false;
 	private var jumpEnd:Bool = false;
 	private var attacking:Bool = false;
-	
 	private var doubleJumped:Bool = false;
 	
 	public function new(world:World) 
@@ -147,9 +147,11 @@ class Player extends BaseObject
 		var right = Root.controls.isDown("right") ? 1 : 0;
 		var up = Root.controls.isDown("up") ? -1 : 0;
 		var down = Root.controls.isDown("down");
-		
+		var down2 = Root.controls.isDown("down") ? -1 : 0;
+
 		var hor = left + right;
-		
+		var vert = up + down2;
+
 		//snowWalkPS.start();
 		
 		if (hor < 0) {
@@ -163,110 +165,117 @@ class Player extends BaseObject
 		else {
 			//snowWalkPS.stop();
 		}
-		
-		if (grounded && !jumpStart && !jumpEnd && !attacking) {
-			
-			if (hor == 0) {
-				if (sprite.getLastAnimation() != "Idle")
-					sprite.changeAnimation("Idle");
+
+		if (world.checkCollision(this.collider, null, ["ladder"])) {
+		// Ladder Physics
+			var newPosY = this.y + vert * event.passedTime;
+			var newPosX = this.x + hor * event.passedTime;
+			this.setPos(newPosX, newPosY);
+		} else {
+			if (grounded && !jumpStart && !jumpEnd && !attacking) {
+
+				if (hor == 0) {
+					if (sprite.getLastAnimation() != "Idle")
+						sprite.changeAnimation("Idle");
+				} else {
+					if (sprite.getLastAnimation() != "Walk")
+						sprite.changeAnimation("Walk");
+				}
+
+			} else if (jumpStart) {
+
+				if (!sprite.isPlaying) {
+					velY = -20;
+					jumpStart = false;
+					grounded = false;
+				}
+
+			} else if (jumpEnd) {
+
+				if (!sprite.isPlaying) {
+					jumpEnd = false;
+				}
+
+			} else if (attacking) {
+
+				if (!sprite.isPlaying) {
+					attacking = false;
+				}
+
 			} else {
-				if (sprite.getLastAnimation() != "Walk")
-					sprite.changeAnimation("Walk");
+
+				var absVel = (this.velY);
+
+				if (absVel < 5) {
+					sprite.changeAnimation("AirPeak");
+				} else if (absVel < 10) {
+					sprite.changeAnimation("AirSlow");
+				} else if (absVel < 14) {
+					sprite.changeAnimation("AirMed");
+				} else {
+					sprite.changeAnimation("AirFast");
+				}
+
 			}
-		
-		} else if (jumpStart) {
-			
-			if (!sprite.isPlaying) {
-				velY = -20;
-				jumpStart = false;
+
+			var oldX = this.x;
+			var oldY = this.y;
+
+			var newPosY = this.y + velY * event.passedTime;
+
+			var ci = new Array<CollisionInformation>();
+			var dest = world.rayCast(new Point(oldX, oldY - 0.0001), new Point(0, velY * event.passedTime), world.camera.getCameraBounds(world), ["map"], 0.0001, ci);
+			if (velY >= 0 && dest != null && !ci[0].collider_src.containsPoint(new Point(dest.x, dest.y - 0.0001), world) && !down) {
+				this.setPos(this.x, dest.y);
+				this.velY = 0;
+				if (!grounded && !attacking) {
+					jumpEnd = true;
+					sprite.changeAnimation("Jump");
+					sprite.nextFrame();
+					sprite.play();
+				}
+				grounded = true;
+				doubleJumped = false;
+			}
+			else {
+				this.setPos(this.x, newPosY);
 				grounded = false;
 			}
-			
-		} else if (jumpEnd) {
-			
-			if (!sprite.isPlaying) {
-				jumpEnd = false;
-			}
-		
-		} else if (attacking) {
-			
-			if (!sprite.isPlaying) {
-				attacking = false;
-			}
-			
-		} else {
-			
-			var absVel = (this.velY);
-			
-			if (absVel < 5) {
-				sprite.changeAnimation("AirPeak");
-			} else if (absVel < 10) {
-				sprite.changeAnimation("AirSlow");
-			} else if (absVel < 14) {
-				sprite.changeAnimation("AirMed");
-			} else {
-				sprite.changeAnimation("AirFast");
-			}
-			
-		}
-		
-		var oldX = this.x;
-		var oldY = this.y;
-		
-		var newPosY = this.y + velY * event.passedTime;
-		
-		var ci = new Array<CollisionInformation>();
-		var dest = world.rayCast(new Point(oldX, oldY - 0.0001), new Point(0, velY * event.passedTime), world.camera.getCameraBounds(world), ["map"], 0.0001, ci);
-		if (velY >= 0 && dest != null && !ci[0].collider_src.containsPoint(new Point(dest.x, dest.y - 0.0001), world) && !down) {
-			this.setPos(this.x, dest.y);
-			this.velY = 0;
-			if (!grounded && !attacking) {
-				jumpEnd = true;
-				sprite.changeAnimation("Jump");
-				sprite.nextFrame();
-				sprite.play();
-			}
-			grounded = true;
-			doubleJumped = false;
-		}
-		else {
-			this.setPos(this.x, newPosY);
-			grounded = false;
-		}
-		
-		var newPosX = this.x + hor * event.passedTime * 7.5;
-		
-		var oldX = this.x;
-		var oldY = this.y;
-		
-		this.setPos(newPosX, this.y);
-		
-		if ( true || grounded) {
-			
-			var dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * -7.6), world.camera.getCameraBounds(world), ["map"]);
-			if (dest != null) {// && Math.abs(dest.y - this.y) > 0.0001) {
-				
-				//this.y = dest.y + 0.0001;
-				this.setPos(newPosX, dest.y - 0.0001);
-				
-			} else {
-				
-				dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * 7.6), world.camera.getCameraBounds(world), ["map"]);
-				if (dest != null) {
+
+			var newPosX = this.x + hor * event.passedTime * 7.5;
+
+			var oldX = this.x;
+			var oldY = this.y;
+
+			this.setPos(newPosX, this.y);
+
+			if ( true || grounded) {
+
+				var dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * -7.6), world.camera.getCameraBounds(world), ["map"]);
+				if (dest != null) {// && Math.abs(dest.y - this.y) > 0.0001) {
+
 					//this.y = dest.y + 0.0001;
 					this.setPos(newPosX, dest.y - 0.0001);
+
+				} else {
+
+					dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * 7.6), world.camera.getCameraBounds(world), ["map"]);
+					if (dest != null) {
+						//this.y = dest.y + 0.0001;
+						this.setPos(newPosX, dest.y - 0.0001);
+					}
 				}
+
 			}
-			
+			else {
+				//snowWalkPS.stop();
+			}
+
+			velY += event.passedTime * 80.0;
+
+			//snowWalkPS.emitterX = this.x * tileSize * 2;
+			//snowWalkPS.emitterY = this.y * tileSize * 2;
 		}
-		else {
-			//snowWalkPS.stop();
-		}
-		
-		velY += event.passedTime * 80.0;
-		
-		//snowWalkPS.emitterX = this.x * tileSize * 2;
-		//snowWalkPS.emitterY = this.y * tileSize * 2;
 	}
 	
 	
