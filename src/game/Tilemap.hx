@@ -315,15 +315,11 @@ class Tilemap extends BaseObject implements HasCollider {
 						entities.push(chest);
 
                     case "Golem":
-                    var golem = new Golem(this.world);
-                    golem.x = object.x / world.tileSize;
-                    golem.y = object.y / world.tileSize;
+                    var golem = new Golem(this.world, object.x/world.tileSize, object.y/world.tileSize);
                     entities.push(golem);
 
                     case "Snowmon":
-                    var snowmon = new Snowmon(this.world);
-                    snowmon.x = object.x / world.tileSize;
-                    snowmon.y = object.y / world.tileSize;
+                    var snowmon = new Snowmon(this.world, object.x/world.tileSize, object.y/world.tileSize);
                     entities.push(snowmon);
 
                     case "Ladder":
