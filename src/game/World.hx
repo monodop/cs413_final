@@ -75,8 +75,8 @@ class World extends Sprite {
 		collisionMatrix.registerLayer("enemies");
 		collisionMatrix.registerLayer("ladder");
 		collisionMatrix.registerLayer("items");
+		collisionMatrix.registerLayer("hitOnly");
 		collisionMatrix.enableCollisions("player", ["items"]);
-		collisionMatrix.enableCollisions("player", ["ladder"]);
 		collisionMatrix.enableCollisions("map", ["player", "enemies"]);
 		
 		addObject(tilemap);

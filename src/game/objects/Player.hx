@@ -87,6 +87,10 @@ class Player extends BaseObject
 		
 	}
 	
+	private override function killed(overflow:Float) {
+		world.gameOver();
+	}
+	
 	public function setWorld(world:World) {
 		this.world.detachPlayer();
 		this.world = world;
@@ -146,7 +150,7 @@ class Player extends BaseObject
 		if (clip.getLastAnimation() == "Attack1" && clip.getAnimationFrame() == 2) {
 			// Strike
 			var ci = new Array<CollisionInformation>();
-			var hit = world.rayCast(new Point(x, y - 1.0), new Point((this.scaleX < 0 ? -1 : 1) * 3.0, 0.0), world.camera.getCameraBounds(world), ["map", "enemies"], 0.0, ci);
+			var hit = world.rayCast(new Point(x, y - 1.0), new Point((this.scaleX < 0 ? -1 : 1) * 3.0, 0.0), world.camera.getCameraBounds(world), ["map", "enemies", "hitOnly"], 0.0, ci);
 			if(hit != null) {
 				var hitCollider = ci[0].collider_src.parent;
 				if (Std.is(hitCollider, BaseObject)) {
@@ -280,9 +284,9 @@ class Player extends BaseObject
 	public override function clearColor() {
 		this.sprite.filter = null;
 	}
-    public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
+	public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
 		this.sprite.filter = new ColorFilter(r, g, b, a);
-    }
+	}
 	
 	//public override function collision(self:Collider, object:Collider, collisionInfo:CollisionInformation):Bool {
 		//
@@ -295,8 +299,8 @@ class Player extends BaseObject
 		//return true;
 		//
 	//}
-    //
-    //public override function setColor(color:Int) {
-        //this.sprite.color = color;
-    //}
+	//
+	//public override function setColor(color:Int) {
+		//this.sprite.color = color;
+	//}
 }

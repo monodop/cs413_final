@@ -4,7 +4,7 @@ import flash.geom.Rectangle;
 import utility.Point;
 import colliders.CollisionInformation;
 import haxe.Timer;
-import starling.display.Quad;
+import starling.display.Image;
 class AI extends BaseObject
 {
 	var direction:Bool = true;
@@ -14,11 +14,13 @@ class AI extends BaseObject
 	var canAttack:Bool = false;
 	var attackDamage:Float = 0.0;
 	var healthBarYOffset:Float = 50.0;
-	var healthBar:Quad;
+	var healthBar:Image;
 	var healthBarHeight:Float=5;
 	var healthBarWidth:Float=100;
-    var advanceMoveSpeed:Float = 5.0;
+	var advanceMoveSpeed:Float = 5.0;
 	var patrolMoveSpeed:Float = 2.5;
+	
+	var canMove:Bool = true;
 	
 	
 	public function new(world:World, ?x:Float = 0.0, ?y:Float = 0.0, ?offsetX = 0.0, ?offsetY = 0.0) {
@@ -30,8 +32,8 @@ class AI extends BaseObject
 			this.health = 1.0;
 		attackTimer = attackSpeed;
 		
-		this.healthBar = new Quad(healthBarWidth * this.getHealth() / this.getMaxHealth(), healthBarHeight, 0xff0000);
-        this.addChild(this.healthBar);
+		this.healthBar = new Image(Root.assets.getTexture("redpixel"));
+		this.addChild(this.healthBar);
 	}
 	
 	public override function awake() {
@@ -62,10 +64,15 @@ class AI extends BaseObject
 		} else if (!direction && world.rayCast(new Point(this.x - 0.25, this.y - 0.0001), new Point( -0.75, 1.25), new Rectangle(this.x - 2, this.y - 2, 4, 4), ["map"]) == null) {
 			direction = true;
 		}
-			
+		
         this.fall(event, ["map"]);
-		this.walk(event, patrolMoveSpeed, direction ? 1 : -1, ["map"]);
-        
+		
+		var hor = 0;
+		if (canMove) {
+			hor = direction ? 1 : -1;
+		}
+		
+		this.walk(event, patrolMoveSpeed, hor, ["map"]);
 			
 	}
 	
@@ -76,12 +83,17 @@ class AI extends BaseObject
 		else if(this.x>world.player.x) {
 			direction = false;
 		}  
-        this.fall(event, ["map"]);
+		this.fall(event, ["map"]);
 			
-		this.walk(event, advanceMoveSpeed, direction ? 1 : -1, ["map"]);
+		var hor = 0;
+		if (canMove) {
+			hor = direction ? 1 : -1;
+		}
+		
+		this.walk(event, advanceMoveSpeed, hor, ["map"]);
 	}
 	
-	public function Attack(event:EnterFrameEvent) {
+	public function Attack() {
 		// attack
 		var ci = new Array<CollisionInformation>();
 		var hit = world.rayCast(new Point(x, y - 1.0), new Point((direction ? 1 : -1)* attackRange, 0.0), world.camera.getCameraBounds(world), ["player", "map"], 0.0, ci);
@@ -120,7 +132,7 @@ class AI extends BaseObject
 			}
 			if(canAttack){
 				canAttack=false;
-				this.Attack(event);
+				this.Attack();
 				attackTimer = attackSpeed;
 			}
 		}
