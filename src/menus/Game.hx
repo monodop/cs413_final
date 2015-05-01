@@ -66,6 +66,10 @@ class Game extends MenuState
         this.addChild(this.healthBarFG);
 	}
 	
+	private function updateHealthBar(event:Event) {
+		this.healthBarFG.width = healthBarWidth * this.player.health / this.player.maxHealth;
+	}
+	
 	override function deinit() {
 		summerWorld.dispose();
 		winterWorld.dispose();
@@ -75,11 +79,13 @@ class Game extends MenuState
 	override function awake() {
 		this.addEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
 		Root.controls.hook("debugWorldSwitch", "gameSwitchWorldDebug", switchWorld);
+		this.player.addEventListener("healthChanged", updateHealthBar);
 		activeWorld.awake();
 	}
 	override function sleep() {
 		removeEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
 		Root.controls.unhook("debugWorldSwitch", "gameSwitchWorldDebug");
+		this.player.removeEventListener("healthChanged", updateHealthBar);
 		activeWorld.sleep();
 	}
 	

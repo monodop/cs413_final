@@ -3,6 +3,7 @@ import colliders.Collider;
 import colliders.CollisionInformation;
 import colliders.HasCollider;
 import colliders.Quadtree;
+import starling.events.Event;
 import game.World;
 import starling.display.Sprite;
 import starling.events.EnterFrameEvent;
@@ -15,8 +16,8 @@ class BaseObject extends Sprite implements HasCollider
 	private var world:World;
 	
 	private var strikable:Bool = false;
-	public var health:Float = 0.0;
-	public var maxHealth:Float = 0.0;
+	private var health:Float = 0.0;
+	private var maxHealth:Float = 0.0;
 
 	public function new(world:World, ?x:Float=0.0, ?y:Float=0.0, ?offsetX:Float=0.0, ?offsetY:Float=0.0) 
 	{
@@ -72,12 +73,20 @@ class BaseObject extends Sprite implements HasCollider
 	
 	public function damage(amt:Float) {
 		if (!isDead()) {
-			health -= amt;
+			addHealth( -amt);
 			if (health < 0) {
 				killed( -health);
-				health = 0.0;
+				updateHealth(0);
 			}
 		}
+	}
+	
+	public function updateHealth(amt:Float) {
+		health = amt;
+		dispatchEvent(new Event("healthChanged"));
+	}
+	public function addHealth(amt:Float) {
+		updateHealth(this.health + amt);
 	}
 	
 	private function killed(overflow:Float) { world.removeObject(this); this.dispose(); }
