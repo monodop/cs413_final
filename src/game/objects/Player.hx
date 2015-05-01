@@ -248,8 +248,8 @@ class Player extends BaseObject
 				
 			} else {
 				
-				var dt = world.rayCast(new Point(this.x, this.y - 0.0001), new Point(0, 100.0), world.camera.getBounds(world), ["map"]);
-				if (dt != null) {
+				dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * 7.6), world.camera.getCameraBounds(world), ["map"]);
+				if (dest != null) {
 					//this.y = dest.y + 0.0001;
 					this.setPos(newPosX, dest.y - 0.0001);
 				}
