@@ -87,6 +87,10 @@ class Player extends BaseObject
 		
 	}
 	
+	private override function killed(overflow:Float) {
+		world.gameOver();
+	}
+	
 	public function setWorld(world:World) {
 		this.world.detachPlayer();
 		this.world = world;
