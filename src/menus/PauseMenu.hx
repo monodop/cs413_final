@@ -13,6 +13,7 @@ import utility.ControlManager.ControlAction;
 
 class PauseMenu extends MenuState
 {
+	private var game:MenuState;
 	private var world:World;
 	private var selection:Int;
 	private var buttons:Array<TextField>;
@@ -25,9 +26,10 @@ class PauseMenu extends MenuState
 	public var menuTitle:TextField;
 	public var center = new Vector3D(Starling.current.stage.stageWidth / 2.5, Starling.current.stage.stageHeight / 2.5);
 
-	public function new(rootSprite:Sprite, world:World) 
+	public function new(rootSprite:Sprite, game:MenuState, world:World) 
 	{
 		super(rootSprite);
+		this.game = game;
 		this.world = world;
 	}
 	
@@ -128,7 +130,7 @@ class PauseMenu extends MenuState
 	private function space(action:ControlAction) {
 		if (selection == 0) {
 			// Resume game
-			world.awake();
+			game.start();
 			this.stop();
 		}
 		else if (selection == 1) {
@@ -140,7 +142,7 @@ class PauseMenu extends MenuState
 	
 	private function unpauseGame(action:ControlAction) {
 		if (action.isActive()) {
-			world.awake();
+			game.start();
 			this.stop();
 		}
 	}
