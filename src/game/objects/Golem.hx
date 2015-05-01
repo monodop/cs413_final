@@ -24,9 +24,16 @@ class Golem extends AI
 		this.attackDamage = 15;
 		this.attackSpeed = 7000.0;
 		
+		this.healthBar.x = 0;
+        this.healthBar.y = -healthBarYOffset;
+		
 		this.health = 50.0;
-		this.maxHealth = 200.0;
+		this.maxHealth = 50.0;
 		this.strikable = true;
+		
+		this.healthBar.x = -26.5;
+        this.healthBar.y = -100;
+		this.healthBarWidth = 50;
 
         var animations = new StringMap<Vector<Texture>>();
         animations.set("Move", Root.assets.getTextures("enemies/Golem_"));

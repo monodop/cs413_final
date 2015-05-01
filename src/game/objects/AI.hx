@@ -15,7 +15,7 @@ class AI extends BaseObject
 	var attackDamage:Float = 0.0;
 	var healthBarYOffset:Float = 50.0;
 	var healthBar:Quad;
-	var healthBarHeight:Float=30;
+	var healthBarHeight:Float=5;
 	var healthBarWidth:Float=100;
 	
 	
@@ -29,8 +29,6 @@ class AI extends BaseObject
 		attackTimer = attackSpeed;
 		
 		this.healthBar = new Quad(healthBarWidth * this.getHealth() / this.getMaxHealth(), healthBarHeight, 0xff0000);
-        this.healthBar.x = 0;
-        this.healthBar.y = -healthBarYOffset;
         this.addChild(this.healthBar);
 	}
 	
