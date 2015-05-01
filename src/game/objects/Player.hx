@@ -104,6 +104,10 @@ class Player extends BaseObject
 		world.removeChild(snowWalkPS);
 		Starling.juggler.remove(snowWalkPS);
 	}
+
+	public function climb(action:ControlAction) {
+
+	}
 	
 	public function jump(action:ControlAction) {
 		if (action.isActive() && !jumpStart && !attacking && (grounded || !doubleJumped) ) {
@@ -136,6 +140,7 @@ class Player extends BaseObject
 				if (Std.is(hitCollider, BaseObject)) {
 					var target:BaseObject = cast hitCollider;
 					target.damage(10);
+					trace(Type.getClass(ci[0].collider_src.parent));
 				}
 			}
 		}
@@ -149,7 +154,7 @@ class Player extends BaseObject
 		var right = Root.controls.isDown("right") ? 1 : 0;
 		var up = Root.controls.isDown("up") ? -1 : 0;
 		var down = Root.controls.isDown("down");
-		var down2 = Root.controls.isDown("down") ? -1 : 0;
+		var down2 = Root.controls.isDown("down") ? 1 : 0;
 
 		var hor = left + right;
 		var vert = up + down2;

@@ -23,6 +23,9 @@ class Snowmon extends AI
 		this.attackRange = 2.0;
 		this.attackDamage = 3.0;
 		this.attackSpeed = 2000.0;
+		this.maxHealth = 100.0;
+		this.health = 100.0;
+		this.strikable = true;
 
         var animations = new StringMap<Vector<Texture>>();
         animations.set("Move", Root.assets.getTextures("enemies/SnowMon_"));

@@ -4,7 +4,7 @@ import flash.geom.Rectangle;
 import utility.Point;
 import colliders.CollisionInformation;
 import haxe.Timer;
-
+import starling.display.Quad;
 class AI extends BaseObject
 {
 	var direction:Bool = true;
@@ -13,12 +13,47 @@ class AI extends BaseObject
 	var attackTimer:Float;
 	var canAttack:Bool = false;
 	var attackDamage:Float = 0.0;
+	var healthBarYOffset:Float = 50.0;
+	var healthBar:Quad;
+	var healthBarHeight:Float=30;
+	var healthBarWidth:Float=100;
 	
-	public function new(world:World, ?x:Float=0.0, ?y:Float=0.0, ?offsetX=0.0, ?offsetY=0.0) {
+	
+	public function new(world:World, ?x:Float = 0.0, ?y:Float = 0.0, ?offsetX = 0.0, ?offsetY = 0.0) {
+		
 		super(world, x, y, offsetX, offsetY);
+		if (this.maxHealth <= 0)
+			this.maxHealth = 1.0;
+		if (this.health <= 0)
+			this.health = 1.0;
 		attackTimer = attackSpeed;
+		
+		this.healthBar = new Quad(healthBarWidth * this.getHealth() / this.getMaxHealth(), healthBarHeight, 0xff0000);
+        this.healthBar.x = 0;
+        this.healthBar.y = -healthBarYOffset;
+        this.addChild(this.healthBar);
 	}
 	
+	public override function awake() {
+		super.awake();
+		this.addEventListener("healthChanged", updateHealthBar);
+		updateHealthBar();
+	}
+	
+	public override function sleep() {
+		super.sleep();
+		this.removeEventListener("healthChanged", updateHealthBar);
+	}
+	
+	public function updateHealthBar() {
+		healthBar.width = healthBarWidth * this.getHealth() / this.getMaxHealth();
+	}
+	
+	override public function dispose():Void 
+	{
+		this.removeEventListener("healthChanged", updateHealthBar);
+		super.dispose();
+	}
 	
 	public function Patrol(event:EnterFrameEvent) {
 		if (direction)
@@ -63,6 +98,9 @@ class AI extends BaseObject
 	}
 
 	public override function update(event:EnterFrameEvent) {
+		
+		this.setChildIndex(healthBar, this.numChildren - 1);
+		
 		var dir = new Point(world.player.x - this.x, world.player.y - this.y);
 		dir = dir.normalize(5);
 		var ci = new Array<CollisionInformation>();
