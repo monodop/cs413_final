@@ -15,6 +15,7 @@ import starling.events.Event;
 import utility.ControlManager.ControlAction;
 import starling.text.TextField;
 import starling.text.BitmapFont;
+import starling.extensions.*;
 
 class Game extends MenuState
 {
@@ -113,12 +114,16 @@ class Game extends MenuState
                 this.healthBarBG.color = 0x000000;
                 this.scoreText.color = 0x000000;
                 this.coinText.color = 0x000000;
+                this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xffffffff);
+                this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xffffffff);
 			} else {
 				this.activeWorld = summerWorld;
                 this.healthText.color = 0xffffff;
                 this.healthBarBG.color = 0xffffff;
                 this.scoreText.color = 0xffffff;
                 this.coinText.color = 0xffffff;
+                this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xff8b7355);
+                this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xff8b7355);
 			}
 			player.setWorld(this.activeWorld);
 			this.addChild(activeWorld);

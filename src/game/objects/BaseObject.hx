@@ -7,6 +7,7 @@ import starling.events.Event;
 import game.World;
 import starling.display.Sprite;
 import starling.events.EnterFrameEvent;
+import haxe.Timer;
 
 class BaseObject extends Sprite implements HasCollider
 {
@@ -74,7 +75,17 @@ class BaseObject extends Sprite implements HasCollider
 	public function damage(amt:Float) {
 		if (!isDead()) {
 			addHealth( -amt);
-			if (health < 0) {
+            this.setColor(0xffff00);
+            Timer.delay(function() {
+                this.setColor(0xffffff);
+                Timer.delay(function() {
+                    this.setColor(0xffff00);
+                    Timer.delay(function() {
+                        this.setColor(0xffffff);
+                    }, 500);
+                }, 500);
+            }, 500);
+			if (health <= 0) {
 				killed( -health);
 				updateHealth(0);
 			}
@@ -84,7 +95,9 @@ class BaseObject extends Sprite implements HasCollider
 	public function getHealth():Float {
 		return this.health;
 	}
+    
 	public function getMaxHealth():Float {
+		return this.maxHealth;
 		return this.maxHealth;
 	}
 	
@@ -92,14 +105,19 @@ class BaseObject extends Sprite implements HasCollider
 		health = amt;
 		dispatchEvent(new Event("healthChanged"));
 	}
+    
 	public function addHealth(amt:Float) {
 		updateHealth(this.health + amt);
 	}
 	
-	private function killed(overflow:Float) { world.removeObject(this); this.dispose(); }
+	private function killed(overflow:Float) {
+        world.removeObject(this);
+        this.dispose();
+    }
 	
 	public function isDead():Bool {
 		return health == 0;
 	}
-	
+    
+	public function setColor(color:Int) {}
 }

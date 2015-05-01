@@ -116,6 +116,7 @@ class World extends Sprite {
 		for (collider in obj.getColliders()) {
 			collider.quadTree.remove(collider, true);
 		}
+		this.tilemap.entities.remove(obj);
 		removeChild(obj);
 	}
 	

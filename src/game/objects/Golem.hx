@@ -23,6 +23,17 @@ class Golem extends AI
 		this.attackRange = 3.5;
 		this.attackDamage = 15;
 		this.attackSpeed = 7000.0;
+		
+		this.healthBar.x = 0;
+        this.healthBar.y = -healthBarYOffset;
+		
+		this.health = 50.0;
+		this.maxHealth = 50.0;
+		this.strikable = true;
+		
+		this.healthBar.x = -26.5;
+        this.healthBar.y = -100;
+		this.healthBarWidth = 50;
 
         var animations = new StringMap<Vector<Texture>>();
         animations.set("Move", Root.assets.getTextures("enemies/Golem_"));
@@ -42,5 +53,9 @@ class Golem extends AI
 
     public override function getColliders():Array<Collider> {
         return [this.collider];
+    }
+    
+    public override function setColor(color:Int) {
+        this.sprite.color = color;
     }
 }
