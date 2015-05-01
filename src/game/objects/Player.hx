@@ -141,7 +141,7 @@ class Player extends BaseObject
 				if (Std.is(hitCollider, BaseObject)) {
 					var target:BaseObject = cast hitCollider;
 					target.damage(10);
-					trace(Type.getClass(ci[0].collider_src.parent));
+					//trace(Type.getClass(ci[0].collider_src.parent));
 				}
 			}
 		}
