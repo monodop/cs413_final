@@ -7,7 +7,9 @@ import game.objects.Player;
 import haxe.Log;
 import menus.Game;
 import menus.MenuState;
+import menus.PauseMenu;
 import menus.QuadTreeVis;
+import menus.MainMenu;
 import movable.*;
 import starling.core.Starling;
 import starling.display.Image;
@@ -152,6 +154,7 @@ class World extends Sprite {
 	
 	public function awake() {
 		Root.controls.hook("quadtreevis", "quadTreeVis", quadTreeVis);
+		Root.controls.hook("pause", "Pause", pauseGame);
 		Starling.current.stage.addEventListener(TouchEvent.TOUCH, screenShake);
 		player.awake();
 		for (ent in tilemap.entities)
@@ -160,6 +163,7 @@ class World extends Sprite {
 	
 	public function sleep() {
 		Root.controls.unhook("quadtreevis", "quadTreeVis");
+		Root.controls.unhook("pause", "Pause");
 		Starling.current.stage.removeEventListener(TouchEvent.TOUCH, screenShake);
 		player.sleep();
 		for (ent in tilemap.entities)
@@ -189,6 +193,20 @@ class World extends Sprite {
 		menustate.stop();
 		game.start();
 		
+	}
+	
+	public function quit() {
+		var menu = new MainMenu(menustate.rootSprite);
+		menustate.stop();
+		menu.start();
+	}
+	
+	function pauseGame(action:ControlAction) {
+		if (action.isActive()) {
+			var pauseMenu = new PauseMenu(menustate.rootSprite, this);
+			this.sleep();
+			pauseMenu.start();
+		}
 	}
 	
 	function touch(event:TouchEvent) {
