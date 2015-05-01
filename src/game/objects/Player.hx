@@ -214,7 +214,7 @@ class Player extends BaseObject
 		
 		var ci = new Array<CollisionInformation>();
 		var dest = world.rayCast(new Point(oldX, oldY - 0.0001), new Point(0, velY * event.passedTime), world.camera.getCameraBounds(world), ["map"], 0.0001, ci);
-		if (velY >= 0 && dest != null && !ci[0].collider_src.containsPoint(new Point(dest.x, dest.y - 0.0001), world)) {
+		if (velY >= 0 && dest != null && !ci[0].collider_src.containsPoint(new Point(dest.x, dest.y - 0.0001), world) && !down) {
 			this.setPos(this.x, dest.y);
 			this.velY = 0;
 			if (!grounded && !attacking) {
