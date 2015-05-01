@@ -25,9 +25,6 @@ class Golem extends AI
 		this.attackDamage = 15;
 		this.attackSpeed = 7000.0;
 		
-		this.healthBar.x = 0;
-        this.healthBar.y = -healthBarYOffset;
-		
 		this.health = 50.0;
 		this.maxHealth = 50.0;
 		this.strikable = true;
@@ -35,6 +32,8 @@ class Golem extends AI
 		this.patrolMoveSpeed = 2;
 		this.advanceMoveSpeed = 3;
 		
+        this.healthBar.scaleX = healthBarWidth * this.getHealth() / this.getMaxHealth();
+        this.healthBar.scaleY = healthBarHeight;
 		this.healthBar.x = -26.5;
         this.healthBar.y = -100;
 		this.healthBarWidth = 50;

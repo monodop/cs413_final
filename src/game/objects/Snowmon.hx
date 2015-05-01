@@ -27,6 +27,8 @@ class Snowmon extends AI
 		this.maxHealth = 20.0;
 		this.health = 20.0;
 		this.strikable = true;
+        this.healthBar.scaleX = healthBarWidth * this.getHealth() / this.getMaxHealth();
+        this.healthBar.scaleY = healthBarHeight;
 		this.healthBar.x = -10;
         this.healthBar.y = -50;
 		this.healthBarWidth = 20;
