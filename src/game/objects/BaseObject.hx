@@ -85,10 +85,10 @@ class BaseObject extends Sprite implements HasCollider
 		Root.assets.playSound("Hit_Sound_" + Std.string(noise), 0, 0, new SoundTransform(0.1, 0.1));
 		if (!isDead()) {
 			addHealth( -amt);
-            this.setColor(0.9, 0.9, 0.25, 1.0);
-            Timer.delay(function() {
+			this.setColor(0.9, 0.9, 0.25, 1.0);
+			Timer.delay(function() {
 				this.clearColor();
-            }, 50);
+			}, 50);
 			if (health <= 0) {
 				killed( -health);
 				updateHealth(0);
@@ -155,7 +155,7 @@ class BaseObject extends Sprite implements HasCollider
 	public function getHealth():Float {
 		return this.health;
 	}
-    
+	
 	public function getMaxHealth():Float {
 		return this.maxHealth;
 		return this.maxHealth;
@@ -165,26 +165,26 @@ class BaseObject extends Sprite implements HasCollider
 		health = amt;
 		dispatchEvent(new Event("healthChanged"));
 	}
-    
+	
 	public function addHealth(amt:Float) {
 		updateHealth(this.health + amt);
 	}
 	
 	private function killed(overflow:Float) {
-        world.removeObject(this);
-        this.dispose();
-    }
+		world.removeObject(this);
+		this.dispose();
+	}
 	
 	public function isDead():Bool {
 		return health == 0;
 	}
-    
+	
 	//public function setColor(color:Int) { }
 	public function clearColor() {
 		//this.sprite.filter = null;
 	}
-    public function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
-        //this.sprite.color = color;
+	public function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
+		//this.sprite.color = color;
 		//this.sprite.filter = new ColorFilter(r, g, b, a);
-    }
+	}
 }

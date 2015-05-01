@@ -17,7 +17,7 @@ class AI extends BaseObject
 	var healthBar:Image;
 	var healthBarHeight:Float=5;
 	var healthBarWidth:Float=100;
-    var advanceMoveSpeed:Float = 5.0;
+	var advanceMoveSpeed:Float = 5.0;
 	var patrolMoveSpeed:Float = 2.5;
 	
 	
@@ -31,7 +31,7 @@ class AI extends BaseObject
 		attackTimer = attackSpeed;
 		
 		this.healthBar = new Image(Root.assets.getTexture("redpixel"));
-        this.addChild(this.healthBar);
+		this.addChild(this.healthBar);
 	}
 	
 	public override function awake() {
@@ -63,9 +63,9 @@ class AI extends BaseObject
 			direction = true;
 		}
 			
-        this.fall(event, ["map"]);
+		this.fall(event, ["map"]);
 		this.walk(event, patrolMoveSpeed, direction ? 1 : -1, ["map"]);
-        
+		
 			
 	}
 	
@@ -76,7 +76,7 @@ class AI extends BaseObject
 		else if(this.x>world.player.x) {
 			direction = false;
 		}  
-        this.fall(event, ["map"]);
+		this.fall(event, ["map"]);
 			
 		this.walk(event, advanceMoveSpeed, direction ? 1 : -1, ["map"]);
 	}
