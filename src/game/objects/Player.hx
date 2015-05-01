@@ -6,6 +6,7 @@ import flash.Vector;
 import game.MovieClipPlusPlus;
 import game.World;
 import haxe.ds.StringMap;
+import starling.events.Event;
 import haxe.macro.Expr.Position;
 import starling.core.Starling;
 import starling.display.Image;
@@ -30,6 +31,7 @@ class Player extends BaseObject
 	private var jumpEnd:Bool = false;
 	private var attacking:Bool = false;
 	private var doubleJumped:Bool = false;
+	private var coins:Int = 0;
 	
 	public function new(world:World) 
 	{
@@ -129,6 +131,15 @@ class Player extends BaseObject
 		}
 	}
 	
+	public function updateCoins() {
+		coins++;
+		dispatchEvent(new Event("coinAdded"));
+	}
+	
+	public function getCoinCount():Int {
+		return this.coins;
+	}
+	
 	public function frameAdvance(clip:MovieClipPlusPlus) {
 		//trace(clip.getLastAnimation() + "\t\t" + clip.getAnimationFrame());
 		if (clip.getLastAnimation() == "Attack1" && clip.getAnimationFrame() == 2) {
@@ -172,13 +183,15 @@ class Player extends BaseObject
 		else {
 			snowWalkPS.stop();
 		}
-
+		
+		world.checkCollision(this.collider, null, ["items"]);
 		if (world.checkCollision(this.collider, null, ["ladder"])) {
 		// Ladder Physics
 			var newPosY = this.y + vert * event.passedTime;
 			var newPosX = this.x + hor * event.passedTime;
 			this.setPos(newPosX, newPosY);
-		} else {
+		}
+		else {
 			if (grounded && !jumpStart && !jumpEnd && !attacking) {
 
 				if (hor == 0) {

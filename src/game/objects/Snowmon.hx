@@ -59,4 +59,10 @@ class Snowmon extends AI
     public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
 		this.sprite.filter = new ColorFilter(r, g, b, a);
     }
+	
+	private override function killed(overflow:Float) {
+		world.spawnItem("{ \"Coin\" : \"1\" }", this.x, this.y);
+		world.removeObject(this);
+        this.dispose();
+	}
 }

@@ -49,5 +49,6 @@ class Chest extends BaseObject
 	
 	private override function killed(overflow:Float) {
 		this.sprite.changeAnimation("Open");
+		world.spawnItem(Loot, this.x, this.y);
 	}
 }

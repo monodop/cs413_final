@@ -66,4 +66,10 @@ class Golem extends AI
         //this.sprite.color = color;
 		this.sprite.filter = new ColorFilter(r, g, b, a);
     }
+	
+	private override function killed(overflow:Float) {
+		world.spawnItem("{ \"Coin\" : \"3\" }", this.x, this.y);
+		world.removeObject(this);
+        this.dispose();
+	}
 }
