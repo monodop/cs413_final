@@ -93,13 +93,22 @@ class CollisionMatrix
 	}
 	
 	// Check if two colliders can collide based on their assigned physics layers
-	public function canCollide(c1:Collider, c2:Collider) {
+	public function canCollide(c1:Collider, c2:Collider, ?layerFilter:Array<String>) {
 		var l1 = c1.getLayers();
 		var l2 = c2.getLayers();
 		for (layer1 in l1) {
 			for (layer2 in l2) {
-				if (collisionExists(layer1, layer2) || collisionExists(layer2, layer1))
-					return true;
+				if (collisionExists(layer1, layer2) || collisionExists(layer2, layer1)) {
+					if (layerFilter != null) {
+						for (l in layerFilter) {
+							if (l == layer1 || l == layer2) {
+								return true;
+							}
+						}
+					} else {
+						return true;
+					}
+				}
 			}
 		}
 		return false;

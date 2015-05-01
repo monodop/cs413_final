@@ -7,7 +7,9 @@ import game.objects.Player;
 import haxe.Log;
 import menus.Game;
 import menus.MenuState;
+import menus.PauseMenu;
 import menus.QuadTreeVis;
+import menus.MainMenu;
 import movable.*;
 import starling.core.Starling;
 import starling.display.Image;
@@ -152,6 +154,7 @@ class World extends Sprite {
 	
 	public function awake() {
 		Root.controls.hook("quadtreevis", "quadTreeVis", quadTreeVis);
+		Root.controls.hook("pause", "Pause", pauseGame);
 		Starling.current.stage.addEventListener(TouchEvent.TOUCH, screenShake);
 		player.awake();
 		for (ent in tilemap.entities)
@@ -160,6 +163,7 @@ class World extends Sprite {
 	
 	public function sleep() {
 		Root.controls.unhook("quadtreevis", "quadTreeVis");
+		Root.controls.unhook("pause", "Pause");
 		Starling.current.stage.removeEventListener(TouchEvent.TOUCH, screenShake);
 		player.sleep();
 		for (ent in tilemap.entities)
@@ -191,6 +195,20 @@ class World extends Sprite {
 		
 	}
 	
+	function pauseGame(action:ControlAction) {
+		if (action.isActive()) {
+			var pauseMenu = new PauseMenu(menustate.rootSprite, menustate, this);
+			menustate.pause();
+			pauseMenu.start();
+		}
+	}
+	
+	public function quit() {
+		var menu = new MainMenu(menustate.rootSprite);
+		menustate.stop();
+		menu.start();
+	}
+	
 	function touch(event:TouchEvent) {
 		var p = event.getTouch(Starling.current.stage, TouchPhase.BEGAN, -1);
 		if (p != null) {
@@ -203,7 +221,7 @@ class World extends Sprite {
 	// Pass a collider of something you want to test the collision of (the player's ship for example).
 	// optionally pass in collisionInfo to retrieve an array of collisions that occured with some (admittedly not super reliable) data about them.
 	// This function returns True if there was a collision and False if not.
-	public function checkCollision(collider:Collider, ?collisionInfo:Array<CollisionInformation>):Bool {
+	public function checkCollision(collider:Collider, ?collisionInfo:Array<CollisionInformation>, ?layerFilter:Array<String> ):Bool {
 		
 		if (collisionInfo == null)
 			collisionInfo = new Array<CollisionInformation>();
@@ -213,7 +231,7 @@ class World extends Sprite {
 		for (c in colliders) {
 			ci = new CollisionInformation();
 			if (collider != c && collider.getOwner() != c.getOwner()
-				&& collisionMatrix.canCollide(collider, c)) {
+				&& collisionMatrix.canCollide(collider, c, layerFilter)) {
 					if(collider.isClipping(c, ci)) {
 						var collide = false;
 						
