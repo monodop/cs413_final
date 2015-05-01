@@ -30,7 +30,7 @@ typedef Items = {
 
 class World extends Sprite {
 	
-	private var menustate:MenuState;
+	public var menustate:MenuState;
 	
 	private var bg:Image;
 	
@@ -38,6 +38,8 @@ class World extends Sprite {
 	private var tilemap:Tilemap;
 	public var player:Player;
 	public var camera:Camera;
+	
+	public var first:Bool = true;
 	
 	private var quadvis:QuadTreeVis;
 	
@@ -145,6 +147,11 @@ class World extends Sprite {
 			gameOver();
 		}
 		
+		if (first) {
+			first = false;
+			return;
+		}
+		
 		for (ent in tilemap.entities)
 			ent.update(event);
 		
@@ -168,6 +175,7 @@ class World extends Sprite {
 		player.awake();
 		for (ent in tilemap.entities)
 			ent.awake();
+		first = true;
 	}
 	
 	public function sleep() {
@@ -179,6 +187,7 @@ class World extends Sprite {
 			ent.sleep();
 		if(quadvis != null)
 			quadvis.pause();
+		first = false;
 	}
 	
 	override public function dispose():Void 

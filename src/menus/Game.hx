@@ -97,7 +97,9 @@ class Game extends MenuState
 	
 	override function awake() {
 		this.addEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
-		Root.controls.hook("debugWorldSwitch", "gameSwitchWorldDebug", switchWorld);
+		Root.controls.hook("debugWorldSwitch", "gameSwitchWorldDebug", function(action:ControlAction) {
+			if (action.isActive()) { switchWorld(); }
+		});
 		this.player.addEventListener("healthChanged", updateHealthBar);
 		this.player.addEventListener("coinAdded", updateCoinDisplay);
 		activeWorld.awake();
@@ -110,50 +112,46 @@ class Game extends MenuState
 		activeWorld.sleep();
 	}
 	
-	function switchWorld(action:ControlAction) {
+	public function switchWorld() {
 		
-		if (action.isActive()) {
-			
-			//var playerX = activeWorld.player.x;
-			//var playerY = activeWorld.player.y;
-			
-			this.activeWorld.sleep();
-			this.removeChild(activeWorld);
-			if (this.activeWorld == summerWorld) {
-				Root.assets.playSound("Change_World_Sound_2", 0, 0, new SoundTransform(0.1, 0.1));
-				this.activeWorld = winterWorld;
-				this.healthText.color = 0x000000;
-				this.healthBarBG.texture = Root.assets.getTexture("blackpixel");
-				//this.scoreText.color = 0x000000;
-				this.coinText.color = 0x000000;
-				this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xffffffff);
-				this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xffffffff);
-			} else {
-				Root.assets.playSound("Change_World__Sound_1", 0, 0, new SoundTransform(0.1, 0.1));
-				this.activeWorld = summerWorld;
-				this.healthText.color = 0xffffff;
-				this.healthBarBG.texture = Root.assets.getTexture("pixel");
-				//this.scoreText.color = 0xffffff;
-				this.coinText.color = 0xffffff;
-				this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xff8b7355);
-				this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xff8b7355);
-			}
-			player.setWorld(this.activeWorld);
-			this.addChild(activeWorld);
-			//activeWorld.player.x = playerX;
-			//activeWorld.player.y = playerY;
-			//activeWorld.camera.x = playerX;
-			//activeWorld.camera.y = playerY;
-			
-			this.activeWorld.awake();
-			
-			this.setChildIndex(healthText, this.numChildren - 1);
-			this.setChildIndex(healthBarBG, this.numChildren - 1);
-			this.setChildIndex(healthBarFG, this.numChildren - 1);
-			//this.setChildIndex(scoreText, this.numChildren - 1);
-			this.setChildIndex(coinText, this.numChildren - 1);
-			
+		//var playerX = activeWorld.player.x;
+		//var playerY = activeWorld.player.y;
+		
+		this.activeWorld.sleep();
+		this.removeChild(activeWorld);
+		if (this.activeWorld == summerWorld) {
+			Root.assets.playSound("Change_World_Sound_2", 0, 0, new SoundTransform(0.1, 0.1));
+			this.activeWorld = winterWorld;
+			this.healthText.color = 0x000000;
+			this.healthBarBG.texture = Root.assets.getTexture("blackpixel");
+			//this.scoreText.color = 0x000000;
+			this.coinText.color = 0x000000;
+			this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xffffffff);
+			this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xffffffff);
+		} else {
+			Root.assets.playSound("Change_World__Sound_1", 0, 0, new SoundTransform(0.1, 0.1));
+			this.activeWorld = summerWorld;
+			this.healthText.color = 0xffffff;
+			this.healthBarBG.texture = Root.assets.getTexture("pixel");
+			//this.scoreText.color = 0xffffff;
+			this.coinText.color = 0xffffff;
+			this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xff8b7355);
+			this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xff8b7355);
 		}
+		player.setWorld(this.activeWorld);
+		this.addChild(activeWorld);
+		//activeWorld.player.x = playerX;
+		//activeWorld.player.y = playerY;
+		//activeWorld.camera.x = playerX;
+		//activeWorld.camera.y = playerY;
+		
+		this.activeWorld.awake();
+		
+		this.setChildIndex(healthText, this.numChildren - 1);
+		this.setChildIndex(healthBarBG, this.numChildren - 1);
+		this.setChildIndex(healthBarFG, this.numChildren - 1);
+		//this.setChildIndex(scoreText, this.numChildren - 1);
+		this.setChildIndex(coinText, this.numChildren - 1);
 		
 	}
 	

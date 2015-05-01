@@ -6,6 +6,8 @@ import flash.Vector;
 import game.MovieClipPlusPlus;
 import game.World;
 import haxe.ds.StringMap;
+import menus.Game;
+import starling.animation.Tween;
 import starling.events.Event;
 import haxe.macro.Expr.Position;
 import starling.core.Starling;
@@ -31,8 +33,12 @@ class Player extends BaseObject
 	private var jumpStart:Bool = false;
 	private var jumpEnd:Bool = false;
 	private var attacking:Bool = false;
+	private var teleporting:Bool = false;
+	private var teleportingIn:Bool = true;
 	private var doubleJumped:Bool = false;
 	private var coins:Int = 0;
+	
+	private var teleportSprite:Image;
 	
 	public function new(world:World) 
 	{
@@ -67,12 +73,14 @@ class Player extends BaseObject
 		
 		this.sprite.setAnimationDuration("Jump", 0.05);
 		this.sprite.setAnimationDuration("Attack1", 0.15);
+		this.sprite.setAnimationDuration("TeleportIn", 1);
+		this.sprite.setAnimationDuration("TeleportOut", 0.25);
 		this.sprite.setAnimationFrameDuration("Attack1", 0, 0.05);
 		this.sprite.setAnimationFrameDuration("Attack1", 3, 0.05);
 		this.sprite.setAnimationDuration("Idle", 0.20);
 		this.sprite.setLoop("Walk");
 		this.sprite.setLoop("Idle");
-		this.sprite.changeAnimation("Walk");
+		this.sprite.changeAnimation("TeleportIn");
 		
 		addChild(this.sprite);
 		
@@ -84,6 +92,10 @@ class Player extends BaseObject
 		snowWalkPS.emitterY = this.y * tileSize * 2;
 		snowWalkPS.scaleX = 1 / tileSize / 2;
 		snowWalkPS.scaleY = 1 / tileSize / 2;
+		
+		teleportSprite = new Image(Root.assets.getTexture("player/Teleport"));
+		teleportSprite.pivotX = 48;
+		teleportSprite.pivotY = 48;
 		
 	}
 	
@@ -100,6 +112,7 @@ class Player extends BaseObject
 	public override function awake() {
 		Root.controls.hook("up", "playerJump", jump);
 		Root.controls.hook("attack", "playerAttack", attack);
+		Root.controls.hook("teleport", "playerTP", teleport);
 		sprite.addChangeFrameHook(frameAdvance);
 		world.addChild(snowWalkPS);
 		Starling.juggler.add(snowWalkPS);
@@ -107,13 +120,38 @@ class Player extends BaseObject
 	public override function sleep() {
 		Root.controls.unhook("up", "playerJump");
 		Root.controls.unhook("attack", "playerAttack");
+		Root.controls.unhook("teleport", "playerTP");
 		sprite.removeChangeFrameHook(frameAdvance);
 		world.removeChild(snowWalkPS);
 		Starling.juggler.remove(snowWalkPS);
 	}
 
-	public function climb(action:ControlAction) {
-
+	public function teleport(action:ControlAction) {
+		if(action.isActive() && !this.teleporting && !this.teleportingIn) {
+			this.teleporting = true;
+			this.sprite.changeAnimation("TeleportOut");
+			
+			world.addChild(teleportSprite);
+			teleportSprite.scaleX = 1 / world.tileSize;
+			teleportSprite.scaleY = 1 / world.tileSize;
+			teleportSprite.alpha = 1.0;
+			teleportSprite.x = this.x;
+			teleportSprite.y = this.y - 1;
+			
+			var tween = new Tween(teleportSprite, 1.0, "linear");
+			tween.animate("scaleX", 0.0);
+			tween.animate("scaleY", 0.0);
+			tween.animate("alpha", 0.0);
+			Starling.juggler.add(tween);
+			
+			tween = new Tween(this.sprite, 1.0, "linear");
+			this.sprite.alpha = 1.0;
+			tween.animate("scaleX", 0.0);
+			tween.animate("scaleY", 0.0);
+			tween.animate("alpha", 0.0);
+			tween.animate("y", -16);
+			Starling.juggler.add(tween);
+		}
 	}
 	
 	public function jump(action:ControlAction) {
@@ -165,6 +203,58 @@ class Player extends BaseObject
 	public override function update(event:EnterFrameEvent) {
 		
 		this.sprite.advanceTime(event.passedTime);
+		
+		if (this.teleporting) {
+			if(this.sprite.isPlaying)
+				return;
+			else {
+				var game:Game = cast world.menustate;
+				game.switchWorld();
+				this.teleporting = false;
+				this.teleportingIn = true;
+				this.sprite.changeAnimation("TeleportIn");
+				this.velX = 0.0;
+				this.velY = 0.0;
+							
+				world.addChild(teleportSprite);
+				teleportSprite.scaleX = 0.0;
+				teleportSprite.scaleY = 0.0;
+				teleportSprite.alpha = 0.0;
+				//teleportSprite.x = this.x;
+				//teleportSprite.y = this.y - 1;
+				
+				var tween = new Tween(teleportSprite, 0.85, "linear");
+				tween.animate("scaleX", 1 / world.tileSize);
+				tween.animate("scaleY", 1 / world.tileSize);
+				tween.animate("alpha", 1.0);
+				tween.onComplete = function() {
+					tween = new Tween(teleportSprite, 0.15, "linear");
+					tween.animate("alpha", 0.0);
+					tween.onComplete = function() {
+						world.removeChild(teleportSprite);
+					}
+					Starling.juggler.add(tween);
+				}
+				Starling.juggler.add(tween);
+				
+				tween = new Tween(this.sprite, 0.9, "linear");
+				this.sprite.alpha = 1.0;
+				tween.animate("scaleX", 1);
+				tween.animate("scaleY", 1);
+				tween.animate("alpha", 1.0);
+				tween.animate("y", 0);
+				Starling.juggler.add(tween);
+			}
+		}
+		if (this.teleportingIn) {
+			if(this.sprite.isPlaying)
+				return;
+			else {
+				this.teleportingIn = false;
+				this.velX = 0.0;
+				this.velY = 0.0;
+			}
+		}
 		
 		var left = Root.controls.isDown("left") ? -1 : 0;
 		var right = Root.controls.isDown("right") ? 1 : 0;
