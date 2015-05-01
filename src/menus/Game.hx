@@ -9,9 +9,12 @@ import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
 import starling.display.Image;
+import starling.display.Quad;
 import starling.events.EnterFrameEvent;
 import starling.events.Event;
 import utility.ControlManager.ControlAction;
+import starling.text.TextField;
+import starling.text.BitmapFont;
 
 class Game extends MenuState
 {
@@ -22,6 +25,11 @@ class Game extends MenuState
 	var summerWorld:SummerWorld;
 	var activeWorld:World;
 	var player:Player;
+    var healthText:TextField;
+    var healthBarBG:Quad;
+    var healthBarFG:Quad;
+    var healthBarWidth:Int = 100;
+    var healthBarHeight:Int = 6;
 	
 	override function init() {
 		rootSprite.addChild(this);
@@ -38,9 +46,24 @@ class Game extends MenuState
 		this.player = new Player(this.activeWorld);
 		this.player.x = 7;
 		this.player.y = 14;
+        this.player.health = 50;
+        this.player.maxHealth = 100;
 		this.summerWorld.player = this.player;
 		this.winterWorld.player = this.player;
 		this.activeWorld.attachPlayer();
+        
+        this.healthText = new TextField(50, 12, "Health:", BitmapFont.MINI, 12, 0x000000);
+        this.healthText.x = 20;
+        this.healthText.y = 18;
+        this.addChild(this.healthText);
+        this.healthBarBG = new Quad(healthBarWidth + 4, healthBarHeight + 4, 0x000000);
+        this.healthBarBG.x = 70;
+        this.healthBarBG.y = 20;
+        this.addChild(this.healthBarBG);
+        this.healthBarFG = new Quad(healthBarWidth * this.player.health / this.player.maxHealth, healthBarHeight, 0xff0000);
+        this.healthBarFG.x = 70 + 2;
+        this.healthBarFG.y = 20 + 2;
+        this.addChild(this.healthBarFG);
 	}
 	
 	override function deinit() {
@@ -71,8 +94,12 @@ class Game extends MenuState
 			this.removeChild(activeWorld);
 			if (this.activeWorld == summerWorld) {
 				this.activeWorld = winterWorld;
+                this.healthText.color = 0x000000;
+                this.healthBarBG.color = 0x000000;
 			} else {
 				this.activeWorld = summerWorld;
+                this.healthText.color = 0xffffff;
+                this.healthBarBG.color = 0xffffff;
 			}
 			player.setWorld(this.activeWorld);
 			this.addChild(activeWorld);
@@ -82,6 +109,10 @@ class Game extends MenuState
 			//activeWorld.camera.y = playerY;
 			
 			this.activeWorld.awake();
+            
+            this.setChildIndex(healthText, this.numChildren - 1);
+            this.setChildIndex(healthBarBG, this.numChildren - 1);
+            this.setChildIndex(healthBarFG, this.numChildren - 1);
 			
 		}
 		

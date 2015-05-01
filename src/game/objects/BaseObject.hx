@@ -15,8 +15,8 @@ class BaseObject extends Sprite implements HasCollider
 	private var world:World;
 	
 	private var strikable:Bool = false;
-	private var health:Float = 0.0;
-	private var maxHealth:Float = 0.0;
+	public var health:Float = 0.0;
+	public var maxHealth:Float = 0.0;
 
 	public function new(world:World) 
 	{
