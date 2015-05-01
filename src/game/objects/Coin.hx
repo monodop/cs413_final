@@ -1,22 +1,31 @@
 package game.objects;
 import colliders.BoxCollider;
 import colliders.Collider;
+import colliders.CollisionInformation;
 import flash.Vector;
+import game.MovieClipPlusPlus;
+import game.World;
 import haxe.ds.StringMap;
+import haxe.macro.Expr.Position;
+import starling.core.Starling;
+import starling.display.Image;
+import starling.display.MovieClip;
+import starling.events.EnterFrameEvent;
 import starling.textures.Texture;
+import utility.ControlManager.ControlAction;
 import utility.Point;
+import starling.extensions.*;
 
-
-class Chest extends BaseObject
+/**
+ * ...
+ * @author Group 5
+ */
+class Coin extends BaseObject
 {
-
 	private var sprite:MovieClipPlusPlus;
 	private var collider:BoxCollider;
 	
-	public var Loot:String;
-	
-	public function new(world:World) 
-	{
+	public function new(world:World, xloc:Float, yloc:Float) {
 		super(world);
 		
 		this.scaleX = 1 / world.tileSize;
@@ -27,15 +36,14 @@ class Chest extends BaseObject
 		this.strikable = true;
 		
 		var animations = new StringMap<Vector<Texture>>();
-		animations.set("Closed", Root.assets.getTextures("world/Chest_Closed"));
-		animations.set("Open", Root.assets.getTextures("world/Chest_Open"));
-		
+		animations.set("Coin", Root.assets.getTextures("player/Player"));
+	
 		this.sprite = new MovieClipPlusPlus(animations, 10);
 		this.sprite.pivotX = 0;
 		this.sprite.pivotY = 32;
 		this.sprite.smoothing = 'none';
 		
-		this.sprite.changeAnimation("Closed");
+		this.sprite.changeAnimation("Coin");
 		
 		addChild(this.sprite);
 		
@@ -47,8 +55,4 @@ class Chest extends BaseObject
 		return [this.collider];
 	}
 	
-	private override function killed(overflow:Float) {
-		this.sprite.changeAnimation("Open");
-		world.spawnItem(Loot, this.x, this.y);
-	}
 }

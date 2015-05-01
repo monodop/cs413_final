@@ -6105,7 +6105,7 @@
  <objectgroup color="#2a84a4" name="Map_Objects">
   <object id="51" type="Chest" gid="17" x="384" y="288">
    <properties>
-    <property name="Loot" value="{ 'Coin': 10 }"/>
+    <property name="Loot" value='{ "Coin": "10" }'/>
    </properties>
   </object>
   <object id="65" type="Snowmon" gid="18" x="560" y="224"/>

@@ -1,6 +1,8 @@
 package game;
 
 import colliders.*;
+import game.objects.Coin;
+import haxe.Json;
 import flash.geom.Rectangle;
 import game.objects.BaseObject;
 import game.objects.Player;
@@ -21,6 +23,10 @@ import utility.ControlManager.ControlAction;
 import utility.Point;
 import starling.extensions.*;
 import starling.utils.Color;
+
+typedef Items = {
+	var Coin:Int;
+}
 
 class World extends Sprite {
 	
@@ -207,6 +213,16 @@ class World extends Sprite {
 		var menu = new MainMenu(menustate.rootSprite);
 		menustate.stop();
 		menu.start();
+	}
+	
+	public function spawnItem(loot:String, xlocation:Float, ylocation:Float) {
+		var ctr:Int = 0;
+		var Loot = Json.parse(loot);
+		while (ctr < Loot.Coin) {
+			ctr++;
+			var coin:Coin = new Coin(this, xlocation, ylocation);
+			addChild(coin);
+		}
 	}
 	
 	function touch(event:TouchEvent) {
