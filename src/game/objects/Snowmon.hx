@@ -37,6 +37,9 @@ class Snowmon extends AI
         this.sprite.pivotX = 24;
         this.sprite.pivotY = 64;
         this.sprite.smoothing = 'none';
+		
+		this.patrolMoveSpeed = 3;
+		this.advanceMoveSpeed = 4.5;
 
         this.sprite.changeAnimation("Move");
 

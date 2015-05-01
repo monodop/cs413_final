@@ -11,6 +11,7 @@ import haxe.Timer;
 import starling.filters.ColorFilter;
 import starling.filters.PixelateFilter;
 import starling.filters.SelectorFilter;
+import utility.Point;
 
 class BaseObject extends Sprite implements HasCollider
 {
@@ -22,6 +23,8 @@ class BaseObject extends Sprite implements HasCollider
 	private var strikable:Bool = false;
 	private var health:Float = 0.0;
 	private var maxHealth:Float = 0.0;
+	
+	private var grounded:Bool = false;
 
 	public function new(world:World, ?x:Float=0.0, ?y:Float=0.0, ?offsetX:Float=0.0, ?offsetY:Float=0.0) 
 	{
@@ -87,6 +90,60 @@ class BaseObject extends Sprite implements HasCollider
 				updateHealth(0);
 			}
 		}
+	}
+	
+	public function walk(event:EnterFrameEvent, moveSpeed:Float, hor:Float, ?layers:Array<String>) {
+		
+		if (layers == null)
+			layers = ["map"];
+		
+		var newPosX = this.x + hor * event.passedTime * moveSpeed;
+
+		var oldX = this.x;
+		var oldY = this.y;
+
+		this.setPos(newPosX, this.y);
+
+		var dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * -moveSpeed * 1.05), world.camera.getCameraBounds(world), layers);
+		if (dest != null) {
+			this.setPos(newPosX, dest.y - 0.0001);
+		} else {
+			dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * moveSpeed * 1.05), world.camera.getCameraBounds(world), layers );
+			if (dest != null) {
+				this.setPos(newPosX, dest.y - 0.0001);
+			}
+		}
+
+	}
+	
+	public function fall(event:EnterFrameEvent, ?layers:Array<String>, ?clipFloor:Bool = false, ?gravity:Float = 80.0) {
+		if (layers == null)
+			layers = ["map"];
+			
+		var oldX = this.x;
+		var oldY = this.y;
+
+		var newPosY = this.y + velY * event.passedTime;
+
+		var ci = new Array<CollisionInformation>();
+		var dest = world.rayCast(new Point(oldX, oldY - 0.0001), new Point(0, velY * event.passedTime), world.camera.getCameraBounds(world), layers, 0.0001, ci);
+		if (velY >= 0 && dest != null && !ci[0].collider_src.containsPoint(new Point(dest.x, dest.y - 0.0001), world) && !clipFloor) {
+			this.setPos(this.x, dest.y);
+			this.velY = 0;
+			grounded = true;
+			landed();
+		}
+		else {
+			this.setPos(this.x, newPosY);
+			grounded = false;
+		}
+		
+		velY += event.passedTime * gravity;
+
+	}
+	
+	public function landed() {
+		
 	}
 	
 	public function getHealth():Float {
