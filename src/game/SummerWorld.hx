@@ -18,7 +18,7 @@ class SummerWorld extends World
 		firefliesPS = new PDParticleSystem(Root.assets.getXml("fireflies_config"), Root.assets.getTexture("particles/fireflies_particle"));
 		firefliesPS.scaleX = 1 / tileSize / 2;
 		firefliesPS.scaleY = 1 / tileSize / 2;
-        firefliesPS.lifespan = 16;
+		firefliesPS.lifespan = 16;
 
 		this.addChild(firefliesPS);
 

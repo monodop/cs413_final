@@ -14,18 +14,23 @@ import utility.Point;
 class Golem extends AI
 {
 
+<<<<<<< HEAD
     private var sprite:MovieClipPlusPlus;
     private var collider:BoxCollider;
 	
 	private var attacking:Bool;
+=======
+	private var sprite:MovieClipPlusPlus;
+	private var collider:BoxCollider;
+>>>>>>> 9c3c505fc8d3e36e3efeaf112289b8573abd398a
 
-    public var Loot:String;
+	public var Loot:String;
 
-    public function new(world:World, ?x:Float=0.0, ?y:Float=0.0)
-    {
-        super(world, x, y, 40/world.tileSize, 0);
-        this.scaleX = 1 / world.tileSize;
-        this.scaleY = 1 / world.tileSize;
+	public function new(world:World, ?x:Float=0.0, ?y:Float=0.0)
+	{
+		super(world, x, y, 40/world.tileSize, 0);
+		this.scaleX = 1 / world.tileSize;
+		this.scaleY = 1 / world.tileSize;
 		this.attackRange = 3.5;
 		this.attackDamage = 15;
 		this.attackSpeed = 5000.0;
@@ -37,10 +42,10 @@ class Golem extends AI
 		this.patrolMoveSpeed = 2;
 		this.advanceMoveSpeed = 3;
 		
-        this.healthBar.scaleX = healthBarWidth * this.getHealth() / this.getMaxHealth();
-        this.healthBar.scaleY = healthBarHeight;
+		this.healthBar.scaleX = healthBarWidth * this.getHealth() / this.getMaxHealth();
+		this.healthBar.scaleY = healthBarHeight;
 		this.healthBar.x = -26.5;
-        this.healthBar.y = -100;
+		this.healthBar.y = -100;
 		this.healthBarWidth = 50;
 
         var animations = new StringMap<Vector<Texture>>();
@@ -57,8 +62,7 @@ class Golem extends AI
         this.sprite.setAnimationDuration("Move", 0.4);
         this.sprite.setAnimationDuration("Attack", 0.3);
 
-        addChild(this.sprite);
-
+		addChild(this.sprite);
         this.collider = new BoxCollider(this, ["enemies"], 80, 96, new Point(0, -48));
         addChild(this.collider);
 
@@ -133,21 +137,21 @@ class Golem extends AI
 		}
 	}
 
-    public override function getColliders():Array<Collider> {
-        return [this.collider];
-    }
-    
+	public override function getColliders():Array<Collider> {
+		return [this.collider];
+	}
+	
 	public override function clearColor() {
 		this.sprite.filter = null;
 	}
-    public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
-        //this.sprite.color = color;
+	public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
+		//this.sprite.color = color;
 		this.sprite.filter = new ColorFilter(r, g, b, a);
-    }
+	}
 	
 	private override function killed(overflow:Float) {
 		world.spawnItem("{ \"Coin\" : \"3\" }", this.x, this.y);
 		world.removeObject(this);
-        this.dispose();
+		this.dispose();
 	}
 }

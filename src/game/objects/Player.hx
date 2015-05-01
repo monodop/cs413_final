@@ -87,6 +87,10 @@ class Player extends BaseObject
 		
 	}
 	
+	private override function killed(overflow:Float) {
+		world.gameOver();
+	}
+	
 	public function setWorld(world:World) {
 		this.world.detachPlayer();
 		this.world = world;
@@ -280,9 +284,9 @@ class Player extends BaseObject
 	public override function clearColor() {
 		this.sprite.filter = null;
 	}
-    public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
+	public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
 		this.sprite.filter = new ColorFilter(r, g, b, a);
-    }
+	}
 	
 	//public override function collision(self:Collider, object:Collider, collisionInfo:CollisionInformation):Bool {
 		//
@@ -295,8 +299,8 @@ class Player extends BaseObject
 		//return true;
 		//
 	//}
-    //
-    //public override function setColor(color:Int) {
-        //this.sprite.color = color;
-    //}
+	//
+	//public override function setColor(color:Int) {
+		//this.sprite.color = color;
+	//}
 }
