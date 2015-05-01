@@ -16,6 +16,7 @@ import utility.ControlManager.ControlAction;
 import starling.text.TextField;
 import starling.text.BitmapFont;
 import starling.extensions.*;
+import flash.media.SoundTransform;
 
 class Game extends MenuState
 {
@@ -119,6 +120,7 @@ class Game extends MenuState
 			this.activeWorld.sleep();
 			this.removeChild(activeWorld);
 			if (this.activeWorld == summerWorld) {
+				Root.assets.playSound("Change_World_Sound_2", 0, 0, new SoundTransform(0.1, 0.1));
 				this.activeWorld = winterWorld;
 				this.healthText.color = 0x000000;
 				this.healthBarBG.texture = Root.assets.getTexture("blackpixel");
@@ -127,6 +129,7 @@ class Game extends MenuState
 				this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xffffffff);
 				this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xffffffff);
 			} else {
+				Root.assets.playSound("Change_World__Sound_1", 0, 0, new SoundTransform(0.1, 0.1));
 				this.activeWorld = summerWorld;
 				this.healthText.color = 0xffffff;
 				this.healthBarBG.texture = Root.assets.getTexture("pixel");

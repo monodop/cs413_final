@@ -2,6 +2,7 @@ package game.objects;
 import colliders.BoxCollider;
 import colliders.Collider;
 import colliders.CollisionInformation;
+import flash.events.Event;
 import flash.media.SoundTransform;
 import flash.Vector;
 import game.MovieClipPlusPlus;
@@ -16,11 +17,16 @@ import starling.textures.Texture;
 import utility.ControlManager.ControlAction;
 import utility.Point;
 import starling.extensions.*;
+import flash.media.Sound;
+import flash.media.SoundChannel;
+import haxe.Timer;
 
 class Coin extends BaseObject
 {
 	private var sprite:MovieClipPlusPlus;
 	private var collider:BoxCollider;
+	public static var soundIsPlaying:SoundChannel;
+	public static var isSoundPlaying:Bool = false;
 	
 	private var collectable:Bool = false;
 	private var timeToCollectable:Float = 550;
@@ -57,6 +63,20 @@ class Coin extends BaseObject
 	
 	public override function getColliders():Array<Collider> {
 		return [this.collider];
+	}
+	
+	public override function damage(amt:Float) {
+		if (!isDead()) {
+			addHealth( -amt);
+            this.setColor(0.9, 0.9, 0.25, 1.0);
+            Timer.delay(function() {
+				this.clearColor();
+            }, 50);
+			if (health <= 0) {
+				killed( -health);
+				updateHealth(0);
+			}
+		}
 	}
 	
 	public override function update(event:EnterFrameEvent) {
@@ -129,11 +149,19 @@ class Coin extends BaseObject
 		if (Std.is(object.parent, Player)) {
 			player = cast object.parent;
 			player.updateCoins();
-			Root.assets.playSound("Pickup_Sound_1", 0, 0, new SoundTransform(0.1, 0.1));
+			if (!isSoundPlaying) {
+				isSoundPlaying = true;
+				soundIsPlaying = Root.assets.playSound("Pickup_Sound_1", 0, 0, new SoundTransform(0.1, 0.1));
+				soundIsPlaying.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
+			}
 			this.damage(1.0);
 		}
 		return true;
 		
+	}
+	
+	private function onSoundComplete(event:Event) {
+		isSoundPlaying = false;
 	}
 	
 }
