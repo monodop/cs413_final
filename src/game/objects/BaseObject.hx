@@ -12,6 +12,7 @@ import starling.filters.ColorFilter;
 import starling.filters.PixelateFilter;
 import starling.filters.SelectorFilter;
 import utility.Point;
+import flash.media.SoundTransform;
 
 class BaseObject extends Sprite implements HasCollider
 {
@@ -79,6 +80,8 @@ class BaseObject extends Sprite implements HasCollider
 	}
 	
 	public function damage(amt:Float) {
+		var noise:Int = Std.random(3) + 1;
+		Root.assets.playSound("Hit_Sound_" + Std.string(noise), 0, 0, new SoundTransform(0.1, 0.1));
 		if (!isDead()) {
 			addHealth( -amt);
             this.setColor(0.9, 0.9, 0.25, 1.0);

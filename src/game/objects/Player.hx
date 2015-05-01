@@ -17,6 +17,7 @@ import starling.textures.Texture;
 import utility.ControlManager.ControlAction;
 import utility.Point;
 import starling.extensions.*;
+import flash.media.SoundTransform;
 
 class Player extends BaseObject
 {
@@ -205,6 +206,12 @@ class Player extends BaseObject
 			} else if (jumpStart) {
 
 				if (!sprite.isPlaying) {
+					if (grounded) {
+						Root.assets.playSound("Jump_Sound_2", 0, 0, new SoundTransform(0.1, 0.1));
+					}
+					else {
+						Root.assets.playSound("Jump_Sound_1", 0, 0, new SoundTransform(0.1, 0.1));
+					}
 					velY = -20;
 					jumpStart = false;
 					grounded = false;

@@ -2,6 +2,7 @@ package game.objects;
 import colliders.BoxCollider;
 import colliders.Collider;
 import colliders.CollisionInformation;
+import flash.media.SoundTransform;
 import flash.Vector;
 import game.MovieClipPlusPlus;
 import game.World;
@@ -104,6 +105,7 @@ class Coin extends BaseObject
 		if (Std.is(object.parent, Player)) {
 			player = cast object.parent;
 			player.updateCoins();
+			Root.assets.playSound("Pickup_Sound_1", 0, 0, new SoundTransform(0.1, 0.1));
 			this.damage(1.0);
 		}
 		return true;
