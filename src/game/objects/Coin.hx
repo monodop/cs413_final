@@ -30,8 +30,8 @@ class Coin extends BaseObject
 		this.scaleX = 1 / world.tileSize;
 		this.scaleY = 1 / world.tileSize;
 		
-		this.health = 1.0;
-		this.maxHealth = 1.0;
+		this.health = 0.0;
+		this.maxHealth = 0.0;
 		this.strikable = true;
 		
 		var animations = new StringMap<Vector<Texture>>();

@@ -172,12 +172,18 @@ class Player extends BaseObject
 			snowWalkPS.stop();
 		}
 
+		
+		if (world.checkCollision(this.collider, null, ["items"])) {
+			
+		} 
+		
 		if (world.checkCollision(this.collider, null, ["ladder"])) {
 		// Ladder Physics
 			var newPosY = this.y + vert * event.passedTime;
 			var newPosX = this.x + hor * event.passedTime;
 			this.setPos(newPosX, newPosY);
-		} else {
+		}
+		else {
 			if (grounded && !jumpStart && !jumpEnd && !attacking) {
 
 				if (hor == 0) {
