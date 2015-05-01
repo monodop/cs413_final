@@ -11,6 +11,7 @@ import starling.core.Starling;
 import starling.display.Image;
 import starling.display.MovieClip;
 import starling.events.EnterFrameEvent;
+import starling.filters.ColorFilter;
 import starling.textures.Texture;
 import utility.ControlManager.ControlAction;
 import utility.Point;
@@ -295,6 +296,14 @@ class Player extends BaseObject
 		return [this.collider];
 	}
 	
+	
+	public override function clearColor() {
+		this.sprite.filter = null;
+	}
+    public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
+		this.sprite.filter = new ColorFilter(r, g, b, a);
+    }
+	
 	//public override function collision(self:Collider, object:Collider, collisionInfo:CollisionInformation):Bool {
 		//
 		//var b = object.getBounds(world);
@@ -306,8 +315,8 @@ class Player extends BaseObject
 		//return true;
 		//
 	//}
-    
-    public override function setColor(color:Int) {
-        this.sprite.color = color;
-    }
+    //
+    //public override function setColor(color:Int) {
+        //this.sprite.color = color;
+    //}
 }

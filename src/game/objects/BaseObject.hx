@@ -8,6 +8,9 @@ import game.World;
 import starling.display.Sprite;
 import starling.events.EnterFrameEvent;
 import haxe.Timer;
+import starling.filters.ColorFilter;
+import starling.filters.PixelateFilter;
+import starling.filters.SelectorFilter;
 
 class BaseObject extends Sprite implements HasCollider
 {
@@ -75,16 +78,10 @@ class BaseObject extends Sprite implements HasCollider
 	public function damage(amt:Float) {
 		if (!isDead()) {
 			addHealth( -amt);
-            this.setColor(0xffff00);
+            this.setColor(0.9, 0.9, 0.25, 1.0);
             Timer.delay(function() {
-                this.setColor(0xffffff);
-                Timer.delay(function() {
-                    this.setColor(0xffff00);
-                    Timer.delay(function() {
-                        this.setColor(0xffffff);
-                    }, 500);
-                }, 500);
-            }, 500);
+				this.clearColor();
+            }, 50);
 			if (health <= 0) {
 				killed( -health);
 				updateHealth(0);
@@ -119,5 +116,12 @@ class BaseObject extends Sprite implements HasCollider
 		return health == 0;
 	}
     
-	public function setColor(color:Int) {}
+	//public function setColor(color:Int) { }
+	public function clearColor() {
+		//this.sprite.filter = null;
+	}
+    public function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
+        //this.sprite.color = color;
+		//this.sprite.filter = new ColorFilter(r, g, b, a);
+    }
 }

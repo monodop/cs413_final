@@ -3,6 +3,7 @@ import colliders.BoxCollider;
 import colliders.Collider;
 import flash.Vector;
 import haxe.ds.StringMap;
+import starling.filters.ColorFilter;
 import starling.textures.Texture;
 import utility.Point;
 
@@ -55,7 +56,11 @@ class Golem extends AI
         return [this.collider];
     }
     
-    public override function setColor(color:Int) {
-        this.sprite.color = color;
+	public override function clearColor() {
+		this.sprite.filter = null;
+	}
+    public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
+        //this.sprite.color = color;
+		this.sprite.filter = new ColorFilter(r, g, b, a);
     }
 }
