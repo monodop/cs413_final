@@ -48,8 +48,6 @@ class Game extends MenuState
 		this.player = new Player(this.activeWorld);
 		this.player.x = 7;
 		this.player.y = 14;
-        this.player.health = 50;
-        this.player.maxHealth = 100;
 		this.summerWorld.player = this.player;
 		this.winterWorld.player = this.player;
 		this.activeWorld.attachPlayer();
@@ -62,7 +60,7 @@ class Game extends MenuState
         this.healthBarBG.x = 70;
         this.healthBarBG.y = 20;
         this.addChild(this.healthBarBG);
-        this.healthBarFG = new Quad(healthBarWidth * this.player.health / this.player.maxHealth, healthBarHeight, 0xff0000);
+        this.healthBarFG = new Quad(healthBarWidth * this.player.getHealth() / this.player.getMaxHealth(), healthBarHeight, 0xff0000);
         this.healthBarFG.x = 70 + 2;
         this.healthBarFG.y = 20 + 2;
         this.addChild(this.healthBarFG);
@@ -78,7 +76,7 @@ class Game extends MenuState
 	}
 	
 	private function updateHealthBar(event:Event) {
-		this.healthBarFG.width = healthBarWidth * this.player.health / this.player.maxHealth;
+		this.healthBarFG.width = healthBarWidth * this.player.getHealth() / this.player.getMaxHealth();
 	}
 	
 	override function deinit() {

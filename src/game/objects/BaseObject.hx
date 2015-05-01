@@ -81,6 +81,13 @@ class BaseObject extends Sprite implements HasCollider
 		}
 	}
 	
+	public function getHealth():Float {
+		return this.health;
+	}
+	public function getMaxHealth():Float {
+		return this.maxHealth;
+	}
+	
 	public function updateHealth(amt:Float) {
 		health = amt;
 		dispatchEvent(new Event("healthChanged"));

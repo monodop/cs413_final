@@ -42,6 +42,9 @@ class Player extends BaseObject
 		this.pivotX = 0;
 		this.pivotY = -4;
 		
+		this.health = 100;
+		this.maxHealth = 100;
+		
 		var animations = new StringMap<Vector<Texture>>();
 		animations.set("Walk", Root.assets.getTextures("player/Player_Walk_"));
 		animations.set("Idle", Root.assets.getTextures("player/Player_Idle_"));
