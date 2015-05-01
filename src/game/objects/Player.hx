@@ -76,13 +76,11 @@ class Player extends BaseObject
 		this.collider = new BoxCollider(this, ["player"], 32, 64, new Point(0, -32));
 		addChild(this.collider);
 		
-		//snowWalkPS = new PDParticleSystem(Root.assets.getXml("snow_walk_particle_config"), Root.assets.getTexture("particles/snow_walk_particle"));
-		//snowWalkPS.emitterX = this.x * tileSize * 2;
-		//snowWalkPS.emitterY = this.y * tileSize * 2;
-		//snowWalkPS.scaleX = 1 / tileSize / 2;
-		//snowWalkPS.scaleY = 1 / tileSize / 2;
-		//world.addChild(snowWalkPS);
-		//Starling.juggler.add(snowWalkPS);
+		snowWalkPS = new PDParticleSystem(Root.assets.getXml("snow_walk_particle_config"), Root.assets.getTexture("particles/snow_walk_particle"));
+		snowWalkPS.emitterX = this.x * tileSize * 2;
+		snowWalkPS.emitterY = this.y * tileSize * 2;
+		snowWalkPS.scaleX = 1 / tileSize / 2;
+		snowWalkPS.scaleY = 1 / tileSize / 2;
 		
 	}
 	
@@ -96,11 +94,15 @@ class Player extends BaseObject
 		Root.controls.hook("up", "playerJump", jump);
 		Root.controls.hook("attack", "playerAttack", attack);
 		sprite.addChangeFrameHook(frameAdvance);
+		world.addChild(snowWalkPS);
+		Starling.juggler.add(snowWalkPS);
 	}
 	public override function sleep() {
 		Root.controls.unhook("up", "playerJump");
 		Root.controls.unhook("attack", "playerAttack");
 		sprite.removeChangeFrameHook(frameAdvance);
+		world.removeChild(snowWalkPS);
+		Starling.juggler.remove(snowWalkPS);
 	}
 	
 	public function jump(action:ControlAction) {
@@ -152,18 +154,18 @@ class Player extends BaseObject
 		var hor = left + right;
 		var vert = up + down2;
 
-		//snowWalkPS.start();
+		snowWalkPS.start();
 		
 		if (hor < 0) {
 			this.scaleX = -(Math.abs(this.scaleX));
-			//snowWalkPS.emitAngle = utility.Utils.deg2rad(221.64 + 90);
+			snowWalkPS.emitAngle = utility.Utils.deg2rad(221.64 + 90);
 		}
 		else if (hor > 0) {
 			this.scaleX = Math.abs(this.scaleX);
-			//snowWalkPS.emitAngle = utility.Utils.deg2rad(221.64);
+			snowWalkPS.emitAngle = utility.Utils.deg2rad(221.64);
 		}
 		else {
-			//snowWalkPS.stop();
+			snowWalkPS.stop();
 		}
 
 		if (world.checkCollision(this.collider, null, ["ladder"])) {
@@ -267,14 +269,14 @@ class Player extends BaseObject
 				}
 
 			}
-			else {
-				//snowWalkPS.stop();
+			if (!grounded) {
+				snowWalkPS.stop();
 			}
 
 			velY += event.passedTime * 80.0;
 
-			//snowWalkPS.emitterX = this.x * tileSize * 2;
-			//snowWalkPS.emitterY = this.y * tileSize * 2;
+			snowWalkPS.emitterX = this.x * tileSize * 2;
+			snowWalkPS.emitterY = this.y * tileSize * 2;
 		}
 	}
 	
@@ -294,4 +296,8 @@ class Player extends BaseObject
 		//return true;
 		//
 	//}
+    
+    public override function setColor(color:Int) {
+        this.sprite.color = color;
+    }
 }

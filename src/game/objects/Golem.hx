@@ -43,4 +43,8 @@ class Golem extends AI
     public override function getColliders():Array<Collider> {
         return [this.collider];
     }
+    
+    public override function setColor(color:Int) {
+        this.sprite.color = color;
+    }
 }
