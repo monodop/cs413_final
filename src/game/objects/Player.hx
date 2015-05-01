@@ -28,7 +28,6 @@ class Player extends BaseObject
 	private var jumpStart:Bool = false;
 	private var jumpEnd:Bool = false;
 	private var attacking:Bool = false;
-	private var attackPerformed:Bool = false;
 	
 	private var doubleJumped:Bool = false;
 	
@@ -239,14 +238,21 @@ class Player extends BaseObject
 		
 		this.setPos(newPosX, this.y);
 		
-		if (grounded) {
+		if ( true || grounded) {
 			
-			var ci = new Array<CollisionInformation>();
-			var dest = world.rayCast(new Point(this.x, this.y), new Point(0, -0.15), world.camera.getCameraBounds(world), ["map"], 0.0, ci);
-			if (dest != null && Math.abs(dest.y - this.y) > 0.0001) {
+			var dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * -7.6), world.camera.getCameraBounds(world), ["map"]);
+			if (dest != null) {// && Math.abs(dest.y - this.y) > 0.0001) {
 				
-				this.y = dest.y + 0.0001;
+				//this.y = dest.y + 0.0001;
+				this.setPos(newPosX, dest.y - 0.0001);
 				
+			} else {
+				
+				dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * 7.6), world.camera.getCameraBounds(world), ["map"]);
+				if (dest != null) {
+					//this.y = dest.y + 0.0001;
+					this.setPos(newPosX, dest.y - 0.0001);
+				}
 			}
 			
 		}
