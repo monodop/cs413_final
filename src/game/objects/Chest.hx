@@ -3,6 +3,7 @@ import colliders.BoxCollider;
 import colliders.Collider;
 import flash.Vector;
 import haxe.ds.StringMap;
+import starling.filters.ColorFilter;
 import starling.textures.Texture;
 import utility.Point;
 
@@ -39,7 +40,7 @@ class Chest extends BaseObject
 		
 		addChild(this.sprite);
 		
-		this.collider = new BoxCollider(this, ["map"], 32, 32, new Point(16, -16));
+		this.collider = new BoxCollider(this, ["hitOnly"], 32, 32, new Point(16, -16));
 		addChild(this.collider);
 	}
 	
@@ -49,5 +50,13 @@ class Chest extends BaseObject
 	
 	private override function killed(overflow:Float) {
 		this.sprite.changeAnimation("Open");
+		world.spawnItem(Loot, this.x, this.y);
 	}
+    
+	public override function clearColor() {
+		this.sprite.filter = null;
+	}
+    public override function setColor(r:Float, g:Float, b:Float, a:Float = 0.0) {
+		this.sprite.filter = new ColorFilter(r, g, b, a);
+    }
 }

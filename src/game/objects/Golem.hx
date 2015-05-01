@@ -28,13 +28,15 @@ class Golem extends AI
 		this.attackDamage = 15;
 		this.attackSpeed = 7000.0;
 		
-		this.healthBar.x = 0;
-        this.healthBar.y = -healthBarYOffset;
-		
 		this.health = 50.0;
 		this.maxHealth = 50.0;
 		this.strikable = true;
 		
+		this.patrolMoveSpeed = 2;
+		this.advanceMoveSpeed = 3;
+		
+        this.healthBar.scaleX = healthBarWidth * this.getHealth() / this.getMaxHealth();
+        this.healthBar.scaleY = healthBarHeight;
 		this.healthBar.x = -26.5;
         this.healthBar.y = -100;
 		this.healthBarWidth = 50;
@@ -116,4 +118,10 @@ class Golem extends AI
         //this.sprite.color = color;
 		this.sprite.filter = new ColorFilter(r, g, b, a);
     }
+	
+	private override function killed(overflow:Float) {
+		world.spawnItem("{ \"Coin\" : \"3\" }", this.x, this.y);
+		world.removeObject(this);
+        this.dispose();
+	}
 }

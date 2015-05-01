@@ -6,6 +6,7 @@ import flash.Vector;
 import game.MovieClipPlusPlus;
 import game.World;
 import haxe.ds.StringMap;
+import starling.events.Event;
 import haxe.macro.Expr.Position;
 import starling.core.Starling;
 import starling.display.Image;
@@ -16,13 +17,13 @@ import starling.textures.Texture;
 import utility.ControlManager.ControlAction;
 import utility.Point;
 import starling.extensions.*;
+import flash.media.SoundTransform;
 
 class Player extends BaseObject
 {
 
 	private var sprite:MovieClipPlusPlus;
 	private var collider:BoxCollider;
-	private var grounded:Bool;
 	public var snowWalkPS:PDParticleSystem;
 	public var tileSize:Float = 16;
 	private var ladders:Ladder;
@@ -31,6 +32,7 @@ class Player extends BaseObject
 	private var jumpEnd:Bool = false;
 	private var attacking:Bool = false;
 	private var doubleJumped:Bool = false;
+	private var coins:Int = 0;
 	
 	public function new(world:World) 
 	{
@@ -130,12 +132,21 @@ class Player extends BaseObject
 		}
 	}
 	
+	public function updateCoins() {
+		coins++;
+		dispatchEvent(new Event("coinAdded"));
+	}
+	
+	public function getCoinCount():Int {
+		return this.coins;
+	}
+	
 	public function frameAdvance(clip:MovieClipPlusPlus) {
 		//trace(clip.getLastAnimation() + "\t\t" + clip.getAnimationFrame());
 		if (clip.getLastAnimation() == "Attack1" && clip.getAnimationFrame() == 2) {
 			// Strike
 			var ci = new Array<CollisionInformation>();
-			var hit = world.rayCast(new Point(x, y - 1.0), new Point((this.scaleX < 0 ? -1 : 1) * 3.0, 0.0), world.camera.getCameraBounds(world), ["map", "enemies"], 0.0, ci);
+			var hit = world.rayCast(new Point(x, y - 1.0), new Point((this.scaleX < 0 ? -1 : 1) * 3.0, 0.0), world.camera.getCameraBounds(world), ["map", "enemies", "hitOnly"], 0.0, ci);
 			if(hit != null) {
 				var hitCollider = ci[0].collider_src.parent;
 				if (Std.is(hitCollider, BaseObject)) {
@@ -173,13 +184,15 @@ class Player extends BaseObject
 		else {
 			snowWalkPS.stop();
 		}
-
+		
+		world.checkCollision(this.collider, null, ["items"]);
 		if (world.checkCollision(this.collider, null, ["ladder"])) {
 		// Ladder Physics
 			var newPosY = this.y + vert * event.passedTime;
 			var newPosX = this.x + hor * event.passedTime;
 			this.setPos(newPosX, newPosY);
-		} else {
+		}
+		else {
 			if (grounded && !jumpStart && !jumpEnd && !attacking) {
 
 				if (hor == 0) {
@@ -193,6 +206,12 @@ class Player extends BaseObject
 			} else if (jumpStart) {
 
 				if (!sprite.isPlaying) {
+					if (grounded) {
+						Root.assets.playSound("Jump_Sound_2", 0, 0, new SoundTransform(0.1, 0.1));
+					}
+					else {
+						Root.assets.playSound("Jump_Sound_1", 0, 0, new SoundTransform(0.1, 0.1));
+					}
 					velY = -20;
 					jumpStart = false;
 					grounded = false;
@@ -226,64 +245,30 @@ class Player extends BaseObject
 
 			}
 
-			var oldX = this.x;
-			var oldY = this.y;
-
-			var newPosY = this.y + velY * event.passedTime;
-
-			var ci = new Array<CollisionInformation>();
-			var dest = world.rayCast(new Point(oldX, oldY - 0.0001), new Point(0, velY * event.passedTime), world.camera.getCameraBounds(world), ["map"], 0.0001, ci);
-			if (velY >= 0 && dest != null && !ci[0].collider_src.containsPoint(new Point(dest.x, dest.y - 0.0001), world) && !down) {
-				this.setPos(this.x, dest.y);
-				this.velY = 0;
-				if (!grounded && !attacking) {
-					jumpEnd = true;
-					sprite.changeAnimation("Jump");
-					sprite.nextFrame();
-					sprite.play();
-				}
-				grounded = true;
-				doubleJumped = false;
-			}
-			else {
-				this.setPos(this.x, newPosY);
-				grounded = false;
-			}
-
-			var newPosX = this.x + hor * event.passedTime * 7.5;
-
-			var oldX = this.x;
-			var oldY = this.y;
-
-			this.setPos(newPosX, this.y);
-
-			if ( true || grounded) {
-
-				var dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * -7.6), world.camera.getCameraBounds(world), ["map"]);
-				if (dest != null) {// && Math.abs(dest.y - this.y) > 0.0001) {
-
-					//this.y = dest.y + 0.0001;
-					this.setPos(newPosX, dest.y - 0.0001);
-
-				} else {
-
-					dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * 7.6), world.camera.getCameraBounds(world), ["map"]);
-					if (dest != null) {
-						//this.y = dest.y + 0.0001;
-						this.setPos(newPosX, dest.y - 0.0001);
-					}
-				}
-
-			}
+			
+			this.fall(event, ["map"], down);
+			
+			this.walk(event, 7.5, hor, ["map"]);
+			
 			if (!grounded) {
 				snowWalkPS.stop();
 			}
 
-			velY += event.passedTime * 80.0;
+			//velY += event.passedTime * 80.0;
 
 			snowWalkPS.emitterX = this.x * tileSize * 2;
 			snowWalkPS.emitterY = this.y * tileSize * 2;
 		}
+	}
+	
+	public override function landed() {
+		if (!grounded && !attacking) {
+			jumpEnd = true;
+			sprite.changeAnimation("Jump");
+			sprite.nextFrame();
+			sprite.play();
+		}
+		doubleJumped = false;
 	}
 	
 	

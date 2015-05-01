@@ -1,6 +1,8 @@
 package game;
 
 import colliders.*;
+import game.objects.Coin;
+import haxe.Json;
 import flash.geom.Rectangle;
 import game.objects.BaseObject;
 import game.objects.Player;
@@ -21,6 +23,10 @@ import utility.ControlManager.ControlAction;
 import utility.Point;
 import starling.extensions.*;
 import starling.utils.Color;
+
+typedef Items = {
+	var Coin:Int;
+}
 
 class World extends Sprite {
 	
@@ -68,7 +74,9 @@ class World extends Sprite {
 		collisionMatrix.registerLayer("player");
 		collisionMatrix.registerLayer("enemies");
 		collisionMatrix.registerLayer("ladder");
-		collisionMatrix.enableCollisions("player", ["ladder"]);
+		collisionMatrix.registerLayer("items");
+		collisionMatrix.registerLayer("hitOnly");
+		collisionMatrix.enableCollisions("player", ["items"]);
 		collisionMatrix.enableCollisions("map", ["player", "enemies"]);
 		
 		addObject(tilemap);
@@ -208,6 +216,21 @@ class World extends Sprite {
 		var menu = new MainMenu(menustate.rootSprite);
 		menustate.stop();
 		menu.start();
+	}
+	
+	public function spawnItem(loot:String, xlocation:Float, ylocation:Float) {
+		var ctr:Int = 0;
+		var Loot = Json.parse(loot);
+		while (ctr < Loot.Coin) {
+			ctr++;
+			var sign = Std.random(2);
+			var offsetX = Math.random();
+			if (sign == 1) { sign = -1; }
+			else { sign = 1; }
+			var coin:Coin = new Coin(this, xlocation, ylocation, offsetX, -19);
+			addObject(coin);
+			tilemap.entities.push(coin);
+		}
 	}
 	
 	function touch(event:TouchEvent) {

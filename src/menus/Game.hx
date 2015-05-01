@@ -27,11 +27,11 @@ class Game extends MenuState
 	var activeWorld:World;
 	var player:Player;
     var healthText:TextField;
-    var healthBarBG:Quad;
-    var healthBarFG:Quad;
+    var healthBarBG:Image;
+    var healthBarFG:Image;
     var healthBarWidth:Int = 100;
     var healthBarHeight:Int = 6;
-    var scoreText:TextField;
+    //var scoreText:TextField;
     var coinText:TextField;
 	
 	override function init() {
@@ -57,27 +57,35 @@ class Game extends MenuState
         this.healthText.x = 20;
         this.healthText.y = 18;
         this.addChild(this.healthText);
-        this.healthBarBG = new Quad(healthBarWidth + 4, healthBarHeight + 4, 0x000000);
+        this.healthBarBG = new Image(Root.assets.getTexture("blackpixel"));
+        this.healthBarBG.scaleX = healthBarWidth + 4;
+        this.healthBarBG.scaleY = healthBarHeight + 4;
         this.healthBarBG.x = 70;
         this.healthBarBG.y = 20;
         this.addChild(this.healthBarBG);
-        this.healthBarFG = new Quad(healthBarWidth * this.player.getHealth() / this.player.getMaxHealth(), healthBarHeight, 0xff0000);
+        this.healthBarFG = new Image(Root.assets.getTexture("redpixel"));
+        this.healthBarFG.scaleX = healthBarWidth * this.player.getHealth() / this.player.getMaxHealth();
+        this.healthBarFG.scaleY = healthBarHeight;
         this.healthBarFG.x = 70 + 2;
         this.healthBarFG.y = 20 + 2;
         this.addChild(this.healthBarFG);
         
-        this.scoreText = new TextField(75, 12, "Score: 0", BitmapFont.MINI, 12, 0x000000);
-        this.scoreText.x = stageWidth - 90;
-        this.scoreText.y = 18;
-        this.addChild(scoreText);
+        //this.scoreText = new TextField(75, 12, "Score: 0", BitmapFont.MINI, 12, 0x000000);
+        //this.scoreText.x = stageWidth - 90;
+        //this.scoreText.y = 18;
+        //this.addChild(scoreText);
         this.coinText = new TextField(75, 12, "Coins: 0", BitmapFont.MINI, 12, 0x000000);
         this.coinText.x = stageWidth - 90;
-        this.coinText.y = 38;
+        this.coinText.y = 18;
         this.addChild(coinText);
 	}
 	
 	private function updateHealthBar(event:Event) {
 		this.healthBarFG.width = healthBarWidth * this.player.getHealth() / this.player.getMaxHealth();
+	}
+	
+	private function updateCoinDisplay(event:Event) {
+		this.coinText.text = "Coins: " + Std.string(player.getCoinCount());
 	}
 	
 	override function deinit() {
@@ -90,12 +98,14 @@ class Game extends MenuState
 		this.addEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
 		Root.controls.hook("debugWorldSwitch", "gameSwitchWorldDebug", switchWorld);
 		this.player.addEventListener("healthChanged", updateHealthBar);
+		this.player.addEventListener("coinAdded", updateCoinDisplay);
 		activeWorld.awake();
 	}
 	override function sleep() {
 		removeEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
 		Root.controls.unhook("debugWorldSwitch", "gameSwitchWorldDebug");
 		this.player.removeEventListener("healthChanged", updateHealthBar);
+		this.player.removeEventListener("coinAdded", updateCoinDisplay);
 		activeWorld.sleep();
 	}
 	
@@ -111,16 +121,16 @@ class Game extends MenuState
 			if (this.activeWorld == summerWorld) {
 				this.activeWorld = winterWorld;
                 this.healthText.color = 0x000000;
-                this.healthBarBG.color = 0x000000;
-                this.scoreText.color = 0x000000;
+                this.healthBarBG.texture = Root.assets.getTexture("blackpixel");
+                //this.scoreText.color = 0x000000;
                 this.coinText.color = 0x000000;
                 this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xffffffff);
                 this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xffffffff);
 			} else {
 				this.activeWorld = summerWorld;
                 this.healthText.color = 0xffffff;
-                this.healthBarBG.color = 0xffffff;
-                this.scoreText.color = 0xffffff;
+                this.healthBarBG.texture = Root.assets.getTexture("pixel");
+                //this.scoreText.color = 0xffffff;
                 this.coinText.color = 0xffffff;
                 this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xff8b7355);
                 this.player.snowWalkPS.endColor = ColorArgb.fromArgbToArgb(0xff8b7355);
@@ -137,7 +147,7 @@ class Game extends MenuState
             this.setChildIndex(healthText, this.numChildren - 1);
             this.setChildIndex(healthBarBG, this.numChildren - 1);
             this.setChildIndex(healthBarFG, this.numChildren - 1);
-            this.setChildIndex(scoreText, this.numChildren - 1);
+            //this.setChildIndex(scoreText, this.numChildren - 1);
             this.setChildIndex(coinText, this.numChildren - 1);
 			
 		}

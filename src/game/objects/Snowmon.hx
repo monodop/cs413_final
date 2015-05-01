@@ -30,6 +30,8 @@ class Snowmon extends AI
 		this.maxHealth = 20.0;
 		this.health = 20.0;
 		this.strikable = true;
+        this.healthBar.scaleX = healthBarWidth * this.getHealth() / this.getMaxHealth();
+        this.healthBar.scaleY = healthBarHeight;
 		this.healthBar.x = -10;
         this.healthBar.y = -50;
 		this.healthBarWidth = 20;
@@ -41,6 +43,9 @@ class Snowmon extends AI
         this.sprite.pivotX = 24;
         this.sprite.pivotY = 64;
         this.sprite.smoothing = 'none';
+		
+		this.patrolMoveSpeed = 3;
+		this.advanceMoveSpeed = 4.5;
 
         this.sprite.changeAnimation("Move");
 
@@ -104,4 +109,10 @@ class Snowmon extends AI
             }
         }
     }
+
+	private override function killed(overflow:Float) {
+		world.spawnItem("{ \"Coin\" : \"1\" }", this.x, this.y);
+		world.removeObject(this);
+        this.dispose();
+	}
 }
