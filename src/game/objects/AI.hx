@@ -56,17 +56,14 @@ class AI extends BaseObject
 	}
 	
 	public function Patrol(event:EnterFrameEvent) {
-		//if (direction)
-			//setPos(this.x+1*event.passedTime*(patrolMoveSpeed/2), this.y);
-		//else
-			//setPos(this.x-1*event.passedTime*(patrolMoveSpeed/2), this.y);
-        
-		if(world.rayCast(new Point(this.x, this.y), new Point(1, 1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
-			direction = false;	
-		else if(world.rayCast(new Point(this.x, this.y), new Point(-1, -1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
+		
+		if (direction && world.rayCast(new Point(this.x + 0.25, this.y - 0.0001), new Point(0.75, 1.25), new Rectangle(this.x-2, this.y-2, 4, 4), ["map"]) == null) {
+			direction = false;
+		} else if (!direction && world.rayCast(new Point(this.x - 0.25, this.y - 0.0001), new Point( -0.75, 1.25), new Rectangle(this.x - 2, this.y - 2, 4, 4), ["map"]) == null) {
 			direction = true;
-        //this.fall(event, ["map"]);
+		}
 			
+        this.fall(event, ["map"]);
 		this.walk(event, patrolMoveSpeed, direction ? 1 : -1, ["map"]);
         
 			
@@ -74,18 +71,11 @@ class AI extends BaseObject
 	
 	public function Advance(event:EnterFrameEvent) {
 		if(this.x<world.player.x) {
-			//setPos(this.x+1*event.passedTime, this.y);
 			direction = true;
 		}
 		else if(this.x>world.player.x) {
-			//setPos(this.x-1*event.passedTime, this.y);
 			direction = false;
-		}
-		//if(world.rayCast(new Point(this.x, this.y), new Point(1, 1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
-			//setPos(this.x, this.y+1*event.passedTime);
-		//if(world.rayCast(new Point(this.x, this.y), new Point(-1, -1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
-			//setPos(this.x, this.y+1*event.passedTime);
-            
+		}  
         this.fall(event, ["map"]);
 			
 		this.walk(event, advanceMoveSpeed, direction ? 1 : -1, ["map"]);
