@@ -55,7 +55,6 @@ class AI extends BaseObject
 		if(hit != null) {
 			var hitCollider = ci[0].collider_src.parent;
 			if (Std.is(hitCollider, BaseObject)) {
-				trace("ATTACK");
 				var target:BaseObject = cast hitCollider;
 				target.damage(attackDamage);
 			}
