@@ -23,7 +23,7 @@ class Coin extends BaseObject
 	private var grounded:Bool = false;
 	
 	public function new(world:World, xloc:Float, yloc:Float, velX, velY) {
-		super(world, xloc, yloc, 0, -2);
+		super(world, xloc, yloc, 0, 0);
 		this.velX = velX;
 		this.velY = velY;
 		
@@ -35,18 +35,18 @@ class Coin extends BaseObject
 		this.strikable = true;
 		
 		var animations = new StringMap<Vector<Texture>>();
-		animations.set("Coin", Root.assets.getTextures("player/Player"));
+		animations.set("Coin", Root.assets.getTextures("items/Coin"));
 	
 		this.sprite = new MovieClipPlusPlus(animations, 10);
 		this.sprite.pivotX = 0;
-		this.sprite.pivotY = 32;
+		this.sprite.pivotY = 16;
 		this.sprite.smoothing = 'none';
 		
 		this.sprite.changeAnimation("Coin");
 		
 		addChild(this.sprite);
 		
-		this.collider = new BoxCollider(this, ["map"], 32, 64, new Point(0, -32));
+		this.collider = new BoxCollider(this, ["map"], 1, 16, new Point(0.5, 0.5));
 		addChild(this.collider);
 	}
 	
@@ -71,7 +71,7 @@ class Coin extends BaseObject
 			this.setPos(this.x, newPosY);
 			grounded = false;
 		}
-		var newPosX = this.x + velX * event.passedTime * 7.5;
+		var newPosX = this.x + velX * event.passedTime * 6;
 
 		this.setPos(newPosX, this.y);
 
@@ -98,6 +98,14 @@ class Coin extends BaseObject
 		}
 	
 		velY += event.passedTime * 80.0;
+	}
+	
+	public override function collision(self:Collider, object:Collider, collisionInfo:CollisionInformation):Bool {
+		
+		
+		
+		return true;
+		
 	}
 	
 }
