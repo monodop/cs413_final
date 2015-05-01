@@ -4,7 +4,7 @@ import flash.geom.Rectangle;
 import utility.Point;
 import colliders.CollisionInformation;
 import haxe.Timer;
-import starling.display.Quad;
+import starling.display.Image;
 class AI extends BaseObject
 {
 	var direction:Bool = true;
@@ -14,7 +14,7 @@ class AI extends BaseObject
 	var canAttack:Bool = false;
 	var attackDamage:Float = 0.0;
 	var healthBarYOffset:Float = 50.0;
-	var healthBar:Quad;
+	var healthBar:Image;
 	var healthBarHeight:Float=5;
 	var healthBarWidth:Float=100;
     var advanceMoveSpeed:Float = 5.0;
@@ -30,7 +30,7 @@ class AI extends BaseObject
 			this.health = 1.0;
 		attackTimer = attackSpeed;
 		
-		this.healthBar = new Quad(healthBarWidth * this.getHealth() / this.getMaxHealth(), healthBarHeight, 0xff0000);
+		this.healthBar = new Image(Root.assets.getTexture("redpixel"));
         this.addChild(this.healthBar);
 	}
 	

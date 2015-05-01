@@ -27,8 +27,8 @@ class Game extends MenuState
 	var activeWorld:World;
 	var player:Player;
     var healthText:TextField;
-    var healthBarBG:Quad;
-    var healthBarFG:Quad;
+    var healthBarBG:Image;
+    var healthBarFG:Image;
     var healthBarWidth:Int = 100;
     var healthBarHeight:Int = 6;
     //var scoreText:TextField;
@@ -57,11 +57,15 @@ class Game extends MenuState
         this.healthText.x = 20;
         this.healthText.y = 18;
         this.addChild(this.healthText);
-        this.healthBarBG = new Quad(healthBarWidth + 4, healthBarHeight + 4, 0x000000);
+        this.healthBarBG = new Image(Root.assets.getTexture("blackpixel"));
+        this.healthBarBG.scaleX = healthBarWidth + 4;
+        this.healthBarBG.scaleY = healthBarHeight + 4;
         this.healthBarBG.x = 70;
         this.healthBarBG.y = 20;
         this.addChild(this.healthBarBG);
-        this.healthBarFG = new Quad(healthBarWidth * this.player.getHealth() / this.player.getMaxHealth(), healthBarHeight, 0xff0000);
+        this.healthBarFG = new Image(Root.assets.getTexture("redpixel"));
+        this.healthBarFG.scaleX = healthBarWidth * this.player.getHealth() / this.player.getMaxHealth();
+        this.healthBarFG.scaleY = healthBarHeight;
         this.healthBarFG.x = 70 + 2;
         this.healthBarFG.y = 20 + 2;
         this.addChild(this.healthBarFG);
@@ -117,7 +121,7 @@ class Game extends MenuState
 			if (this.activeWorld == summerWorld) {
 				this.activeWorld = winterWorld;
                 this.healthText.color = 0x000000;
-                this.healthBarBG.color = 0x000000;
+                this.healthBarBG.texture = Root.assets.getTexture("blackpixel");
                 //this.scoreText.color = 0x000000;
                 this.coinText.color = 0x000000;
                 this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xffffffff);
@@ -125,7 +129,7 @@ class Game extends MenuState
 			} else {
 				this.activeWorld = summerWorld;
                 this.healthText.color = 0xffffff;
-                this.healthBarBG.color = 0xffffff;
+                this.healthBarBG.texture = Root.assets.getTexture("pixel");
                 //this.scoreText.color = 0xffffff;
                 this.coinText.color = 0xffffff;
                 this.player.snowWalkPS.startColor = ColorArgb.fromArgbToArgb(0xff8b7355);
