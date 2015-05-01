@@ -74,7 +74,7 @@ class BaseObject extends Sprite implements HasCollider
 	public function damage(amt:Float) {
 		if (!isDead()) {
 			addHealth( -amt);
-			if (health < 0) {
+			if (health <= 0) {
 				killed( -health);
 				updateHealth(0);
 			}
@@ -85,6 +85,7 @@ class BaseObject extends Sprite implements HasCollider
 		return this.health;
 	}
 	public function getMaxHealth():Float {
+		return this.maxHealth;
 		return this.maxHealth;
 	}
 	

@@ -19,13 +19,18 @@ class AI extends BaseObject
 	var healthBarWidth:Float=100;
 	
 	
-	public function new(world:World, ?x:Float=0.0, ?y:Float=0.0, ?offsetX=0.0, ?offsetY=0.0) {
+	public function new(world:World, ?x:Float = 0.0, ?y:Float = 0.0, ?offsetX = 0.0, ?offsetY = 0.0) {
+		
 		super(world, x, y, offsetX, offsetY);
+		if (this.maxHealth <= 0)
+			this.maxHealth = 1.0;
+		if (this.health <= 0)
+			this.health = 1.0;
 		attackTimer = attackSpeed;
 		
 		this.healthBar = new Quad(healthBarWidth * this.getHealth() / this.getMaxHealth(), healthBarHeight, 0xff0000);
-        //this.healthBar.x = 0;
-        //this.healthBar.y = -healthBarYOffset;
+        this.healthBar.x = 0;
+        this.healthBar.y = -healthBarYOffset;
         this.addChild(this.healthBar);
 	}
 	
@@ -42,6 +47,12 @@ class AI extends BaseObject
 	
 	public function updateHealthBar() {
 		healthBar.width = healthBarWidth * this.getHealth() / this.getMaxHealth();
+	}
+	
+	override public function dispose():Void 
+	{
+		this.removeEventListener("healthChanged", updateHealthBar);
+		super.dispose();
 	}
 	
 	public function Patrol(event:EnterFrameEvent) {
