@@ -31,6 +31,7 @@ class Player extends BaseObject
 	private var jumpEnd:Bool = false;
 	private var attacking:Bool = false;
 	private var doubleJumped:Bool = false;
+	private var coins:Int = 0;
 	
 	public function new(world:World) 
 	{
@@ -130,6 +131,11 @@ class Player extends BaseObject
 		}
 	}
 	
+	public function addCoin() {
+		coins++;
+		trace(coins);
+	}
+	
 	public function frameAdvance(clip:MovieClipPlusPlus) {
 		//trace(clip.getLastAnimation() + "\t\t" + clip.getAnimationFrame());
 		if (clip.getLastAnimation() == "Attack1" && clip.getAnimationFrame() == 2) {
@@ -174,6 +180,7 @@ class Player extends BaseObject
 			snowWalkPS.stop();
 		}
 		
+		world.checkCollision(this.collider, null, ["items"]);
 		if (world.checkCollision(this.collider, null, ["ladder"])) {
 		// Ladder Physics
 			var newPosY = this.y + vert * event.passedTime;

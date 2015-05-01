@@ -46,7 +46,7 @@ class Coin extends BaseObject
 		
 		addChild(this.sprite);
 		
-		this.collider = new BoxCollider(this, ["map"], 1, 16, new Point(0.5, 0.5));
+		this.collider = new BoxCollider(this, ["items"], 12, 16, new Point(8, -8));
 		addChild(this.collider);
 	}
 	
@@ -101,9 +101,12 @@ class Coin extends BaseObject
 	}
 	
 	public override function collision(self:Collider, object:Collider, collisionInfo:CollisionInformation):Bool {
-		
-		
-		
+		var player:Player;
+		if (Std.is(object, BaseObject)) {
+			player = cast object;
+			player.addCoin();
+		}
+		trace(collisionInfo.);
 		return true;
 		
 	}
