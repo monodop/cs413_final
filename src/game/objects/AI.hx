@@ -17,6 +17,9 @@ class AI extends BaseObject
 	var healthBar:Quad;
 	var healthBarHeight:Float=5;
 	var healthBarWidth:Float=100;
+    var grounded:Bool = false;
+    var advanceMoveSpeed:Float = 5.0;
+	var patrolMoveSpeed:Float = 2.5;
 	
 	
 	public function new(world:World, ?x:Float = 0.0, ?y:Float = 0.0, ?offsetX = 0.0, ?offsetY = 0.0) {
@@ -55,9 +58,9 @@ class AI extends BaseObject
 	
 	public function Patrol(event:EnterFrameEvent) {
 		if (direction)
-			setPos(this.x+1*event.passedTime, this.y);
+			setPos(this.x+1*event.passedTime*(patrolMoveSpeed/2), this.y);
 		else
-			setPos(this.x-1*event.passedTime, this.y);
+			setPos(this.x-1*event.passedTime*(patrolMoveSpeed/2), this.y);
 		if(world.rayCast(new Point(this.x, this.y), new Point(1, 1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
 			direction = false;	
 		else if(world.rayCast(new Point(this.x, this.y), new Point(-1, -1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
@@ -67,18 +70,54 @@ class AI extends BaseObject
 	
 	public function Advance(event:EnterFrameEvent) {
 		if(this.x<world.player.x) {
-			setPos(this.x+1*event.passedTime, this.y);
+			//setPos(this.x+1*event.passedTime, this.y);
 			direction = true;
 		}
 		else if(this.x>world.player.x) {
-			setPos(this.x-1*event.passedTime, this.y);
+			//setPos(this.x-1*event.passedTime, this.y);
 			direction = false;
 		}
-		if(world.rayCast(new Point(this.x, this.y), new Point(1, 1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
-			setPos(this.x, this.y+1*event.passedTime);
-		if(world.rayCast(new Point(this.x, this.y), new Point(-1, -1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
-			setPos(this.x, this.y+1*event.passedTime);
-	
+		//if(world.rayCast(new Point(this.x, this.y), new Point(1, 1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
+			//setPos(this.x, this.y+1*event.passedTime);
+		//if(world.rayCast(new Point(this.x, this.y), new Point(-1, -1), new Rectangle(this.x-1, this.y-1, 2, 2), ["map"]) == null)
+			//setPos(this.x, this.y+1*event.passedTime);
+            
+        var oldX = this.x;
+        var oldY = this.y;
+
+        var newPosY = this.y + velY * event.passedTime;
+
+        var ci = new Array<CollisionInformation>();
+        var dest = world.rayCast(new Point(oldX, oldY - 0.0001), new Point(0, velY * event.passedTime), world.camera.getCameraBounds(world), ["map"], 0.0001, ci);
+        if (dest != null && !ci[0].collider_src.containsPoint(new Point(dest.x, dest.y - 0.0001), world)) {
+            this.setPos(this.x, dest.y);
+            this.velY = 0;
+            grounded = true;
+        }
+        else {
+            this.setPos(this.x, newPosY);
+            grounded = false;
+        }
+        
+        var hor = direction ? 1 : -1;
+        var newPosX = this.x + hor * event.passedTime * advanceMoveSpeed;
+
+        var oldX = this.x;
+        var oldY = this.y;
+
+        this.setPos(newPosX, this.y);
+
+        var dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * -advanceMoveSpeed * 1.05), world.camera.getCameraBounds(world), ["map"]);
+        if (dest != null) {
+            this.setPos(newPosX, dest.y - 0.0001);
+        } else {
+            dest = world.rayCast(new Point(this.x, this.y), new Point(0, Math.abs(hor) * event.passedTime * advanceMoveSpeed * 1.05), world.camera.getCameraBounds(world), ["map"]);
+            if (dest != null) {
+                this.setPos(newPosX, dest.y - 0.0001);
+            }
+        }
+
+        velY += event.passedTime * 80.0;
 	}
 	
 	public function Attack(event:EnterFrameEvent) {
