@@ -71,7 +71,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/sounds/Hit_Sound_3.mp3");
 		assets.enqueue("assets/sounds/Pickup_Sound_1.mp3");
 		assets.enqueue("assets/sounds/Change_World__Sound_1.mp3");
-		assets.enqueue("assets/sounds/Change_World__Sound_2.mp3");
+		assets.enqueue("assets/sounds/Change_World_Sound_2.mp3");
 
 		assets.loadQueue(function onProgress(ratio:Float) {
 			haxe.Log.clear();
