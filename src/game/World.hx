@@ -195,18 +195,18 @@ class World extends Sprite {
 		
 	}
 	
+	function pauseGame(action:ControlAction) {
+		if (action.isActive()) {
+			var pauseMenu = new PauseMenu(menustate.rootSprite, menustate, this);
+			menustate.pause();
+			pauseMenu.start();
+		}
+	}
+	
 	public function quit() {
 		var menu = new MainMenu(menustate.rootSprite);
 		menustate.stop();
 		menu.start();
-	}
-	
-	function pauseGame(action:ControlAction) {
-		if (action.isActive()) {
-			var pauseMenu = new PauseMenu(menustate.rootSprite, this);
-			this.sleep();
-			pauseMenu.start();
-		}
 	}
 	
 	function touch(event:TouchEvent) {

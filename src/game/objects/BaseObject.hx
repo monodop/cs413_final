@@ -18,10 +18,15 @@ class BaseObject extends Sprite implements HasCollider
 	public var health:Float = 0.0;
 	public var maxHealth:Float = 0.0;
 
-	public function new(world:World) 
+	public function new(world:World, ?x:Float=0.0, ?y:Float=0.0, ?offsetX:Float=0.0, ?offsetY:Float=0.0) 
 	{
-		this.world = world;
 		super();
+		this.x = x+offsetX;
+		this.y = y+offsetY;
+		this.pivotX += offsetX;
+		this.pivotY += offsetY;
+		this.world = world;
+
 	}
 	
 	public function awake() {
