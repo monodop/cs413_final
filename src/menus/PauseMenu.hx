@@ -72,12 +72,14 @@ class PauseMenu extends MenuState
 		Root.controls.hook("up", "PauseMenuUp", up);
 		Root.controls.hook("down", "PauseMenuDown", down);
 		Root.controls.hook("select", "PauseMenuSpace", space);
+		Root.controls.hook("pause", "PauseInMenu", unpauseGame);
 	}
 	
 	public override function sleep() {
 		Root.controls.unhook("up", "PauseMenuUp");
 		Root.controls.unhook("down", "PauseMenuDown");
 		Root.controls.unhook("select", "PauseMenuSpace");
+		Root.controls.unhook("pause", "PauseInMenu");
 	}
 	
 	private override function transitionIn(?callBack:Void->Void) {
@@ -132,6 +134,13 @@ class PauseMenu extends MenuState
 		else if (selection == 1) {
 			// quit game
 			world.quit();
+			this.stop();
+		}
+	}
+	
+	private function unpauseGame(action:ControlAction) {
+		if (action.isActive()) {
+			world.awake();
 			this.stop();
 		}
 	}
