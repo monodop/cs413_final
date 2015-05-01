@@ -6,6 +6,7 @@ import flash.Vector;
 import game.MovieClipPlusPlus;
 import game.World;
 import haxe.ds.StringMap;
+import starling.events.Event;
 import haxe.macro.Expr.Position;
 import starling.core.Starling;
 import starling.display.Image;
@@ -130,9 +131,13 @@ class Player extends BaseObject
 		}
 	}
 	
-	public function addCoin() {
+	public function updateCoins() {
 		coins++;
-		trace(coins);
+		dispatchEvent(new Event("coinAdded"));
+	}
+	
+	public function getCoinCount():Int {
+		return this.coins;
 	}
 	
 	public function frameAdvance(clip:MovieClipPlusPlus) {

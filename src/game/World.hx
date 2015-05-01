@@ -225,7 +225,8 @@ class World extends Sprite {
 			ctr++;
 			var sign = Std.random(2);
 			var offsetX = Math.random();
-			if (sign == 1) { offsetX *= -1; }
+			if (sign == 1) { sign = -1; }
+			else { sign = 1; }
 			var coin:Coin = new Coin(this, xlocation, ylocation, offsetX, -19);
 			addObject(coin);
 			tilemap.entities.push(coin);

@@ -20,7 +20,6 @@ class Coin extends BaseObject
 {
 	private var sprite:MovieClipPlusPlus;
 	private var collider:BoxCollider;
-	private var grounded:Bool = false;
 	
 	public function new(world:World, xloc:Float, yloc:Float, velX, velY) {
 		super(world, xloc, yloc, 0, 0);
@@ -30,8 +29,8 @@ class Coin extends BaseObject
 		this.scaleX = 1 / world.tileSize;
 		this.scaleY = 1 / world.tileSize;
 		
-		this.health = 0.0;
-		this.maxHealth = 0.0;
+		this.health = 1.0;
+		this.maxHealth = 1.0;
 		this.strikable = true;
 		
 		var animations = new StringMap<Vector<Texture>>();
@@ -102,11 +101,11 @@ class Coin extends BaseObject
 	
 	public override function collision(self:Collider, object:Collider, collisionInfo:CollisionInformation):Bool {
 		var player:Player;
-		if (Std.is(object, BaseObject)) {
-			player = cast object;
-			player.addCoin();
+		if (Std.is(object.parent, Player)) {
+			player = cast object.parent;
+			player.updateCoins();
+			this.damage(1.0);
 		}
-		trace(collisionInfo.);
 		return true;
 		
 	}

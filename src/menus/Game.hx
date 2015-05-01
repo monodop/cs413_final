@@ -70,7 +70,7 @@ class Game extends MenuState
         this.scoreText.x = stageWidth - 90;
         this.scoreText.y = 18;
         this.addChild(scoreText);
-        this.coinText = new TextField(75, 12, "Coins: 0", BitmapFont.MINI, 12, 0x000000);
+        this.coinText = new TextField(75, 12, "Coins: " + Std.string(player.getCoinCount()), BitmapFont.MINI, 12, 0x000000);
         this.coinText.x = stageWidth - 90;
         this.coinText.y = 38;
         this.addChild(coinText);
@@ -78,6 +78,10 @@ class Game extends MenuState
 	
 	private function updateHealthBar(event:Event) {
 		this.healthBarFG.width = healthBarWidth * this.player.getHealth() / this.player.getMaxHealth();
+	}
+	
+	private function updateCoinDisplay(event:Event) {
+		this.coinText.text = "Coins: " + Std.string(player.getCoinCount());
 	}
 	
 	override function deinit() {
@@ -90,12 +94,14 @@ class Game extends MenuState
 		this.addEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
 		Root.controls.hook("debugWorldSwitch", "gameSwitchWorldDebug", switchWorld);
 		this.player.addEventListener("healthChanged", updateHealthBar);
+		this.player.addEventListener("coinAdded", updateCoinDisplay);
 		activeWorld.awake();
 	}
 	override function sleep() {
 		removeEventListener(EnterFrameEvent.ENTER_FRAME, enterFrame);
 		Root.controls.unhook("debugWorldSwitch", "gameSwitchWorldDebug");
 		this.player.removeEventListener("healthChanged", updateHealthBar);
+		this.player.removeEventListener("coinAdded", updateCoinDisplay);
 		activeWorld.sleep();
 	}
 	

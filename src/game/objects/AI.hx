@@ -17,7 +17,6 @@ class AI extends BaseObject
 	var healthBar:Quad;
 	var healthBarHeight:Float=5;
 	var healthBarWidth:Float=100;
-    var grounded:Bool = false;
     var advanceMoveSpeed:Float = 5.0;
 	var patrolMoveSpeed:Float = 2.5;
 	
